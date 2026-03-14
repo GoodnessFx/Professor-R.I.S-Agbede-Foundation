@@ -288,13 +288,13 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   },
   {
     id: '7',
-    src: '/images/laughing-children.jpg',
+    src: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=600',
     caption: 'Group of joyful laughing Black children, colorful and vibrant energy',
     category: 'Education'
   },
   {
     id: '8',
-    src: '/images/baby-girl-smile.jpg',
+    src: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=600',
     caption: 'Black and white close-up of a beautiful African baby girl smiling, hands cradling her face',
     category: 'Community'
   }
@@ -303,14 +303,14 @@ export const GALLERY_IMAGES: GalleryImage[] = [
 export const HERO_SLIDES = [
   {
     id: 1,
-    image: '/images/laughing-children.jpg',
+    image: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920',
     alt: 'Group of joyful laughing Black children, colorful and vibrant energy',
     title: 'Because Every Child Deserves a Fighting Chance',
     subtitle: 'In classrooms without roofs, in communities without doctors, in families without hope — the Professor R.I.S Agbede Foundation shows up. We believe potential is never scarce. Only opportunity is.'
   },
   {
     id: 2,
-    image: '/images/baby-girl-smile.jpg',
+    image: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920',
     alt: 'Black and white close-up of a beautiful African baby girl smiling, hands cradling her face, deeply emotional and intimate',
     title: 'Education Opens Doors',
     subtitle: 'Every scholarship we award is not just financial aid — it\'s a belief statement. We\'re saying: "Your dreams matter. Your story deserves a next chapter."'

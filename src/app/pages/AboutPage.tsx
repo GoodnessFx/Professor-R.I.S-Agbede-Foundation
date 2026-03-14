@@ -56,7 +56,7 @@ export function AboutPage() {
               <div className="relative max-w-md mx-auto">
                 <div className="absolute inset-0 bg-[var(--gold)] rounded-lg transform rotate-3" />
                 <ImageWithFallback
-                  src="/images/founder.jpg"
+                  src="https://images.pexels.com/photos/3777572/pexels-photo-3777572.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Founder portrait"
                   className="relative rounded-lg shadow-2xl w-full"
                 />
