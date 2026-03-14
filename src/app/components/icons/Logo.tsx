@@ -46,7 +46,7 @@ export function Logo({ className = "w-10 h-10", variant = 'dark' }: Props) {
       {/* Bottom small label */}
       <text
         x="50%"
-        y="96"
+        y="78"
         textAnchor="middle"
         fontFamily="Nunito Sans, system-ui, sans-serif"
         fontWeight="700"
