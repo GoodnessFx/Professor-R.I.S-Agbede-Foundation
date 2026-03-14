@@ -81,22 +81,27 @@ export function HeroSlider() {
           }}
         />
       </AnimatePresence>
-      {/* Gradient and grain overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/65 pointer-events-none" />
+      {/* Enhanced gradient and visual overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-[rgba(13,27,42,0.2)] to-[rgba(212,175,55,0.1)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(212,175,55,0.05)] via-transparent to-[rgba(13,27,42,0.1)] pointer-events-none" />
       <div 
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' /%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' /%3E%3C/svg%3E")',
           backgroundRepeat: 'repeat',
         }}
       />
 
-      {/* Marquee Eyebrow Text */}
+      {/* Enhanced Marquee Eyebrow Text */}
       <div className="absolute left-0 right-0 z-10 top-24 md:top-28 lg:top-28 overflow-hidden">
         <div className="mx-auto max-w-[90vw] overflow-hidden">
           <div
-            className="marquee-left text-[var(--gold)] uppercase tracking-[0.2em] text-sm md:text-base font-semibold px-4"
-            style={{ fontFamily: 'Montserrat, sans-serif', letterSpacing: '0.12em' }}
+            className="marquee-left text-[var(--gold)] uppercase tracking-[0.2em] text-sm md:text-base font-semibold px-4 drop-shadow-lg"
+            style={{ 
+              fontFamily: 'Montserrat, sans-serif', 
+              letterSpacing: '0.12em',
+              textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(212,175,55,0.2)'
+            }}
           >
             Changing Lives Across Nigeria — One Community At A Time
           </div>
@@ -114,22 +119,24 @@ export function HeroSlider() {
             className="max-w-4xl"
           >
             <h1 
-              className="font-bold text-white mb-6"
+              className="font-bold text-white mb-6 drop-shadow-2xl"
               style={{ 
                 fontFamily: 'Cormorant Garamond, serif',
                 lineHeight: '1.2',
                 textWrap: 'balance',
-                fontSize: 'clamp(2rem, 6vw, 5rem)'
+                fontSize: 'clamp(2rem, 6vw, 5rem)',
+                textShadow: '0 4px 8px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.1)'
               }}
             >
               {heroTitle}
             </h1>
             <p 
-              className="text-white/85 mb-10 max-w-[620px]"
+              className="text-white/90 mb-10 max-w-[620px] drop-shadow-lg"
               style={{
                 fontFamily: 'Nunito Sans, sans-serif',
                 lineHeight: '1.85',
-                fontSize: 'clamp(1rem, 2.2vw, 1.375rem)'
+                fontSize: 'clamp(1rem, 2.2vw, 1.375rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)'
               }}
             >
               {heroSubtitle}
@@ -137,16 +144,22 @@ export function HeroSlider() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/programs"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--gold)] text-[var(--navy)] rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.02]"
-                style={{ fontFamily: 'Nunito Sans, sans-serif' }}
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--gold)] to-yellow-500 text-[var(--navy)] rounded-full font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[var(--gold)]/30"
+                style={{ 
+                  fontFamily: 'Nunito Sans, sans-serif',
+                  boxShadow: '0 4px 15px rgba(212,175,55,0.2)'
+                }}
               >
                 <span>See What We Do</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
               <Link
                 to="/donate"
-                className="group px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-[var(--navy)] transition-all duration-300 text-center shadow-lg hover:shadow-2xl"
-                style={{ fontFamily: 'Nunito Sans, sans-serif' }}
+                className="group px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white rounded-full font-bold text-lg hover:bg-white hover:text-[var(--navy)] transition-all duration-300 text-center shadow-lg hover:shadow-2xl hover:shadow-white/20"
+                style={{ 
+                  fontFamily: 'Nunito Sans, sans-serif',
+                  backdropFilter: 'blur(10px)'
+                }}
               >
                 Join the Movement
               </Link>
@@ -155,26 +168,31 @@ export function HeroSlider() {
         </div>
       </div>
 
-      {/* Slide counter */}
-      <div className="absolute bottom-8 right-8 z-20 text-white/80 font-mono text-sm">
+      {/* Enhanced Slide counter */}
+      <div className="absolute bottom-8 right-8 z-20 text-white/90 font-mono text-sm drop-shadow-lg" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
         {String(currentSlide + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      {/* Enhanced Slide indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
         {HERO_SLIDES.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'w-8 bg-[var(--gold)]' : 'w-2 bg-white/50 hover:bg-white/80'
+            className={`h-3 rounded-full transition-all duration-300 shadow-lg ${
+              index === currentSlide 
+                ? 'w-10 bg-gradient-to-r from-[var(--gold)] to-yellow-400 shadow-[var(--gold)]/50' 
+                : 'w-3 bg-white/40 hover:bg-white/70 hover:scale-110 backdrop-blur-sm'
             }`}
+            style={{
+              boxShadow: index === currentSlide ? '0 0 15px rgba(212,175,55,0.4)' : '0 2px 4px rgba(0,0,0,0.2)'
+            }}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
 
-      {/* Scroll indicator */}
+      {/* Enhanced Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
@@ -182,10 +200,13 @@ export function HeroSlider() {
           opacity: { delay: 1.5 },
           y: { repeat: Infinity, duration: 1.5 }
         }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-white/80"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-white/90 drop-shadow-lg"
+        style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
       >
-        <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
-        <ChevronDown size={24} />
+        <span className="text-xs uppercase tracking-widest mb-2 font-medium">Scroll</span>
+        <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm">
+          <ChevronDown size={20} className="text-[var(--gold)]" />
+        </div>
       </motion.div>
     </div>
   );
