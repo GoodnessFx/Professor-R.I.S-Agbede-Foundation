@@ -3,9 +3,10 @@
  */
 
 import { Link } from 'react-router';
-import { Heart } from 'lucide-react';
+import { Heart, Shield, CheckCircle, FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
+import { useState } from 'react';
 
 const DONATION_AMOUNTS = ['₦5,000', '₦20,000', '₦50,000', 'Custom'];
 
@@ -14,19 +15,20 @@ export function DonateCTA() {
     threshold: 0.2,
     triggerOnce: true,
   });
+  const [selectedAmount, setSelectedAmount] = useState<string>('');
 
   return (
     <section 
       ref={ref}
-      className="py-20 relative overflow-hidden"
+      className="py-24 relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/baby-girl-smile.jpg)',
+        backgroundColor: '#1A3C5E',
+        backgroundImage: 'url(https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        filter: 'grayscale(100%)',
       }}
     >
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0" style={{ backgroundColor: 'rgba(10, 20, 40, 0.82)' }} />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
@@ -35,13 +37,28 @@ export function DonateCTA() {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-[var(--gold)] flex items-center justify-center mx-auto mb-6">
+          <div 
+            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+            style={{ 
+              backgroundColor: '#C8832A',
+              boxShadow: '0 0 20px rgba(200, 131, 42, 0.3)'
+            }}
+          >
             <Heart size={32} className="text-white fill-white" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-[var(--navy)] mb-6">
+          <h2 
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+            style={{ 
+              fontFamily: 'Cormorant Garamond, serif',
+              lineHeight: '1.2'
+            }}
+          >
             Your Support Changes Everything
           </h2>
-          <p className="text-xl text-gray-700 mb-10 leading-relaxed">
+          <p 
+            className="text-xl text-white/80 mb-10 leading-relaxed max-w-3xl mx-auto"
+            style={{ fontFamily: 'Nunito Sans, sans-serif' }}
+          >
             Every contribution, no matter the size, directly funds education, healthcare, and hope for communities across Nigeria. Join us in building a brighter future.
           </p>
 
@@ -49,7 +66,13 @@ export function DonateCTA() {
             {DONATION_AMOUNTS.map((amount) => (
               <button
                 key={amount}
-                className="px-6 py-3 bg-white border-2 border-[var(--navy)] text-[var(--navy)] rounded-full font-semibold hover:bg-[var(--navy)] hover:text-white transition-all duration-300"
+                onClick={() => setSelectedAmount(amount)}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 min-w-[120px] ${
+                  selectedAmount === amount
+                    ? 'bg-[#C8832A] text-[#1A3C5E] border-0'
+                    : 'bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1A3C5E]'
+                }`}
+                style={{ fontFamily: 'Nunito Sans, sans-serif' }}
               >
                 {amount}
               </button>
@@ -58,29 +81,56 @@ export function DonateCTA() {
 
           <Link
             to="/donate"
-            className="inline-block px-10 py-4 bg-[var(--navy)] text-white rounded-full font-semibold text-lg hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-block px-10 py-4 text-[#1A3C5E] rounded-full font-bold text-lg hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl"
+            style={{ 
+              backgroundColor: '#C8832A',
+              fontFamily: 'Nunito Sans, sans-serif'
+            }}
           >
             Donate Now
           </Link>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-8 text-sm text-gray-600">
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-6 text-white/90">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-[var(--green)]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span>Secure</span>
+              <Shield size={16} className="text-white" />
+              <span 
+                className="uppercase tracking-wider"
+                style={{ 
+                  fontFamily: 'Nunito Sans, sans-serif',
+                  fontSize: '13px',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                Secure
+              </span>
             </div>
+            <div className="w-1 h-1 bg-white/60 rounded-full"></div>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-[var(--green)]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span>Registered NGO</span>
+              <CheckCircle size={16} className="text-[#22C55E]" />
+              <span 
+                className="uppercase tracking-wider"
+                style={{ 
+                  fontFamily: 'Nunito Sans, sans-serif',
+                  fontSize: '13px',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                Registered NGO
+              </span>
             </div>
+            <div className="w-1 h-1 bg-white/60 rounded-full"></div>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-[var(--green)]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span>Tax Deductible</span>
+              <FileText size={16} className="text-[#22C55E]" />
+              <span 
+                className="uppercase tracking-wider"
+                style={{ 
+                  fontFamily: 'Nunito Sans, sans-serif',
+                  fontSize: '13px',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                Tax Deductible
+              </span>
             </div>
           </div>
         </motion.div>
