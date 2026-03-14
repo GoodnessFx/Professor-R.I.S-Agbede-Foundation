@@ -4,8 +4,8 @@
  */
 
 import { Link, useLocation } from 'react-router';
-import { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, Search } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, X, ChevronDown, Search, X as CloseIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from '../icons/Logo';
 import { NAV_LINKS } from '../../../lib/constants';
@@ -17,8 +17,19 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [searchExpanded, setSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const scrolled = useScrollProgress(50);
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,6 +39,8 @@ export function Navbar() {
   useEffect(() => {
     setMobileMenuOpen(false);
     setMobileActiveDropdown(null);
+    setSearchExpanded(false);
+    setSearchQuery('');
   }, [location.pathname]);
 
   // Prevent scroll when mobile menu is open
@@ -42,6 +55,37 @@ export function Navbar() {
     };
   }, [mobileMenuOpen]);
 
+  // Close search on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setSearchExpanded(false);
+        setSearchQuery('');
+      }
+    };
+
+    if (searchExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchExpanded]);
+
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQuery.trim()) {
+        performSearch(searchQuery);
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   const navClasses = scrolled || !isHomePage
     ? 'bg-white/95 backdrop-blur-md shadow-md'
     : 'bg-transparent';
@@ -50,18 +94,63 @@ export function Navbar() {
     ? 'text-[var(--navy)]'
     : 'text-white';
 
-  const searchItems = [
-    { label: 'Home', path: '/' },
-    ...NAV_LINKS.flatMap((l: any) =>
-      'dropdown' in l ? l.dropdown : l.path ? [{ label: l.label, path: l.path }] : []
-    ),
-    ...PROGRAMS.map(p => ({ label: `${p.title}`, path: `/programs#${p.id}` })),
-    ...NEWS_ARTICLES.map(a => ({ label: a.title, path: `/news/${(a as any).slug ?? a.id}` })),
+  // Search data
+  const searchData = [
+    // Pages
+    { title: 'Home', path: '/', category: 'Page', excerpt: 'Welcome to the Professor R.I.S Agbede Foundation' },
+    { title: 'About Us', path: '/about', category: 'Page', excerpt: 'Learn about our mission and founder' },
+    { title: 'Our Programs', path: '/programs', category: 'Page', excerpt: 'Explore our educational and community initiatives' },
+    { title: 'Impact', path: '/impact', category: 'Page', excerpt: 'See the difference we\'re making' },
+    { title: 'News & Media', path: '/news', category: 'Page', excerpt: 'Latest updates and press releases' },
+    { title: 'Contact Us', path: '/contact', category: 'Page', excerpt: 'Get in touch with our team' },
+    { title: 'Donate', path: '/donate', category: 'Page', excerpt: 'Support our work and make a difference' },
+    { title: 'Grantmaking', path: '/grantmaking', category: 'Page', excerpt: 'Learn about our grant programs' },
+    { title: 'Gallery', path: '/gallery', category: 'Page', excerpt: 'View our community impact photos' },
+    
+    // Programs
+    ...PROGRAMS.map(p => ({ 
+      title: p.title, 
+      path: `/programs#${p.id}`, 
+      category: 'Program', 
+      excerpt: p.description 
+    })),
+    
+    // News Articles
+    ...NEWS_ARTICLES.map(a => ({ 
+      title: a.title, 
+      path: `/news/${(a as any).slug ?? a.id}`, 
+      category: 'News', 
+      excerpt: a.excerpt || a.content?.substring(0, 100) + '...' 
+    })),
   ];
 
-  const results = query.trim()
-    ? searchItems.filter(i => i.label.toLowerCase().includes(query.toLowerCase())).slice(0, 8)
-    : [];
+  const performSearch = (query: string) => {
+    const filtered = searchData.filter(item =>
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.excerpt.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 6);
+    
+    setSearchResults(filtered);
+  };
+
+  const handleSearchToggle = () => {
+    setSearchExpanded(!searchExpanded);
+    if (!searchExpanded) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    } else {
+      setSearchQuery('');
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleSearchToggle();
+    } else if (e.key === 'Enter' && searchResults.length > 0) {
+      navigate(searchResults[0].path);
+      handleSearchToggle();
+    }
+  };
 
   return (
     <>
@@ -167,14 +256,147 @@ export function Navbar() {
                 </span>
                 <div className="absolute inset-0 bg-[var(--navy)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
               </Link>
-              {/* Search trigger */}
-              <button
-                onClick={() => { setSearchOpen(true); setTimeout(() => (document.getElementById('site-search-input') as HTMLInputElement | null)?.focus(), 0); }}
-                className={`p-2 rounded-full border border-transparent hover:border-current transition-colors ${textClasses}`}
-                aria-label="Search site"
-              >
-                <Search size={20} />
-              </button>
+              {/* Inline Expanding Search */}
+              <div ref={searchContainerRef} className="relative">
+                <motion.div 
+                  className="flex items-center"
+                  animate={{ width: searchExpanded ? (isMobile ? 'calc(100vw - 4rem)' : 280) : 40 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  <button
+                    onClick={handleSearchToggle}
+                    className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} lg:block hidden`}
+                    aria-label="Search site"
+                  >
+                    {searchExpanded ? <CloseIcon size={20} /> : <Search size={20} />}
+                  </button>
+                  
+                  <AnimatePresence>
+                    {searchExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: 'auto' }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden flex-1 lg:flex-initial"
+                      >
+                        <div className="relative ml-2 lg:ml-2">
+                          <input
+                            ref={searchInputRef}
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={handleSearchKeyDown}
+                            placeholder="Search..."
+                            className={`w-full lg:w-56 px-4 py-2 pl-10 rounded-full border-2 transition-all duration-300 ${
+                              scrolled || !isHomePage
+                                ? 'bg-white/90 border-[var(--navy)]/30 focus:border-[var(--gold)] text-[var(--navy)] placeholder-[var(--navy)]/60'
+                                : 'bg-[var(--navy)]/80 border-white/30 focus:border-[var(--gold)] text-white placeholder-white/60'
+                            } focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20 backdrop-blur-sm`}
+                            style={{ fontFamily: 'Nunito Sans, sans-serif' }}
+                          />
+                          <Search 
+                            size={16} 
+                            className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${
+                              scrolled || !isHomePage ? 'text-[var(--navy)]/60' : 'text-white/60'
+                            }`} 
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
+                {/* Mobile Search Button */}
+                <button
+                  onClick={handleSearchToggle}
+                  className={`lg:hidden p-2 rounded-full border border-transparent hover:border-current transition-colors ${textClasses}`}
+                  aria-label="Search site"
+                >
+                  {searchExpanded ? <CloseIcon size={20} /> : <Search size={20} />}
+                </button>
+
+                {/* Search Results Dropdown */}
+                <AnimatePresence>
+                  {searchExpanded && searchQuery.trim() && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className={`absolute top-full left-0 right-0 mt-2 rounded-b-lg shadow-xl overflow-hidden z-50 ${
+                        scrolled || !isHomePage ? 'bg-white/95' : 'bg-[var(--navy)]/95'
+                      } backdrop-blur-md border border-white/20`}
+                    >
+                      {searchResults.length > 0 ? (
+                        <div className="max-h-80 overflow-y-auto">
+                          {searchResults.map((result, index) => (
+                            <Link
+                              key={`${result.path}-${index}`}
+                              to={result.path}
+                              onClick={handleSearchToggle}
+                              className={`block px-4 py-3 transition-colors duration-200 ${
+                                scrolled || !isHomePage
+                                  ? 'hover:bg-[var(--neutral-100)] text-[var(--navy)]'
+                                  : 'hover:bg-white/10 text-white'
+                              } border-b border-white/10 last:border-b-0`}
+                            >
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <div className={`font-semibold text-sm ${
+                                    scrolled || !isHomePage ? 'text-[var(--navy)]' : 'text-white'
+                                  }`}>
+                                    {result.title}
+                                  </div>
+                                  <div className={`text-xs mt-1 line-clamp-2 ${
+                                    scrolled || !isHomePage ? 'text-[var(--navy)]/70' : 'text-white/70'
+                                  }`}>
+                                    {result.excerpt}
+                                  </div>
+                                </div>
+                                <span className={`text-xs px-2 py-1 rounded-full ml-3 flex-shrink-0 ${
+                                  result.category === 'Page' ? 'bg-blue-500/20 text-blue-300' :
+                                  result.category === 'Program' ? 'bg-green-500/20 text-green-300' :
+                                  'bg-orange-500/20 text-orange-300'
+                                }`}>
+                                  {result.category}
+                                </span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className={`px-4 py-6 text-center ${
+                          scrolled || !isHomePage ? 'text-[var(--navy)]/70' : 'text-white/70'
+                        }`}>
+                          <div className="text-sm font-medium mb-3">Oops, nothing found!</div>
+                          <div className="text-xs mb-4">Did you mean...</div>
+                          <div className="space-y-2">
+                            {[
+                              { title: 'About Us', path: '/about' },
+                              { title: 'Our Programs', path: '/programs' },
+                              { title: 'Contact Us', path: '/contact' }
+                            ].map((suggestion) => (
+                              <Link
+                                key={suggestion.path}
+                                to={suggestion.path}
+                                onClick={handleSearchToggle}
+                                className={`block text-xs px-3 py-2 rounded transition-colors ${
+                                  scrolled || !isHomePage
+                                    ? 'hover:bg-[var(--neutral-100)] text-[var(--navy)]/80'
+                                    : 'hover:bg-white/10 text-white/80'
+                                }`}
+                              >
+                                {suggestion.title}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Mobile Menu Button */}
@@ -188,77 +410,6 @@ export function Navbar() {
           </div>
         </div>
       </motion.nav>
-
-      {/* Search Overlay */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50 grid place-items-center p-4"
-            onClick={() => setSearchOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.98, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden"
-            >
-              <div className="flex items-center gap-3 p-5 border-b border-gray-200">
-                <Search className="text-[var(--navy)]" size={20} />
-                <input
-                  id="site-search-input"
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && results[0]) {
-                      navigate(results[0].path);
-                      setSearchOpen(false);
-                      setQuery('');
-                    } else if (e.key === 'Escape') {
-                      setSearchOpen(false);
-                      setQuery('');
-                    }
-                  }}
-                  placeholder="Search the foundation..."
-                  className="flex-1 px-4 py-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--navy)] text-xl font-semibold"
-                  style={{ fontFamily: 'Nunito Sans, sans-serif' }}
-                />
-                <button
-                  onClick={() => { setSearchOpen(false); setQuery(''); }}
-                  className="px-3 py-1.5 rounded-md text-[var(--navy)] hover:bg-[var(--neutral-100)]"
-                  aria-label="Close search"
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="max-h-96 overflow-y-auto">
-                {results.length ? (
-                  results.map((r) => (
-                    <Link
-                      key={`${r.path}-${r.label}`}
-                      to={r.path}
-                      onClick={() => { setSearchOpen(false); setQuery(''); }}
-                      className="block px-5 py-4 hover:bg-[var(--neutral-100)] text-[var(--navy)]"
-                      style={{ fontFamily: 'Nunito Sans, sans-serif' }}
-                    >
-                      {r.label}
-                      <span className="text-gray-500 text-xs ml-2">{r.path}</span>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="px-5 py-8 text-gray-500" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
-                    Type to search for a page, program, or article…
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
