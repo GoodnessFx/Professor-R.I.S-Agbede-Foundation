@@ -10,7 +10,7 @@
 - Home hero slider with image/video, impact counters, and calls to action.
 - Rich program pages, gallery with lightbox, news listings with filters.
 - Contact page with offices, validated contact form, and embedded Nigeria map.
-- Smooth page transitions, back-to-top, and WhatsApp CTA.
+- Smooth page transitions, back-to-top, and WhatsApp CTA (directs to +234 573 709 66).
 - Mobile-first design using Tailwind CSS.
 
 ## Tech Stack
