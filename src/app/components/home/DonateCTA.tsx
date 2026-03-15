@@ -23,7 +23,7 @@ export function DonateCTA() {
       className="py-24 relative overflow-hidden"
       style={{
         backgroundColor: '#1A3C5E',
-        backgroundImage: "url('/images/nigerian-children-laughing.jpg')",
+        backgroundImage: "url('https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

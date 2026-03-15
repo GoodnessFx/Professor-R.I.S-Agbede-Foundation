@@ -18,7 +18,7 @@ export function MissionPreview() {
       ref={ref} 
       className="py-20 relative overflow-hidden" 
       style={{ 
-        backgroundImage: 'url(/images/laughing-children.jpg)', 
+        backgroundImage: 'url(https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920)', 
         backgroundSize: 'cover', 
         backgroundPosition: 'center' 
       }}
