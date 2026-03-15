@@ -11,7 +11,7 @@ export function WhatsAppButton() {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <motion.a
-        href="https://wa.me/23457370966"
+        href="https://wa.me/2348057370966?text=Welcome%20to%20Professor%20R.I.S%20Agbede%20Foundation"
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-xl hover:shadow-2xl transition-shadow duration-300"
