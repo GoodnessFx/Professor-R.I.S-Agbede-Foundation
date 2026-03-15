@@ -58,7 +58,7 @@ export function DonatePage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/7004906/pexels-photo-7004906.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+          src="/images/school-boys-running.jpg"
           alt="Make a donation"
           className="absolute inset-0 w-full h-full object-cover"
         />

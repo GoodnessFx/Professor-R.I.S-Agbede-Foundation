@@ -26,12 +26,12 @@ export function ProgramCard({ icon, title, description, link = '/programs' }: Pr
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      className="group bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-[var(--gold)]"
+      className="group bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-[var(--gold)]"
     >
-      <div className="w-16 h-16 rounded-full bg-[var(--gold)]/10 flex items-center justify-center mb-6 group-hover:bg-[var(--gold)] transition-colors duration-300">
-        <Icon size={32} className="text-[var(--gold)] group-hover:text-white transition-colors duration-300" />
+      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[var(--gold)]/10 flex items-center justify-center mb-6 group-hover:bg-[var(--gold)] transition-colors duration-300">
+        <Icon size={24} className="md:w-8 md:h-8 text-[var(--gold)] group-hover:text-white transition-colors duration-300" />
       </div>
-      <h3 className="text-2xl font-serif font-semibold text-[var(--navy)] mb-4">
+      <h3 className="text-xl md:text-2xl font-serif font-semibold text-[var(--navy)] mb-4">
         {title}
       </h3>
       <p className="text-gray-600 mb-6 leading-relaxed">

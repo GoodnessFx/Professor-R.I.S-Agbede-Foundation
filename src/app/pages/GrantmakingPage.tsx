@@ -42,7 +42,7 @@ export function GrantmakingPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/images/baby-girl-smile.jpg"
           alt="African mother holding her child"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: 'grayscale(100%)' }}
@@ -89,7 +89,7 @@ export function GrantmakingPage() {
         {/* Fading background image */}
         <div className="absolute inset-0 opacity-10">
           <ImageWithFallback
-            src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1920&q=80"
+            src="/images/laughing-children-group.jpg"
             alt="Background"
             className="w-full h-full object-cover grayscale"
           />

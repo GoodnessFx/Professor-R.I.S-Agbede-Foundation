@@ -36,7 +36,7 @@ export function ImpactPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/7005302/pexels-photo-7005302.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+          src="https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
           alt="Community celebration"
           className="absolute inset-0 w-full h-full object-cover"
         />

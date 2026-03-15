@@ -75,7 +75,7 @@ export function ContactPage() {
       {/* Hero with Image Background */}
       <section className="relative h-[45vh] min-h-[350px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1920&q=80"
+          src="https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Nigerian community gathering"
           className="absolute inset-0 w-full h-full object-cover"
         />

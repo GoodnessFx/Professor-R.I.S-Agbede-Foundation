@@ -11,12 +11,12 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ name, location, program, quote, avatar }: TestimonialCardProps) {
   return (
-    <div className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-shadow duration-300 relative">
-      <div className="absolute top-8 right-8 text-[var(--gold)]/20">
-        <Quote size={48} />
+    <div className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-xl transition-shadow duration-300 relative">
+      <div className="absolute top-6 md:top-8 right-6 md:right-8 text-[var(--gold)]/20">
+        <Quote size={32} className="md:w-12 md:h-12" />
       </div>
       <div className="relative">
-        <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
+        <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6 italic">
           "{quote}"
         </p>
         <div className="flex items-center gap-4">

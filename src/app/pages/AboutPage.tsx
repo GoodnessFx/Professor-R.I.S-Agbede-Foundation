@@ -19,7 +19,7 @@ export function AboutPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/images/laughing-children-group.jpg"
           alt="African community members gathered together in unity"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -56,7 +56,7 @@ export function AboutPage() {
               <div className="relative max-w-md mx-auto">
                 <div className="absolute inset-0 bg-[var(--gold)] rounded-lg transform rotate-3" />
                 <ImageWithFallback
-                  src="https://images.pexels.com/photos/3777572/pexels-photo-3777572.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/images/baby-girl-smile.jpg"
                   alt="Founder portrait"
                   className="relative rounded-lg shadow-2xl w-full"
                 />

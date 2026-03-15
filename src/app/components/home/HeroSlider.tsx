@@ -27,9 +27,9 @@ export function HeroSlider() {
       // Fallbacks chosen to avoid duplication within Hero if a primary fails
       'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 1
       'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 2
-      'https://images.pexels.com/photos/5905569/pexels-photo-5905569.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 3
+      'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 3
       'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 4
-      'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 5
+      'https://images.pexels.com/photos/6647028/pexels-photo-6647028.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 5
       'https://images.pexels.com/photos/8363028/pexels-photo-8363028.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 6
     ];
 

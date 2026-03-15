@@ -33,7 +33,7 @@ export function NewsCard({ id, slug, title, category, date, excerpt, author, ima
           {category}
         </div>
       </div>
-      <div className="p-6 flex flex-col h-[260px]">
+      <div className="p-4 md:p-6 flex flex-col h-full min-h-[240px] md:min-h-[260px]">
         <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
           <span className="flex items-center gap-1">
             <Calendar size={14} />

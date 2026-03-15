@@ -27,7 +27,7 @@ export function ProgramsPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/images/school-boys-running.jpg"
           alt="Nigerian schoolgirls studying together"
           className="absolute inset-0 w-full h-full object-cover"
         />
