@@ -19,9 +19,10 @@ export function AboutPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="/images/laughing-children-group.jpg"
-          alt="African community members gathered together in unity"
+          src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="African medical professional in hospital"
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-[var(--navy)]/70" />
         <div className="relative z-10 text-center text-white px-4">
@@ -39,13 +40,13 @@ export function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl max-w-2xl mx-auto"
           >
-            A legacy of hope, education, and transformation
+            Supporting indigent patients with end-stage kidney disease across Nigeria
           </motion.p>
         </div>
       </section>
 
       {/* Founder Section */}
-      <section ref={heroRef} className="py-20 bg-white">
+      <section ref={heroRef} id="founder" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -56,9 +57,10 @@ export function AboutPage() {
               <div className="relative max-w-md mx-auto">
                 <div className="absolute inset-0 bg-[var(--gold)] rounded-lg transform rotate-3" />
                 <ImageWithFallback
-                  src="/images/baby-girl-smile.jpg"
+                  src="https://images.pexels.com/photos/5490276/pexels-photo-5490276.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Founder portrait"
-                  className="relative rounded-lg shadow-2xl w-full"
+                  className="relative rounded-lg shadow-2xl w-full h-[500px] object-cover"
+                  unoptimized={true}
                 />
               </div>
             </motion.div>
@@ -75,13 +77,13 @@ export function AboutPage() {
               
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Professor Raphael Idowu Sunday Agbede was born in a small village in Kogi State, where access to quality education was a distant dream for most children. Through sheer determination, the support of a dedicated teacher, and countless sacrifices by his family, he became the first in his community to attend university.
+                  Professor Raphael Idowu Sunday Agbede was born in a small village in Kogi State, where access to quality healthcare was a distant dream for most. Through sheer determination and the support of his community, he rose to become a distinguished academic and public servant.
                 </p>
                 <p>
-                  His academic journey took him from the University of Lagos, where he studied Economics, to doctoral studies at Oxford University. Throughout his distinguished 40-year career in academia and public service, Professor Agbede never forgot the helping hands that lifted him up. He witnessed firsthand how a single scholarship, one medical intervention, or a community development project could change not just individual lives, but the trajectory of entire families and communities.
+                  Throughout his career, Professor Agbede never forgot the challenges faced by those in his community. He witnessed firsthand how kidney disease could devastate families without the means to afford specialized care. This lived experience became the catalyst for the Foundation's mission.
                 </p>
                 <p>
-                  In 2012, upon his retirement as Vice-Chancellor of Federal University of Technology, Minna, Professor Agbede established this foundation with a clear mission: to ensure that no bright Nigerian child would be denied the opportunity to learn, grow, and contribute to society simply because of their economic circumstances. Today, his legacy lives on through the thousands of students, families, and communities transformed by the Foundation's work.
+                  Established with a clear focus on kidney health, the Professor R.I.S Agbede Foundation now stands as a beacon of hope for indigent Nigerians. Our work ensures that end-stage kidney disease is not a death sentence for the vulnerable, providing a path to treatment, dignity, and a second chance at life.
                 </p>
               </div>
             </motion.div>
@@ -89,10 +91,10 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
+      {/* Mission, Vision, Objectives */}
       <section ref={valuesRef} className="py-20 bg-[var(--neutral-100)]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={valuesInView ? { opacity: 1, y: 0 } : {}}
@@ -101,7 +103,7 @@ export function AboutPage() {
             >
               <h3 className="text-2xl font-serif font-bold text-[var(--navy)] mb-4">Mission</h3>
               <p className="text-gray-700 leading-relaxed">
-                To empower underserved Nigerian communities through quality education, accessible healthcare, and sustainable development.
+                To support indigent persons with end stage kidney disease to access replacement therapy across Nigeria.
               </p>
             </motion.div>
 
@@ -113,27 +115,33 @@ export function AboutPage() {
             >
               <h3 className="text-2xl font-serif font-bold text-[var(--navy)] mb-4">Vision</h3>
               <p className="text-gray-700 leading-relaxed">
-                A Nigeria where every child has the opportunity to reach their full potential, regardless of their background.
+                A Nigeria where kidney disease is no longer a death sentence for the indigent, through accessible healthcare and sustainable support.
               </p>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white rounded-xl p-8 shadow-md"
-            >
-              <h3 className="text-2xl font-serif font-bold text-[var(--navy)] mb-4">Values</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {VALUES.map((value, index) => (
-                  <div key={value} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[var(--gold)]" />
-                    <span className="text-gray-700">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-white rounded-xl p-8 shadow-md"
+          >
+            <h3 className="text-2xl font-serif font-bold text-[var(--navy)] mb-6">Our Objectives</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                "Support indigent persons with end stage kidney disease to access replacement therapy",
+                "Support a prize for excellence in the study of parasitology and support trainings and capacity-building related to kidney health",
+                "Collaborate with hospitals, healthcare providers, and other organizations to support kidney disease awareness, prevention, and early detection programs",
+                "Establish patient support programs including counseling, education, emotional support, nutrition, and social welfare assistance to patients and caregivers",
+                "Provide financial assistance for laboratory investigations and related medical services for indigent end stage kidney disease patients"
+              ].map((objective, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-[var(--gold)] mt-2 flex-shrink-0" />
+                  <span className="text-gray-700 leading-relaxed">{objective}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -172,7 +180,7 @@ export function AboutPage() {
       <section className="py-12 bg-[var(--neutral-100)] border-t border-gray-200">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm text-gray-600">
-            Registered Non-Profit Organization | CAC No: RC-XXXXXXX | 
+            Registered Non-Profit Organization | CAC No: 9382765 | 
             Registered with Special Control Unit Against Money Laundering (SCUML)
           </p>
         </div>

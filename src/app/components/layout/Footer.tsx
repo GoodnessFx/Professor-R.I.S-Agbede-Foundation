@@ -3,7 +3,7 @@
  */
 
 import { Link } from 'react-router';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
+import { Facebook, X, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
 import { Logo } from '../icons/Logo';
 import { NAV_LINKS, PROGRAMS, SOCIAL_LINKS } from '../../../lib/constants';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ export function Footer() {
 
   const iconMap: Record<string, any> = {
     Facebook,
-    Twitter,
+    X,
     Instagram,
     Linkedin,
     Youtube,
@@ -42,13 +42,13 @@ export function Footer() {
           {/* Column 1: Logo & Mission */}
           <div>
             <Link to="/" className="flex items-center gap-3 mb-4">
-              <Logo className="w-10 h-10 text-[var(--gold)]" />
+              <Logo className="w-16 h-16" />
               <span className="font-serif text-xl font-semibold">
                 Prof. R.I.S Agbede<br />Foundation
               </span>
             </Link>
             <p className="text-white/80 mb-6 leading-relaxed">
-              Empowering underserved Nigerian communities through education, healthcare, and sustainable development.
+              Supporting indigent persons with end stage kidney disease to access replacement therapy across Nigeria.
             </p>
             <div className="flex gap-4">
               {SOCIAL_LINKS.map((social) => {
@@ -156,7 +156,7 @@ export function Footer() {
               <Link to="/terms" className="hover:text-[var(--gold)] transition-colors">
                 Terms of Service
               </Link>
-              <span>CAC No: RC-XXXXXXX</span>
+              <span>CAC No: 9382765</span>
             </div>
           </div>
         </div>

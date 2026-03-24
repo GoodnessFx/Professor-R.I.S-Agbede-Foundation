@@ -26,6 +26,7 @@ export function TestimonialCard({ name, location, program, quote, avatar }: Test
                 src={avatar}
                 alt={`${name}'s portrait`}
                 className="w-full h-full object-cover"
+                unoptimized={true}
               />
             ) : (
               <div className="w-full h-full bg-[var(--gold)]/20 flex items-center justify-center">

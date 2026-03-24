@@ -23,7 +23,7 @@ export function DonateCTA() {
       className="py-24 relative overflow-hidden"
       style={{
         backgroundColor: '#1A3C5E',
-        backgroundImage: "url('https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920')",
+        backgroundImage: "url('https://images.pexels.com/photos/7088541/pexels-photo-7088541.jpeg?auto=compress&cs=tinysrgb&w=1920')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -59,7 +59,7 @@ export function DonateCTA() {
             className="text-xl text-white/80 mb-10 leading-relaxed max-w-3xl mx-auto"
             style={{ fontFamily: 'Nunito Sans, sans-serif' }}
           >
-            Every contribution, no matter the size, directly funds education, healthcare, and hope for communities across Nigeria. Join us in building a brighter future.
+            A kidney patient in Nigeria is waiting. Your support today could be the difference between life and another day of suffering. Join us in providing life-saving care to those who need it most.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-8">

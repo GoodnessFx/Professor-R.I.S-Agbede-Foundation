@@ -6,16 +6,16 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
-import { GraduationCap, Heart, Building2, Laptop, ChevronDown, Send } from 'lucide-react';
+import { HeartPulse, Megaphone, Users, FlaskConical, ChevronDown, Send } from 'lucide-react';
 import { SectionHeader } from '../components/shared/SectionHeader';
 import { PROGRAMS } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 const iconMap: Record<string, any> = {
-  GraduationCap,
-  Heart,
-  Building2,
-  Laptop,
+  HeartPulse,
+  Megaphone,
+  Users,
+  FlaskConical,
 };
 
 export function ProgramsPage() {
@@ -27,9 +27,10 @@ export function ProgramsPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="/images/school-boys-running.jpg"
-          alt="Nigerian schoolgirls studying together"
+          src="https://images.pexels.com/photos/4270371/pexels-photo-4270371.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="African nurse caring for patient"
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--navy)]/70 to-[var(--navy)]/80" />
         <div className="relative z-10 text-center text-white px-4">

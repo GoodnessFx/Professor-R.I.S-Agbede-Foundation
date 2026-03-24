@@ -11,7 +11,7 @@ import { Lightbox } from '../components/shared/Lightbox';
 import { GALLERY_IMAGES } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-const categories = ['All', 'Education', 'Healthcare', 'Events', 'Community'];
+const categories = ['All', 'Healthcare', 'Operations'];
 
 export function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -33,9 +33,10 @@ export function GalleryPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Gallery showcasing foundation's community impact and activities"
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-[var(--navy)]/70" />
         <div className="relative z-10 text-center text-white px-4">
@@ -97,6 +98,7 @@ export function GalleryPage() {
                     src={image.src}
                     alt={image.caption}
                     className="w-full h-auto transition-transform duration-500 group-hover:scale-110"
+                    unoptimized={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <p className="text-white text-sm font-medium">{image.caption}</p>

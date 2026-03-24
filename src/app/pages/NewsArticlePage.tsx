@@ -32,6 +32,7 @@ export function NewsArticlePage() {
           src={article.image}
           alt={article.title}
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-[var(--navy)]/70" />
         <div className="relative z-10 text-white text-center px-4">
@@ -71,7 +72,7 @@ export function NewsArticlePage() {
             <div className="grid sm:grid-cols-2 gap-4">
               {NEWS_ARTICLES.filter(a => a.slug !== article.slug).slice(0, 4).map(a => (
                 <Link key={a.id} to={`/news/${a.slug}`} className="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--neutral-100)] transition-colors">
-                  <ImageWithFallback src={a.image} alt={a.title} className="w-20 h-14 object-cover rounded-md" />
+                  <ImageWithFallback src={a.image} alt={a.title} className="w-20 h-14 object-cover rounded-md" unoptimized={true} />
                   <div>
                     <p className="text-sm text-[var(--gold)]">{a.category}</p>
                     <p className="text-[var(--navy)] font-medium">{a.title}</p>

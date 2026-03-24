@@ -223,6 +223,7 @@ export function ContactPage() {
                         <input
                           {...register('firstName')}
                           type="text"
+                          placeholder="P Zak"
                           className="w-full px-3.5 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--navy)] focus:border-transparent"
                           style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                         />
@@ -255,6 +256,7 @@ export function ContactPage() {
                         <input
                           {...register('email')}
                           type="email"
+                          placeholder="Pzak@gmail.com"
                           className="w-full px-3.5 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--navy)] focus:border-transparent"
                           style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                         />

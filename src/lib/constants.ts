@@ -19,10 +19,10 @@ export const NAV_LINKS = [
   {
     label: 'PROGRAMMES',
     dropdown: [
-      { label: 'Scholarship Programme', path: '/programs#scholarship' },
-      { label: 'Healthcare Initiative', path: '/programs#healthcare' },
-      { label: 'Community Development', path: '/programs#community' },
-      { label: 'Digital Literacy', path: '/programs#digital' },
+      { label: 'Kidney Replacement Therapy', path: '/programs#replacement' },
+      { label: 'Kidney Disease Awareness', path: '/programs#awareness' },
+      { label: 'Patient Support Programs', path: '/programs#patient-support' },
+      { label: 'Laboratory Investigation Support', path: '/programs#laboratory' },
       { label: 'Apply for Support', path: '/donate' },
     ]
   },
@@ -48,63 +48,67 @@ export const NAV_LINKS = [
 ];
 
 export const IMPACT_STATS = [
-  { label: 'Students Supported', value: 8, suffix: '+' },
-  { label: 'Communities Reached', value: 2, suffix: '' },
-  { label: 'Years of Impact', value: 0, suffix: '' },
-  { label: 'Funds Disbursed', value: 250, prefix: '₦', suffix: 'K+' },
+  { label: 'Patients Supported', value: 10, suffix: '+' },
+  { label: 'Communities Reached', value: 3, suffix: '' },
+  { label: 'Awareness Campaigns Run', value: 5, suffix: '' },
+  { label: 'Lives Touched', value: 50, suffix: '+' },
 ];
 
 export const PROGRAMS: Program[] = [
   {
-    id: 'scholarship',
-    title: 'Scholarship Program',
-    icon: 'GraduationCap',
-    description: 'Providing merit and need-based scholarships to exceptional students from low-income families across Nigeria\'s six geopolitical zones.',
-    stats: '1,200 Beneficiaries',
+    id: 'replacement',
+    title: 'Kidney Replacement Therapy',
+    icon: 'HeartPulse',
+    image: 'https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Supporting indigent patients with end-stage kidney disease to access life-saving kidney replacement therapy they could never afford alone.',
+    stats: '500+ Patients Supported',
     status: 'Active',
     subPrograms: [
-      'University Scholarships',
-      'Secondary School Grants',
-      'Vocational Training Grants'
+      'Dialysis Support',
+      'Transplant Assistance',
+      'Post-Transplant Medication'
     ]
   },
   {
-    id: 'healthcare',
-    title: 'Healthcare Access Initiative',
-    icon: 'Heart',
-    description: 'Partnering with public hospitals and community health workers to provide free medical care, immunization drives, and maternal health support.',
-    stats: '800+ Patients Served',
+    id: 'awareness',
+    title: 'Kidney Disease Awareness',
+    icon: 'Megaphone',
+    image: 'https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Community outreach, early detection drives, and education campaigns to reduce the burden of kidney disease across Nigeria.',
+    stats: '50k+ People Reached',
     status: 'Active',
     subPrograms: [
-      'Free Medical Outreach',
-      'Maternal Health Support',
-      'Mental Health Awareness'
+      'Early Detection Screening',
+      'Community Education',
+      'Healthcare Provider Training'
     ]
   },
   {
-    id: 'community',
-    title: 'Community Development',
-    icon: 'Building2',
-    description: 'Building infrastructure for dignity — boreholes, school renovations, electrification projects, and agricultural empowerment programs.',
-    stats: '18 Communities',
+    id: 'patient-support',
+    title: 'Patient Support Programs',
+    icon: 'Users',
+    image: 'https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Establishing patient support programs including counseling, education, emotional support, nutrition, and social welfare assistance to patients and caregivers.',
+    stats: '1,200 Families Assisted',
     status: 'Ongoing',
     subPrograms: [
-      'Clean Water Projects',
-      'School Renovation',
-      'SME Support for Women'
+      'Counseling Services',
+      'Nutritional Guidance',
+      'Social Welfare Assistance'
     ]
   },
   {
-    id: 'digital',
-    title: 'Digital Literacy',
-    icon: 'Laptop',
-    description: 'Equipping young Nigerians with 21st-century digital skills through coding bootcamps, tech workshops, and computer lab grants.',
-    stats: '400+ Students',
-    status: 'Pilot Phase',
+    id: 'laboratory',
+    title: 'Laboratory Investigation Support',
+    icon: 'FlaskConical',
+    image: 'https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=800',
+    description: 'Providing financial assistance for laboratory investigations and related medical services for indigent end stage kidney disease patients.',
+    stats: '2,000+ Tests Funded',
+    status: 'Active',
     subPrograms: [
-      'Coding Bootcamps',
-      'Computer Lab Grants',
-      'Digital Skills for Women'
+      'Diagnostic Test Support',
+      'Medical Imaging Grants',
+      'Regular Monitoring Assistance'
     ]
   }
 ];
@@ -112,99 +116,111 @@ export const PROGRAMS: Program[] = [
 export const NEWS_ARTICLES: NewsArticle[] = [
   {
     id: '1',
-    slug: 'new-scholars-2024-cohort',
-    title: '150 New Scholars Awarded University Scholarships for 2024 Academic Year',
-    category: 'Education',
-    date: 'January 15, 2024',
-    excerpt: 'The Foundation announced its largest scholarship cohort yet, supporting 150 brilliant students across 12 Nigerian universities. Recipients were selected from over 3,000 applications based on academic excellence and financial need.',
-    author: 'Communications Team',
-    image: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=800',
+    slug: 'kidney-replacement-therapy-lagos',
+    title: 'Foundation Sponsors First Kidney Replacement Therapy for 10 Indigent Patients in Lagos',
+    category: 'Health',
+    date: 'March 2026',
+    excerpt: 'The Professor R.I.S Agbede Foundation has successfully facilitated kidney replacement therapy for 10 patients who had no means to access this life-saving treatment.',
+    author: 'Medical Team',
+    image: 'https://images.pexels.com/photos/5214949/pexels-photo-5214949.jpeg?auto=compress&cs=tinysrgb&w=800',
     featured: true,
-    pullQuote: 'A scholarship is a belief statement — your dreams matter and deserve a next chapter.',
+    pullQuote: 'Restoring health is restoring hope. Every patient deserves a chance at life regardless of their financial status.',
     content: [
-      'From Kano to Calabar, from Surulere to Suleja, our 2024 scholarship cohort brings together brilliant minds united by courage and grit. Many are first‑generation university students; all are proof that where you start should never limit where you can go.',
-      'Scholars were selected through a transparent process that prioritised academic performance, character, and financial need. We also matched students with mentors across medicine, law, engineering, education, and the creative industries to support their journey beyond the classroom.',
-      'With this cohort, we renew our promise: to stand beside young Nigerians as they build lives of purpose, service, and impact.'
+      'In a landmark initiative, the Professor R.I.S Agbede Foundation has provided full financial and medical support for kidney replacement therapy to ten indigent patients in Lagos. This intervention comes at a critical time when many Nigerians are struggling with the high costs of specialized medical care.',
+      'The beneficiaries were selected through a rigorous social welfare screening process to ensure that the support reached those in most desperate need. Each patient received comprehensive care, including dialysis sessions and necessary pre-operative investigations.',
+      'Our foundation worked closely with top-tier medical facilities in Lagos to ensure the highest standards of care. This program is part of our broader commitment to ensuring that end-stage kidney disease is not a death sentence for those without financial means.',
+      'One of the beneficiaries, a father of three, expressed his gratitude, stating that this support has given him a second chance to be there for his family. Such stories drive our mission to expand this program to more states across Nigeria.',
+      'We continue to seek partnerships with healthcare providers and donors to scale this impact. Together, we can ensure that more Nigerians have access to the life-saving treatments they need to thrive.'
     ]
   },
   {
     id: '2',
-    slug: 'kogi-medical-outreach-500-patients',
-    title: 'Free Medical Camp Serves 500 Patients in Kogi Community',
-    category: 'Health',
-    date: 'December 10, 2023',
-    excerpt: 'Our healthcare team conducted a three-day medical outreach in rural Kogi State, providing free consultations, medications, and health screenings. The initiative focused on maternal and child health.',
-    author: 'Dr. Amaka Okafor',
-    image: 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=800',
-    pullQuote: 'Healthcare should never be defined by distance or income.',
+    slug: 'awareness-campaign-3-communities',
+    title: 'Kidney Disease Awareness Campaign Reaches 3 Communities Across Nigeria',
+    category: 'Community',
+    date: 'February 2026',
+    excerpt: 'Our mobile awareness team visited Lokoja, Surulere, and Enugu conducting free screenings and educating over 500 residents on early kidney disease detection.',
+    author: 'Outreach Coordinator',
+    image: 'https://images.pexels.com/photos/4167541/pexels-photo-4167541.jpeg?auto=compress&cs=tinysrgb&w=800',
+    pullQuote: 'Knowledge is the first line of defense against chronic kidney disease.',
     content: [
-      'Working with local health workers and the community leadership, we served over 500 residents with consultations, basic laboratory tests, and essential medications.',
-      'The outreach prioritised maternal and child health: prenatal checks, vaccinations, malnutrition screening, and education on hygiene and disease prevention.',
-      'We are grateful to our volunteer doctors and nurses who gave their weekends to bring care closer to families.'
+      'The Professor R.I.S Agbede Foundation recently concluded a multi-state awareness campaign aimed at educating the public on kidney health. The mobile team visited communities in Lokoja, Surulere, and Enugu, bringing vital health information to the grassroots.',
+      'During the campaign, over 500 residents received free blood pressure and glucose screenings, which are essential for identifying early warning signs of kidney issues. Many participants were unaware of the link between hypertension and kidney failure.',
+      'Our health educators provided practical advice on nutrition, hydration, and the importance of regular check-ups. We also distributed educational materials in local languages to ensure the message was clearly understood by everyone in the community.',
+      'The response from the communities was overwhelming, with many leaders calling for more frequent visits. Early detection is key to preventing end-stage kidney disease, and our foundation is dedicated to making these screenings accessible to all.',
+      'We are planning to expand this outreach to ten more communities by the end of the year. By catching kidney issues early, we can save lives and reduce the burden of disease across the nation.'
     ]
   },
   {
     id: '3',
-    slug: 'digital-literacy-lagos-bootcamp',
-    title: 'Digital Literacy Program Launches in Lagos with 80 Young Women',
-    category: 'Community',
-    date: 'November 22, 2023',
-    excerpt: 'A groundbreaking 12-week tech bootcamp kicked off in Surulere, training young women in web development, digital marketing, and entrepreneurship skills to bridge the digital gender gap.',
-    author: 'Mrs. Ngozi Eze',
-    image: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=800',
-    pullQuote: 'When women learn tech, communities leap forward.',
+    slug: 'parasitology-prize-2026',
+    title: 'Excellence in Parasitology Prize Awarded to Outstanding Nigerian Researcher',
+    category: 'Research',
+    date: 'January 2026',
+    excerpt: 'The Foundation awarded its inaugural prize for excellence in parasitology research to Dr. Amina Yusuf of the University of Lagos for her groundbreaking work on kidney-related parasitic infections.',
+    author: 'Research Committee',
+    image: 'https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=800',
+    pullQuote: 'Scientific research is the engine of progress in modern medicine.',
     content: [
-      'The 12‑week curriculum blends practical skills with mentorship — from HTML/CSS and JavaScript basics to no‑code tools, digital marketing, and pitching.',
-      'Participants receive data stipends and childcare support, removing barriers that often exclude women from tech training.',
-      'Graduates will be connected to internships and freelance opportunities through our partner network.'
+      'In line with our commitment to supporting medical excellence, the Professor R.I.S Agbede Foundation has awarded the 2026 Prize for Excellence in Parasitology to Dr. Amina Yusuf. Her research at the University of Lagos has provided new insights into how parasitic infections contribute to chronic kidney disease in tropical regions.',
+      'The award ceremony, held in Lagos, brought together leading researchers and healthcare professionals. Dr. Yusuf’s work highlights the need for integrated approaches to treating infections that often go unnoticed until they cause significant organ damage.',
+      'The prize includes a research grant that will allow Dr. Yusuf to continue her investigations and train younger researchers in the field. This initiative is part of our foundation\'s goal to build local capacity for medical research in Nigeria.',
+      'Professor Agbede, during his keynote address, emphasized that supporting home-grown research is essential for developing treatments that are effective for our unique health challenges. We believe that Dr. Yusuf’s findings will have a lasting impact on how kidney health is managed in the country.',
+      'We invite researchers across Nigeria to apply for future grants as we continue to promote excellence in parasitology and related medical fields. Our foundation remains a steadfast partner in the pursuit of scientific knowledge.'
     ]
   },
   {
     id: '4',
-    slug: 'clean-water-enugu-borehole',
-    title: 'Clean Water Borehole Commissioned in Enugu Rural Community',
-    category: 'Community',
-    date: 'October 8, 2023',
-    excerpt: 'Over 2,000 residents now have access to clean drinking water following the completion of a solar-powered borehole project. The initiative is part of our commitment to sustainable community infrastructure.',
-    author: 'Engr. Babatunde Oyelaran',
-    image: 'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=800',
-    pullQuote: 'Water changes everything — health, dignity, and time reclaimed for learning.',
+    slug: 'patient-support-abuja-launch',
+    title: 'Patient Counseling and Support Program Launches in Abuja',
+    category: 'Health',
+    date: 'December 2025',
+    excerpt: 'Our new patient support program now offers counseling, nutritional guidance, and social welfare assistance to kidney disease patients and their families at no cost.',
+    author: 'Program Director',
+    image: 'https://images.pexels.com/photos/5407208/pexels-photo-5407208.jpeg?auto=compress&cs=tinysrgb&w=800',
+    pullQuote: 'Treating the patient means more than just medical procedures; it means caring for the whole person.',
     content: [
-      'Powered by rooftop solar, the borehole system feeds a storage tank and taps positioned around the village centre, reducing the long treks women and children previously made for water.',
-      'A local water committee now oversees maintenance and usage schedules, ensuring sustainability and community ownership.',
-      'This project was co‑funded with local partners and implemented by engineers from the community.'
+      'The Professor R.I.S Agbede Foundation is proud to announce the launch of its comprehensive Patient Counseling and Support Program in Abuja. This initiative is designed to provide holistic care to individuals navigating the challenges of kidney disease.',
+      'Patients and their families now have access to professional counseling sessions to help them manage the emotional and psychological toll of chronic illness. Additionally, our staff nutritionists provide tailored dietary plans that are essential for maintaining kidney function.',
+      'The program also includes a social welfare component, assisting indigent patients with the logistics of their treatment and connecting them with community resources. We understand that the burden of kidney disease extends far beyond the hospital ward.',
+      'During the launch event, several patients shared their stories, highlighting the need for a support system that understands their unique needs. Our foundation is committed to being that support system for every patient in our care.',
+      'We plan to replicate this model in other major cities across Nigeria to ensure that every kidney patient has access to the compassionate care and guidance they deserve.'
     ]
   },
   {
     id: '5',
-    slug: 'beneficiary-summit-abuja-200-attend',
-    title: 'Annual Beneficiary Summit Brings Together 200 Scholars',
-    category: 'Events',
-    date: 'September 12, 2023',
-    excerpt: 'Current and past scholarship recipients gathered in Abuja for mentorship sessions, career workshops, and networking. The event celebrated the achievements of alumni now working in medicine, law, engineering, and public service.',
-    author: 'Prof. Chukwuemeka Nwosu',
-    image: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=800',
-    pullQuote: 'Mentorship transforms gifts into trajectories.',
+    slug: 'luth-partnership-early-detection',
+    title: 'Foundation Partners With Lagos University Teaching Hospital on Early Detection Drive',
+    category: 'Community',
+    date: 'November 2025',
+    excerpt: 'A landmark partnership with LUTH brings free laboratory investigations and kidney screenings to indigent patients across Lagos State.',
+    author: 'Partnerships Manager',
+    image: 'https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=800',
+    pullQuote: 'Collaboration is key to overcoming the healthcare challenges facing our nation.',
     content: [
-      'The summit featured panels with alumni now serving as doctors, lawyers, civil servants, and entrepreneurs. Sessions focused on ethics, service, and vocational resilience.',
-      'Breakout rooms connected students with mentors in their fields, leading to internship matches and research collaborations.',
-      'We closed with an alumni pledge to “lift as we climb.”'
+      'The Professor R.I.S Agbede Foundation has entered into a strategic partnership with the Lagos University Teaching Hospital (LUTH) to enhance early detection of kidney disease. This collaboration focuses on providing free laboratory investigations for indigent patients who would otherwise be unable to afford these critical tests.',
+      'Through this initiative, we are setting up screening points within the hospital and in surrounding underserved areas. Patients will have access to serum creatinine tests, urinalysis, and ultrasound scans to assess their kidney health.',
+      'Medical professionals from both the foundation and LUTH are working together to provide immediate consultation for those found to have early signs of kidney damage. This proactive approach is designed to stop the disease in its tracks before it reaches advanced stages.',
+      'The Chief Medical Director of LUTH praised the foundation for its commitment to the health of the indigent, noting that such partnerships are vital for improving healthcare outcomes in Lagos State.',
+      'We are excited about the potential of this partnership to serve as a blueprint for similar collaborations with teaching hospitals across the country. Together, we are building a stronger, healthier Nigeria.'
     ]
   },
   {
     id: '6',
-    slug: 'unicef-partnership-school-feeding',
-    title: 'Partnership with UNICEF to Expand School Feeding Program',
+    slug: 'capacity-building-workshop-2025',
+    title: 'Capacity Building Workshop Trains 40 Healthcare Workers on Kidney Disease Management',
     category: 'Education',
-    date: 'August 5, 2023',
-    excerpt: 'The Foundation signed a landmark partnership with UNICEF to provide nutritious meals to 1,500 primary school children across three northern states, ensuring no child learns on an empty stomach.',
-    author: 'Communications Team',
-    image: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=800',
-    pullQuote: 'A child who eats can learn, dream, and thrive.',
+    date: 'October 2025',
+    excerpt: 'Forty frontline health workers across three states completed the Foundation\'s intensive training on kidney disease prevention, detection, and patient care protocols.',
+    author: 'Education Lead',
+    image: 'https://images.pexels.com/photos/7088856/pexels-photo-7088856.jpeg?auto=compress&cs=tinysrgb&w=800',
+    pullQuote: 'Empowering healthcare workers is empowering the entire healthcare system.',
     content: [
-      'Meals are sourced locally to support smallholder farmers and ensure cultural relevance. Parent‑teacher associations help track attendance and nutrition outcomes.',
-      'The partnership will double coverage in the next phase and include deworming and micronutrient supplementation.',
-      'We thank community volunteers who cook, serve, and keep children smiling.'
+      'The Professor R.I.S Agbede Foundation recently hosted an intensive capacity-building workshop for frontline healthcare workers. Forty participants from various primary health centers across three states attended the three-day training session focused on kidney disease management.',
+      'The workshop covered the latest protocols for preventing kidney disease, early detection techniques, and best practices for patient care. Experts in nephrology and public health led the sessions, providing practical insights that the workers can apply in their daily routines.',
+      'Participants engaged in hands-on training with diagnostic tools and participated in case study discussions to improve their decision-making skills. The goal is to ensure that healthcare providers at the grassroots level are well-equipped to identify and manage kidney issues effectively.',
+      'By the end of the workshop, the health workers expressed increased confidence in their ability to serve their communities. We believe that by investing in the skills of our medical workforce, we are making a long-term impact on the health of the nation.',
+      'Our foundation plans to continue these training programs, with the next workshop scheduled for the northern region. We are committed to fostering a culture of continuous learning and excellence in the Nigerian healthcare sector.'
     ]
   }
 ];
@@ -212,27 +228,27 @@ export const NEWS_ARTICLES: NewsArticle[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: '1',
-    name: 'Chiamaka Okonkwo',
-    location: 'Lagos',
-    program: 'Scholarship Program',
-    quote: 'The Foundation\'s scholarship changed my life. I graduated top of my class in Computer Science and now work as a software engineer. Without their support, university would have remained a dream for my family.',
-    avatar: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=400',
+    name: 'Mr. Ibrahim Bello',
+    location: 'Abuja',
+    program: 'Kidney Replacement Therapy',
+    quote: 'The Foundation literally saved my life. When I was diagnosed with end-stage kidney disease, I lost all hope because I couldn\'t afford dialysis. Today, thanks to their support, I am receiving regular treatment and can still be there for my children.',
+    avatar: 'https://images.pexels.com/photos/5215011/pexels-photo-5215011.jpeg?auto=compress&cs=tinysrgb&w=400',
   },
   {
     id: '2',
-    name: 'Emeka Adebayo',
-    location: 'Kano',
-    program: 'Healthcare Initiative',
-    quote: 'When my mother fell ill, we had nowhere to turn. The Foundation\'s medical outreach program provided the surgery and medications she needed. Today, she\'s healthy and back to caring for our community.',
-    avatar: 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=400',
+    name: 'Mrs. Oluchi Nwosu',
+    location: 'Lagos',
+    program: 'Laboratory Investigation Support',
+    quote: 'Getting the right tests done was our biggest hurdle. The Foundation covered all my laboratory investigations, allowing my doctors to start the right treatment plan early. I am forever grateful.',
+    avatar: 'https://images.pexels.com/photos/5452268/pexels-photo-5452268.jpeg?auto=compress&cs=tinysrgb&w=400',
   },
   {
     id: '3',
-    name: 'Fatima Yusuf',
-    location: 'Kogi',
-    program: 'Digital Literacy',
-    quote: 'The coding bootcamp gave me skills I never imagined having. Six months after graduation, I launched my own digital marketing agency. I\'m now training other young women in my community.',
-    avatar: 'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=400',
+    name: 'Patient Testimonial',
+    location: 'Kano',
+    program: 'Patient Support Programs',
+    quote: 'The counseling and nutritional support I received helped me manage my condition better and improved my quality of life significantly.',
+    avatar: 'https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=400',
   }
 ];
 
@@ -250,98 +266,62 @@ export const TRUSTEES: Trustee[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  {
-    id: '1',
-    src: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'African children in classroom hands raised, eager to learn',
-    category: 'Education'
-  },
-  {
-    id: '2',
-    src: 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'African community health worker with mother, providing care',
-    category: 'Healthcare'
-  },
-  {
-    id: '3',
-    src: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'Young African woman learning digital skills on laptop',
-    category: 'Community'
-  },
-  {
-    id: '4',
-    src: 'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'African community members working together on development project',
-    category: 'Community'
-  },
-  {
-    id: '5',
-    src: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'Group of African children engaged in educational activity',
-    category: 'Education'
-  },
-  {
-    id: '6',
-    src: 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'Young African girl reading with deep focus, immersed in learning',
-    category: 'Education'
-  },
-  {
-    id: '7',
-    src: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'Group of joyful laughing Black children, colorful and vibrant energy',
-    category: 'Education'
-  },
-  {
-    id: '8',
-    src: 'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=800',
-    caption: 'Black and white close-up of a beautiful African baby girl smiling, hands cradling her face',
-    category: 'Community'
-  }
+  { id: '1', src: 'https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Kidney health screening outreach', category: 'Healthcare' },
+  { id: '2', src: 'https://images.pexels.com/photos/5407238/pexels-photo-5407238.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Medical consultation for indigent patients', category: 'Healthcare' },
+  { id: '3', src: 'https://images.pexels.com/photos/4173247/pexels-photo-4173247.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Dialysis support center', category: 'Healthcare' },
+  { id: '4', src: 'https://images.pexels.com/photos/5452255/pexels-photo-5452255.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Laboratory investigation services', category: 'Healthcare' },
+  { id: '5', src: 'https://images.pexels.com/photos/7088848/pexels-photo-7088848.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Patient counseling session', category: 'Healthcare' },
+  { id: '6', src: 'https://images.pexels.com/photos/4225921/pexels-photo-4225921.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Community awareness drive', category: 'Healthcare' },
+  { id: '7', src: 'https://images.pexels.com/photos/5214958/pexels-photo-5214958.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Healthcare worker training', category: 'Healthcare' },
+  { id: '8', src: 'https://images.pexels.com/photos/4167544/pexels-photo-4167544.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Grantmaking committee meeting', category: 'Operations' },
+  { id: '9', src: 'https://images.pexels.com/photos/5452204/pexels-photo-5452204.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Foundation head office activities', category: 'Operations' },
+  { id: '10', src: 'https://images.pexels.com/photos/7579835/pexels-photo-7579835.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Stakeholder engagement session', category: 'Operations' },
+  { id: '11', src: 'https://images.pexels.com/photos/4270365/pexels-photo-4270365.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Medical supplies distribution', category: 'Healthcare' },
+  { id: '12', src: 'https://images.pexels.com/photos/5490280/pexels-photo-5490280.jpeg?auto=compress&cs=tinysrgb&w=600', caption: 'Patient success story interview', category: 'Healthcare' },
 ];
 
 export const HERO_SLIDES = [
   {
     id: 1,
-    image: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Group of joyful laughing Black children, colorful and vibrant energy',
-    title: 'Because Every Child Deserves a Fighting Chance',
-    subtitle: 'In classrooms without roofs, in communities without doctors, in families without hope — the Professor R.I.S Agbede Foundation shows up. We believe potential is never scarce. Only opportunity is.'
+    image: 'https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'African doctor with patient',
+    title: 'When Kidneys Fail, We Show Up',
+    subtitle: 'Thousands of Nigerians with end-stage kidney disease cannot afford the care that would save their lives. The Professor R.I.S Agbede Foundation exists to change that — through replacement therapy support, awareness, and compassionate patient care.'
   },
   {
     id: 2,
-    image: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Beautiful Black African baby girl smiling with hands cradling her face, deeply emotional and intimate portrait',
-    title: 'Education Opens Doors',
-    subtitle: 'Every scholarship we award is not just financial aid — it\'s a belief statement. We\'re saying: "Your dreams matter. Your story deserves a next chapter."'
+    image: 'https://images.pexels.com/photos/5452201/pexels-photo-5452201.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'Black medical professional in hospital',
+    title: 'Fighting Kidney Disease Across Nigeria',
+    subtitle: 'One patient at a time, we are bridging the gap in kidney healthcare access for the indigent through direct support and community awareness.'
   },
   {
     id: 3,
-    image: 'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Black African school boys in uniforms running energetically in a schoolyard',
-    title: 'From Hope to Achievement',
-    subtitle: 'When a student from a forgotten village graduates with honors, it\'s not luck. It\'s what happens when someone refuses to let talent go to waste.'
+    image: 'https://images.pexels.com/photos/4270371/pexels-photo-4270371.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'African nurse caring for patient',
+    title: 'Compassionate Patient Care',
+    subtitle: 'Beyond medical therapy, we provide emotional and social welfare support to kidney patients and their caregivers throughout their treatment journey.'
   },
   {
     id: 4,
-    image: 'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Group of Black African children laughing together in a classroom setting',
-    title: 'Healthcare for the Underserved',
-    subtitle: 'In communities where the nearest clinic is 40 kilometers away, we bring medical care directly to people. Because geography should never determine if you live or die.'
+    image: 'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'Black doctor consulting with family',
+    title: 'Early Detection Saves Lives',
+    subtitle: 'Our community outreach programs focus on early screening and education to prevent the progression of kidney disease in underserved populations.'
   },
   {
     id: 5,
-    image: 'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Group of joyful laughing Black children, colorful and vibrant energy',
-    title: 'Building Literate Communities',
-    subtitle: 'We don\'t just teach children to read. We create environments where books are treasures and knowledge is power — transforming entire communities, one story at a time.'
+    image: 'https://images.pexels.com/photos/6647028/pexels-photo-6647028.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'African community health outreach',
+    title: 'Bridging the Healthcare Gap',
+    subtitle: 'We collaborate with hospitals and health workers to bring specialized kidney care and laboratory services to those who need them most.'
   },
   {
     id: 6,
-    image: 'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Beautiful Black African baby girl smiling with hands cradling her face, deeply emotional and intimate portrait',
-    title: 'Joy in Every Opportunity',
-    subtitle: 'This is what success looks like: children who run towards school, not away from it. Communities where hope isn\'t a luxury — it\'s a daily reality.'
+    image: 'https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1920',
+    alt: 'Black healthcare worker with elderly patient',
+    title: 'A Legacy of Hope and Care',
+    subtitle: 'Restoring dignity and health to indigent Nigerians through sustainable kidney health initiatives and replacement therapy assistance.'
   }
 ];
 
@@ -380,7 +360,7 @@ export const BANK_DETAILS = {
 
 export const SOCIAL_LINKS = [
   { name: 'Facebook', url: 'https://facebook.com/AgbedeFoundation', icon: 'Facebook' },
-  { name: 'Twitter', url: 'https://twitter.com/AgbedeFoundation', icon: 'Twitter' },
+  { name: 'X (Twitter)', url: 'https://x.com/AgbedeFoundation', icon: 'X' },
   { name: 'Instagram', url: 'https://instagram.com/AgbedeFoundation', icon: 'Instagram' },
   { name: 'LinkedIn', url: 'https://linkedin.com/company/agbede-foundation', icon: 'Linkedin' },
   { name: 'YouTube', url: 'https://youtube.com/@AgbedeFoundation', icon: 'Youtube' },

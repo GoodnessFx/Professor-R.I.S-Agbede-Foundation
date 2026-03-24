@@ -18,18 +18,29 @@ interface NewsCardProps {
   featured?: boolean;
 }
 
+const categoryColors: Record<string, string> = {
+  Health: 'bg-blue-500 text-white',
+  Community: 'bg-green-500 text-white',
+  Research: 'bg-purple-500 text-white',
+  Education: 'bg-[var(--gold)] text-[var(--navy)]',
+  Events: 'bg-orange-400 text-white',
+};
+
 export function NewsCard({ id, slug, title, category, date, excerpt, author, image, featured = false }: NewsCardProps) {
+  const categoryColor = categoryColors[category] || 'bg-gray-500 text-white';
+
   return (
     <Link to={`/news/${slug}`} className="group block bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full">
       <div className="relative overflow-hidden">
-        <div className="w-full aspect-[16/9]">
+        <div className="w-full h-[220px]">
           <ImageWithFallback
             src={image}
             alt={title}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            unoptimized={true}
           />
         </div>
-        <div className="absolute top-4 left-4 px-3 py-1 bg-[var(--gold)] text-[var(--navy)] text-xs font-semibold rounded-full">
+        <div className={`absolute top-4 left-4 px-3 py-1 ${categoryColor} text-xs font-semibold rounded-full shadow-lg`}>
           {category}
         </div>
       </div>

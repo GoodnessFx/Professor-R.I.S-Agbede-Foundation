@@ -45,7 +45,13 @@ export function GrantsApplyPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative h-[42vh] min-h-[320px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--navy)]" />
+        <ImageWithFallback
+          src="https://images.pexels.com/photos/4167544/pexels-photo-4167544.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Apply for Grants"
+          className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
+        />
+        <div className="absolute inset-0 bg-[var(--navy)]/80" />
         <div className="relative z-10 text-center text-white px-4">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}

@@ -24,7 +24,7 @@ export function Navbar() {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile
+  // Check if mobile (below 1024px for original, but now using 768px for the new requirement)
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
@@ -164,36 +164,41 @@ export function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navClasses}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
-            {/* Logo - Made Bigger */}
-            <Link to="/" className="flex items-center gap-4 group">
-              <Logo variant={(scrolled || !isHomePage) ? 'dark' : 'light'} className={`w-40 h-14 md:w-56 md:h-20 lg:w-64 lg:h-24 ${textClasses}`} />
+          <div className="flex items-center justify-between h-28 md:h-32">
+            {/* Logo & Name */}
+            <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
+              <Logo className="w-20 h-20 md:w-24 md:h-24 lg:w-[110px] lg:h-[110px]" />
+              <div className={`flex flex-col items-center text-center leading-[1.1] ${textClasses} transition-colors duration-300`}>
+                <span className="text-[14px] md:text-[16px] font-bold tracking-wider">Professor</span>
+                <span className="text-2xl md:text-3xl lg:text-[32px] font-bold font-serif whitespace-nowrap">R.I.S</span>
+                <span className="text-[12px] md:text-[14px] font-bold tracking-widest uppercase">Agbede Foundation</span>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-3 lg:gap-6 flex-nowrap overflow-hidden">
               {NAV_LINKS.map((link) => {
                 const hasDropdown = 'dropdown' in link;
                 
                 return (
                   <div
                     key={link.label}
-                    className="relative"
+                    className="relative flex-shrink-0"
                     onMouseEnter={() => hasDropdown && setActiveDropdown(link.label)}
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     {hasDropdown ? (
                       <button
-                        className={`text-[15px] font-medium transition-colors duration-300 tracking-[0.08em] flex items-center gap-1 ${textClasses} hover:text-[var(--gold)]`}
+                        className={`text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] flex items-center gap-1 whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
                         style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                       >
                         {link.label}
-                        <ChevronDown size={14} />
+                        <ChevronDown size={12} className="flex-shrink-0" />
                       </button>
                     ) : (
                       <Link
                         to={link.path!}
-                        className={`text-[15px] font-medium transition-colors duration-300 tracking-[0.08em] ${textClasses} hover:text-[var(--gold)]`}
+                        className={`text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
                         style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                       >
                         {link.label}
@@ -225,7 +230,7 @@ export function Navbar() {
                                 >
                                   <span className="flex items-center gap-3 group-hover:translate-x-1 transition-transform duration-200">
                                     <span className="text-[var(--gold)]">→</span>
-                                    <span className="text-[15px]">{item.label}</span>
+                                    <span className="text-[15px] whitespace-nowrap">{item.label}</span>
                                   </span>
                                 </Link>
                               ))}
@@ -241,13 +246,13 @@ export function Navbar() {
               {/* Donate Button */}
               <Link
                 to="/donate"
-                className="group relative px-8 py-3 bg-gradient-to-r from-[var(--gold)] to-[#D4962F] text-white rounded-full font-bold overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="group relative px-4 lg:px-8 py-2 lg:py-3 bg-gradient-to-r from-[var(--gold)] to-[#D4962F] text-white rounded-full font-bold overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex-shrink-0 whitespace-nowrap"
                 style={{ fontFamily: 'Nunito Sans, sans-serif' }}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>SUPPORT OUR WORK</span>
+                <span className="relative z-10 flex items-center gap-2 text-[clamp(10px,0.9vw,13px)] lg:text-sm">
+                  <span className="whitespace-nowrap">SUPPORT OUR WORK</span>
                   <svg 
-                    className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" 
+                    className="w-3 h-3 lg:w-4 lg:h-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -258,18 +263,18 @@ export function Navbar() {
                 <div className="absolute inset-0 bg-[var(--navy)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
               </Link>
               {/* Inline Expanding Search */}
-              <div ref={searchContainerRef} className="relative">
+              <div ref={searchContainerRef} className="relative flex-shrink-0">
                 <motion.div 
                   className="flex items-center"
-                  animate={{ width: searchExpanded ? (isMobile ? 'calc(100vw - 4rem)' : 280) : 40 }}
+                  animate={{ width: searchExpanded ? (isMobile ? 'calc(100vw - 4rem)' : 200) : 40 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                 >
                   <button
                     onClick={handleSearchToggle}
-                    className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} lg:block hidden`}
+                    className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} md:block hidden`}
                     aria-label="Search site"
                   >
-                    {searchExpanded ? <CloseIcon size={20} /> : <Search size={20} />}
+                    {searchExpanded ? <CloseIcon size={18} /> : <Search size={18} />}
                   </button>
                   
                   <AnimatePresence>
@@ -279,9 +284,9 @@ export function Navbar() {
                         animate={{ opacity: 1, width: 'auto' }}
                         exit={{ opacity: 0, width: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="overflow-hidden flex-1 lg:flex-initial"
+                        className="overflow-hidden flex-1 md:flex-initial"
                       >
-                        <div className="relative ml-2 lg:ml-2">
+                        <div className="relative ml-2">
                           <input
                             ref={searchInputRef}
                             type="text"
@@ -289,7 +294,7 @@ export function Navbar() {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onKeyDown={handleSearchKeyDown}
                             placeholder="Search..."
-                            className={`w-full lg:w-56 px-4 py-2 pl-10 rounded-full border-2 transition-all duration-300 ${
+                            className={`w-full md:w-40 px-3 py-1.5 pl-8 rounded-full border-2 transition-all duration-300 text-xs ${
                               scrolled || !isHomePage
                                 ? 'bg-white/90 border-[var(--navy)]/30 focus:border-[var(--gold)] text-[var(--navy)] placeholder-[var(--navy)]/60'
                                 : 'bg-[var(--navy)]/80 border-white/30 focus:border-[var(--gold)] text-white placeholder-white/60'
@@ -297,8 +302,8 @@ export function Navbar() {
                             style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                           />
                           <Search 
-                            size={16} 
-                            className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${
+                            size={14} 
+                            className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 ${
                               scrolled || !isHomePage ? 'text-[var(--navy)]/60' : 'text-white/60'
                             }`} 
                           />
@@ -311,7 +316,7 @@ export function Navbar() {
                 {/* Mobile Search Button */}
                 <button
                   onClick={handleSearchToggle}
-                  className={`lg:hidden p-2 rounded-full border border-transparent hover:border-current transition-colors ${textClasses}`}
+                  className={`md:hidden p-2 rounded-full border border-transparent hover:border-current transition-colors ${textClasses}`}
                   aria-label="Search site"
                 >
                   {searchExpanded ? <CloseIcon size={20} /> : <Search size={20} />}
@@ -403,7 +408,7 @@ export function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-lg transition-colors ${textClasses}`}
+              className={`md:hidden p-2 rounded-lg transition-colors ${textClasses}`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
@@ -420,7 +425,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-[var(--navy)] z-40 lg:hidden overflow-y-auto"
+            className="fixed inset-0 bg-[var(--navy)] z-40 md:hidden overflow-y-auto"
           >
             <div className="flex flex-col pt-32 pb-12 px-8 gap-2">
               {NAV_LINKS.map((link, index) => {

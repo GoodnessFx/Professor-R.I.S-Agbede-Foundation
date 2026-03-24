@@ -25,12 +25,12 @@ export function HeroSlider() {
   useEffect(() => {
     const FALLBACKS = [
       // Fallbacks chosen to avoid duplication within Hero if a primary fails
-      'https://images.pexels.com/photos/8363031/pexels-photo-8363031.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 1
-      'https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 2
-      'https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 3
-      'https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 4
-      'https://images.pexels.com/photos/6647028/pexels-photo-6647028.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 5
-      'https://images.pexels.com/photos/8363028/pexels-photo-8363028.jpeg?auto=compress&cs=tinysrgb&w=1920', // for slide 6
+      'https://images.pexels.com/photos/5214958/pexels-photo-5214958.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 1
+      'https://images.pexels.com/photos/4167544/pexels-photo-4167544.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 2
+      'https://images.pexels.com/photos/5452204/pexels-photo-5452204.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 3
+      'https://images.pexels.com/photos/7579835/pexels-photo-7579835.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 4
+      'https://images.pexels.com/photos/4270365/pexels-photo-4270365.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 5
+      'https://images.pexels.com/photos/5490280/pexels-photo-5490280.jpeg?auto=compress&cs=tinysrgb&w=1920', // fallback for slide 6
     ];
 
     sources.forEach((src, index) => {
@@ -58,11 +58,11 @@ export function HeroSlider() {
   }, [sources]);
 
   const currentSlideData = HERO_SLIDES[currentSlide];
-  const heroTitle = HERO_SLIDES[0].title;
-  const heroSubtitle = HERO_SLIDES[0].subtitle;
+  const heroTitle = currentSlideData.title;
+  const heroSubtitle = currentSlideData.subtitle;
 
   return (
-    <div className="relative h-screen w-full overflow-hidden" style={{ backgroundColor: '#0D1B2A' }}>
+    <div className="relative min-h-[100svh] w-full overflow-hidden" style={{ backgroundColor: '#0D1B2A' }}>
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
@@ -70,13 +70,12 @@ export function HeroSlider() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
-          className="absolute inset-0 will-change-transform"
+          className="absolute inset-0 will-change-transform min-h-[100svh]"
           style={{
             backgroundImage: `url(${sources[currentSlide]})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            filter: currentSlide === 1 ? 'grayscale(100%)' : 'none',
             opacity: isLoaded[currentSlide] ? 1 : 0,
           }}
         />
@@ -103,13 +102,13 @@ export function HeroSlider() {
               textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(212,175,55,0.2)'
             }}
           >
-            Changing Lives Across Nigeria — One Community At A Time
+            Fighting Kidney Disease Across Nigeria — One Patient At A Time
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center">
+      <div className="relative z-10 min-h-[100svh] flex items-center pt-24 md:pt-0">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             key="hero-overlay"

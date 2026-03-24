@@ -10,26 +10,21 @@ import { NewsCard } from '../components/shared/NewsCard';
 import { NEWS_ARTICLES } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-const categories = ['All', 'Education', 'Health', 'Community', 'Events'];
+const categories = ['All', 'Community', 'Education', 'Health', 'Events', 'Research'];
 
 export function NewsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
-
-  const filteredArticles = selectedCategory === 'All'
-    ? NEWS_ARTICLES
-    : NEWS_ARTICLES.filter(article => article.category === selectedCategory);
-
-  const articles = filteredArticles;
 
   return (
     <div className="pt-20">
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/8363104/pexels-photo-8363104.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="https://images.pexels.com/photos/6647028/pexels-photo-6647028.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="News and updates"
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-[var(--navy)]/70" />
         <div className="relative z-10 text-center text-white px-4">
@@ -78,9 +73,11 @@ export function NewsPage() {
       {/* Articles Grid */}
       <section ref={ref} className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {articles.length > 0 ? (
+          {NEWS_ARTICLES.filter(a => selectedCategory === 'All' || a.category === selectedCategory).length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((article, index) => (
+              {NEWS_ARTICLES
+                .filter(a => selectedCategory === 'All' || a.category === selectedCategory)
+                .map((article, index) => (
                 <motion.div
                   key={article.id}
                   initial={{ opacity: 0, y: 30 }}

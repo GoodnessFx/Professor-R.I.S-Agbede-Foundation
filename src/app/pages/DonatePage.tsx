@@ -58,9 +58,10 @@ export function DonatePage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="/images/school-boys-running.jpg"
-          alt="Make a donation"
+          src="https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Healthcare provider supporting a patient"
           className="absolute inset-0 w-full h-full object-cover"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--navy)]/70 to-[var(--navy)]/80" />
         <div className="relative z-10 text-center text-white px-4">
@@ -178,7 +179,7 @@ export function DonatePage() {
                         {...register('fullName')}
                         type="text"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
-                        placeholder="John Doe"
+                        placeholder="P Zak"
                       />
                       {errors.fullName && (
                         <p className="text-red-600 text-sm mt-1">{errors.fullName.message}</p>
@@ -209,7 +210,7 @@ export function DonatePage() {
                       {...register('email')}
                       type="email"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
-                      placeholder="john@example.com"
+                      placeholder="Pzak@gmail.com"
                     />
                     {errors.email && (
                       <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>

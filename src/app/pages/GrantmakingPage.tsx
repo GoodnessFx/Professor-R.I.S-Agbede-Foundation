@@ -13,7 +13,7 @@ const grantCards = [
     title: 'Annual Grants',
     borderColor: '#C8832A',
     titleColor: 'var(--gold)',
-    description: 'Every year, the Foundation partners with qualified organisations across Nigeria to implement projects in our core focus areas of education and health.',
+    description: 'Every year, the Foundation partners with qualified organisations across Nigeria to implement projects in our core focus areas of kidney healthcare and patient support.',
     buttonText: 'Apply for Grants',
   },
   {
@@ -21,7 +21,7 @@ const grantCards = [
     title: 'Discretionary Grants',
     borderColor: '#2E9CCA',
     titleColor: 'var(--teal)',
-    description: 'We provide discretionary grants to fund rapid humanitarian responses — emergencies, short-term interventions, and urgent community needs in health and education that cannot wait for an annual cycle.',
+    description: 'We provide discretionary grants to fund rapid medical responses — emergencies, short-term interventions, and urgent community needs in kidney health that cannot wait for an annual cycle.',
     buttonText: 'Apply for Grants',
   },
   {
@@ -29,7 +29,7 @@ const grantCards = [
     title: 'Partnerships & Collaborations',
     borderColor: '#C8832A',
     titleColor: 'var(--gold)',
-    description: 'Partnerships multiply our reach. We work with NGOs, government agencies, corporates, and diaspora networks to co-create solutions and leverage both human and material resources for deeper impact.',
+    description: 'Partnerships multiply our reach. We work with hospitals, dialysis centers, and government agencies to co-create solutions and leverage both human and material resources for deeper impact.',
     buttonText: 'Learn More',
   },
 ];
@@ -42,10 +42,11 @@ export function GrantmakingPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="/images/baby-girl-smile.jpg"
-          alt="African mother holding her child"
+          src="https://images.pexels.com/photos/4225920/pexels-photo-4225920.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="African doctor consulting with patient"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: 'grayscale(100%)' }}
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-black/55" />
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
@@ -89,9 +90,10 @@ export function GrantmakingPage() {
         {/* Fading background image */}
         <div className="absolute inset-0 opacity-10">
           <ImageWithFallback
-            src="/images/laughing-children-group.jpg"
+            src="https://images.pexels.com/photos/4225921/pexels-photo-4225921.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Background"
             className="w-full h-full object-cover grayscale"
+            unoptimized={true}
           />
         </div>
 
