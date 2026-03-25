@@ -264,10 +264,11 @@ export function HeroSlider() {
           </button>
 
           {/* Video Preview */}
-          {/* 🎬 SWAP THIS: Replace video src with your own kidney awareness preview loop */}
+          {/* 🎬 SWAP THIS: Drag and drop your video file into the "public/videos/" folder 
+              and then update the src below to "/videos/your-video.mp4" */}
           <video
             ref={dockVideoRef}
-            src="https://player.vimeo.com/external/494252666.sd.mp4?s=727f711ad13e8a38ff5c03251aa309bd073444a3&profile_id=165"
+            src="/videos/Kidneys work explained in 3D_ the formation of urine.mp4"
             autoPlay
             loop
             muted
@@ -304,15 +305,16 @@ export function HeroSlider() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+              className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black"
             >
-              {/* 🎬 SWAP THIS: Replace YouTube URL with your own kidney awareness video */}
-              <iframe
-                src="https://www.youtube.com/embed/fD3q0W55Sj0?autoplay=1"
-                title="Kidney Awareness Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full border-0"
+              {/* 🎬 SWAP THIS: Use the same local video for the full screen modal */}
+              <video
+                ref={modalVideoRef}
+                src="/videos/Kidneys work explained in 3D_ the formation of urine.mp4"
+                autoPlay
+                controls
+                playsInline
+                className="w-full h-full object-contain"
               />
             </motion.div>
           </motion.div>

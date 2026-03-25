@@ -268,7 +268,7 @@ export function Navbar() {
                   <motion.div 
                     className="flex items-center"
                     animate={{ 
-                      width: searchExpanded ? (isMobile ? 'calc(100vw - 2rem)' : '300px') : '40px',
+                      width: searchExpanded ? (isMobile ? 'calc(100vw - 2rem)' : '240px') : '40px',
                       position: searchExpanded && isMobile ? 'fixed' : 'relative',
                       left: searchExpanded && isMobile ? '1rem' : 'auto',
                       right: searchExpanded && isMobile ? '1rem' : 'auto',
@@ -279,10 +279,10 @@ export function Navbar() {
                   >
                     <button
                       onClick={handleSearchToggle}
-                      className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} ${searchExpanded && isMobile ? 'hidden' : 'block'}`}
+                      className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} ${searchExpanded ? 'hidden md:hidden' : 'block'}`}
                       aria-label="Search site"
                     >
-                      {searchExpanded ? <CloseIcon size={18} /> : <Search size={18} />}
+                      <Search size={18} />
                     </button>
                     
                     <AnimatePresence>
