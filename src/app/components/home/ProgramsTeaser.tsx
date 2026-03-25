@@ -15,15 +15,15 @@ export function ProgramsTeaser() {
   });
 
   return (
-    <section ref={ref} className="py-20 bg-white">
+    <section ref={ref} className="section-padding bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          title="Our Programs"
-          subtitle="Comprehensive initiatives designed to create lasting impact across Nigeria"
+          title="Our Key Programmes"
+          subtitle="Focused interventions to reduce the burden of kidney disease across Nigeria"
           centered
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div className="responsive-grid mt-12">
           {PROGRAMS.map((program, index) => (
             <motion.div
               key={program.id}

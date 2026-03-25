@@ -24,9 +24,9 @@ export function Navbar() {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile (below 1024px for original, but now using 768px for the new requirement)
+  // Check if mobile (below 768px to match Tailwind's md: breakpoint)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -164,19 +164,19 @@ export function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navClasses}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-28 md:h-32">
+          <div className="flex items-center justify-between h-20 md:h-28 lg:h-32">
             {/* Logo & Name */}
-            <Link to="/" className="flex items-center gap-3 md:gap-4 group shrink-0">
-              <Logo className="w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28" />
+            <Link to="/" className="flex items-center gap-2 md:gap-4 group shrink-0">
+              <Logo className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24" />
               <div className={`flex flex-col items-start leading-[1.1] ${textClasses} transition-colors duration-300`}>
-                <span className="text-[13px] md:text-[14px] font-bold tracking-wider">Professor</span>
-                <span className="text-xl md:text-2xl lg:text-3xl font-bold font-serif whitespace-nowrap">R.I.S</span>
-                <span className="text-[11px] md:text-[12px] font-bold tracking-widest uppercase">Agbede Foundation</span>
+                <span className="text-[10px] md:text-[12px] lg:text-[14px] font-bold tracking-wider">Professor</span>
+                <span className="text-lg md:text-xl lg:text-3xl font-bold font-serif whitespace-nowrap">R.I.S</span>
+                <span className="text-[9px] md:text-[11px] lg:text-[12px] font-bold tracking-widest uppercase">Agbede Foundation</span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-3 lg:gap-6 flex-nowrap overflow-hidden">
+            <div className="hidden md:flex items-center gap-3 lg:gap-6 flex-nowrap">
               {NAV_LINKS.map((link) => {
                 const hasDropdown = 'dropdown' in link;
                 
@@ -189,7 +189,7 @@ export function Navbar() {
                   >
                     {hasDropdown ? (
                       <button
-                        className={`text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] flex items-center gap-1 whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
+                        className={`tap-target text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] flex items-center gap-1 whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
                         style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                       >
                         {link.label}
@@ -198,7 +198,7 @@ export function Navbar() {
                     ) : (
                       <Link
                         to={link.path!}
-                        className={`text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
+                        className={`tap-target text-[clamp(11px,1vw,14px)] font-bold transition-colors duration-300 tracking-[0.05em] whitespace-nowrap ${textClasses} hover:text-[var(--gold)]`}
                         style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                       >
                         {link.label}
@@ -264,75 +264,83 @@ export function Navbar() {
               </Link>
               {/* Inline Expanding Search */}
               <div ref={searchContainerRef} className="relative flex-shrink-0">
-                <motion.div 
-                  className="flex items-center"
-                  animate={{ width: searchExpanded ? (isMobile ? 'calc(100vw - 4rem)' : 200) : 40 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                  <button
-                    onClick={handleSearchToggle}
-                    className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} md:block hidden`}
-                    aria-label="Search site"
+                <div className="flex items-center">
+                  <motion.div 
+                    className="flex items-center"
+                    animate={{ 
+                      width: searchExpanded ? (isMobile ? 'calc(100vw - 2rem)' : '300px') : '40px',
+                      position: searchExpanded && isMobile ? 'fixed' : 'relative',
+                      left: searchExpanded && isMobile ? '1rem' : 'auto',
+                      right: searchExpanded && isMobile ? '1rem' : 'auto',
+                      top: searchExpanded && isMobile ? '1.25rem' : 'auto',
+                      zIndex: searchExpanded && isMobile ? 60 : 'auto',
+                    }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    {searchExpanded ? <CloseIcon size={18} /> : <Search size={18} />}
-                  </button>
-                  
-                  <AnimatePresence>
-                    {searchExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: 'auto' }}
-                        exit={{ opacity: 0, width: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="overflow-hidden flex-1 md:flex-initial"
-                      >
-                        <div className="relative ml-2">
-                          <input
-                            ref={searchInputRef}
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={handleSearchKeyDown}
-                            placeholder="Search..."
-                            className={`w-full md:w-40 px-3 py-1.5 pl-8 rounded-full border-2 transition-all duration-300 text-xs ${
-                              scrolled || !isHomePage
-                                ? 'bg-white/90 border-[var(--navy)]/30 focus:border-[var(--gold)] text-[var(--navy)] placeholder-[var(--navy)]/60'
-                                : 'bg-[var(--navy)]/80 border-white/30 focus:border-[var(--gold)] text-white placeholder-white/60'
-                            } focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20 backdrop-blur-sm`}
-                            style={{ fontFamily: 'Nunito Sans, sans-serif' }}
-                          />
-                          <Search 
-                            size={14} 
-                            className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 ${
-                              scrolled || !isHomePage ? 'text-[var(--navy)]/60' : 'text-white/60'
-                            }`} 
-                          />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-
-                {/* Mobile Search Button */}
-                <button
-                  onClick={handleSearchToggle}
-                  className={`md:hidden p-2 rounded-full border border-transparent hover:border-current transition-colors ${textClasses}`}
-                  aria-label="Search site"
-                >
-                  {searchExpanded ? <CloseIcon size={20} /> : <Search size={20} />}
-                </button>
+                    <button
+                      onClick={handleSearchToggle}
+                      className={`p-2 rounded-full border border-transparent hover:border-current transition-colors flex-shrink-0 ${textClasses} ${searchExpanded && isMobile ? 'hidden' : 'block'}`}
+                      aria-label="Search site"
+                    >
+                      {searchExpanded ? <CloseIcon size={18} /> : <Search size={18} />}
+                    </button>
+                    
+                    <AnimatePresence>
+                      {searchExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="flex-1 flex items-center bg-inherit"
+                        >
+                          <div className="relative w-full">
+                            <input
+                              ref={searchInputRef}
+                              type="text"
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              onKeyDown={handleSearchKeyDown}
+                              placeholder="Search for programs, news, or info..."
+                              className={`w-full px-4 py-2.5 pl-10 pr-12 rounded-full border-2 shadow-lg transition-all duration-300 text-sm ${
+                                scrolled || !isHomePage
+                                  ? 'bg-white border-[var(--navy)]/20 focus:border-[var(--gold)] text-[var(--navy)] placeholder-[var(--navy)]/50'
+                                  : 'bg-[var(--navy)] border-white/20 focus:border-[var(--gold)] text-white placeholder-white/50'
+                              } focus:outline-none focus:ring-4 focus:ring-[var(--gold)]/10 backdrop-blur-xl`}
+                              style={{ fontFamily: 'Nunito Sans, sans-serif' }}
+                            />
+                            <Search 
+                              size={18} 
+                              className={`absolute left-3.5 top-1/2 transform -translate-y-1/2 ${
+                                scrolled || !isHomePage ? 'text-[var(--navy)]/50' : 'text-white/50'
+                              }`} 
+                            />
+                            <button
+                              onClick={handleSearchToggle}
+                              className={`absolute right-3 top-1/2 transform -translate-y-1/2 p-1.5 rounded-full hover:bg-black/10 transition-colors ${
+                                scrolled || !isHomePage ? 'text-[var(--navy)]' : 'text-white'
+                              }`}
+                            >
+                              <CloseIcon size={16} />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
 
                 {/* Search Results Dropdown */}
                 <AnimatePresence>
                   {searchExpanded && searchQuery.trim() && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
+                      exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className={`absolute top-full left-0 right-0 mt-2 rounded-b-lg shadow-xl overflow-hidden z-50 ${
-                        scrolled || !isHomePage ? 'bg-white/95' : 'bg-[var(--navy)]/95'
-                      } backdrop-blur-md border border-white/20`}
+                      className={`fixed md:absolute top-[5.5rem] md:top-full left-4 right-4 md:left-auto md:right-0 md:w-[450px] mt-2 rounded-2xl shadow-2xl overflow-hidden z-[70] ${
+                        scrolled || !isHomePage ? 'bg-white/98' : 'bg-[var(--navy)]/98'
+                      } backdrop-blur-2xl border border-white/10 max-h-[70vh] flex flex-col`}
                     >
                       {searchResults.length > 0 ? (
                         <div className="max-h-80 overflow-y-auto">

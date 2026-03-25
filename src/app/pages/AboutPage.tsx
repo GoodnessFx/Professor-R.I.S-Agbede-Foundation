@@ -92,9 +92,9 @@ export function AboutPage() {
       </section>
 
       {/* Mission, Vision, Objectives */}
-      <section ref={valuesRef} className="py-20 bg-[var(--neutral-100)]">
+      <section ref={valuesRef} className="section-padding bg-[var(--neutral-100)]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="responsive-grid mb-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={valuesInView ? { opacity: 1, y: 0 } : {}}

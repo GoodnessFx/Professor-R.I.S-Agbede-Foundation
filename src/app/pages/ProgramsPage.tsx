@@ -53,10 +53,10 @@ export function ProgramsPage() {
         </div>
       </section>
 
-      {/* Programs */}
-      <section ref={ref} className="py-20 bg-white">
+      {/* Programs Detailed Section */}
+      <section ref={ref} className="section-padding bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
+          <div className="flex flex-col gap-24">
             {PROGRAMS.map((program, index) => {
               const Icon = iconMap[program.icon];
               const isExpanded = expandedId === program.id;

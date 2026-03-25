@@ -80,37 +80,32 @@ export function GalleryPage() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section ref={ref} className="py-20 bg-white">
+      {/* Gallery Grid */}
+      <section ref={ref} className="section-padding bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredImages.length > 0 ? (
-            <Masonry columnsCount={3} gutter="1.5rem">
-              {filteredImages.map((image, index) => (
-                <motion.div
-                  key={image.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={inView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                  className="relative group cursor-pointer overflow-hidden rounded-xl"
-                  onClick={() => openLightbox(index)}
-                >
-                  <ImageWithFallback
-                    src={image.src}
-                    alt={image.caption}
-                    className="w-full h-auto transition-transform duration-500 group-hover:scale-110"
-                    unoptimized={true}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <p className="text-white text-sm font-medium">{image.caption}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </Masonry>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-xl text-gray-600">No images found in this category.</p>
-            </div>
-          )}
+          <div className="responsive-grid">
+            {filteredImages.map((image, index) => (
+              <motion.div
+                key={image.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.05 }}
+                className="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg aspect-square"
+                onClick={() => openLightbox(index)}
+              >
+                <ImageWithFallback
+                  src={image.src}
+                  alt={image.caption}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  unoptimized={true}
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 text-center">
+                  <p className="text-white text-sm font-medium">{image.caption}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

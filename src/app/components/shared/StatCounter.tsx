@@ -22,10 +22,16 @@ export function StatCounter({ value, label, prefix = '', suffix = '' }: StatCoun
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-4xl md:text-5xl font-bold text-[var(--gold)] mb-2">
+      <div 
+        className="font-bold text-[var(--gold)] mb-2"
+        style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: '1.1' }}
+      >
         {prefix}{count.toLocaleString()}{suffix}
       </div>
-      <div className="text-sm md:text-base text-white/90 uppercase tracking-wider">
+      <div 
+        className="text-white/90 uppercase tracking-wider font-medium"
+        style={{ fontSize: 'clamp(0.75rem, 1.5vw, 1rem)' }}
+      >
         {label}
       </div>
     </div>

@@ -200,4 +200,26 @@
     font-size: clamp(0.875rem, 1.5vw, 1.125rem);
     line-height: 1.85;
   }
+
+  /* Responsive Grid Utilities */
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Responsive Padding */
+  .section-padding {
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(3rem, 8vw, 6rem);
+  }
+
+  /* Tap Target Utility */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

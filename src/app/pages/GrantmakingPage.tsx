@@ -84,7 +84,7 @@ export function GrantmakingPage() {
       {/* Grant Cards Section */}
       <section 
         ref={cardsRef}
-        className="relative py-20 overflow-hidden"
+        className="relative section-padding overflow-hidden"
         style={{ backgroundColor: 'var(--dark-bg)' }}
       >
         {/* Fading background image */}
@@ -98,7 +98,7 @@ export function GrantmakingPage() {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="responsive-grid max-w-7xl mx-auto">
             {grantCards.map((card, index) => (
               <motion.div
                 key={card.id}

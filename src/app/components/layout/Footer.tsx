@@ -47,11 +47,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Logo & Mission */}
           <div>
-            <Link to="/" className="flex items-center gap-3 mb-4">
-              <Logo className="w-16 h-16" />
-              <span className="font-serif text-xl font-semibold">
-                Prof. R.I.S Agbede<br />Foundation
-              </span>
+            <Link to="/" className="flex items-center gap-3 mb-6">
+              <Logo className="w-12 h-12 md:w-16 md:h-16" />
+              <div className="flex flex-col leading-tight">
+                <span className="font-bold text-sm tracking-wider uppercase opacity-80">Professor</span>
+                <span className="font-serif text-2xl font-bold">R.I.S</span>
+                <span className="font-bold text-[10px] tracking-[0.2em] uppercase opacity-80">Agbede Foundation</span>
+              </div>
             </Link>
             <p className="text-white/80 mb-6 leading-relaxed">
               Supporting indigent persons with end stage kidney disease to access replacement therapy across Nigeria.

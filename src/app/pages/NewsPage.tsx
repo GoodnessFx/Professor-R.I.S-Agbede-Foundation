@@ -71,10 +71,10 @@ export function NewsPage() {
       </section>
 
       {/* Articles Grid */}
-      <section ref={ref} className="py-20 bg-white">
+      <section ref={ref} className="section-padding bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {NEWS_ARTICLES.filter(a => selectedCategory === 'All' || a.category === selectedCategory).length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="responsive-grid">
               {NEWS_ARTICLES
                 .filter(a => selectedCategory === 'All' || a.category === selectedCategory)
                 .map((article, index) => (

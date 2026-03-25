@@ -25,7 +25,7 @@ export function NewsTeaser() {
     : NEWS_ARTICLES.filter(article => article.category === activeCategory).slice(0, 6);
 
   return (
-    <section ref={ref} className="py-20 bg-[var(--neutral-100)]">
+    <section ref={ref} className="section-padding bg-[var(--neutral-100)]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-6">
           <SectionHeader
@@ -38,7 +38,7 @@ export function NewsTeaser() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
+                className={`tap-target px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
                   activeCategory === category
                     ? 'bg-[var(--gold)] border-[var(--gold)] text-white'
                     : 'bg-transparent border-gray-300 text-gray-600 hover:border-[var(--gold)]'
@@ -52,7 +52,7 @@ export function NewsTeaser() {
 
         <motion.div 
           layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="responsive-grid mt-12"
         >
           <AnimatePresence mode="popLayout">
             {filteredArticles.map((article, index) => (

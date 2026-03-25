@@ -65,7 +65,7 @@ export function ImpactPage() {
       {/* Key Statistics */}
       <section className="py-16 bg-[var(--navy)]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          <div className="responsive-grid text-center">
             <StatCounter value={10} label="Patients Supported" suffix="+" />
             <StatCounter value={3} label="Communities Reached" />
             <StatCounter value={5} label="Awareness Campaigns Run" />
@@ -166,15 +166,15 @@ export function ImpactPage() {
       </section>
 
       {/* Testimonials */}
-      <section ref={testimonialsRef} className="py-20 bg-[var(--neutral-100)]">
+      <section ref={testimonialsRef} className="section-padding bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            title="Stories of Impact"
-            subtitle="Hear from the people whose lives have been transformed"
+            title="Voices of Impact"
+            subtitle="Stories from the patients and communities we serve"
             centered
           />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          <div className="responsive-grid mt-12">
             {TESTIMONIALS.map((testimonial, index) => (
               <motion.div
                 key={testimonial.id}
