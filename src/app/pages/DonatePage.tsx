@@ -58,7 +58,7 @@ export function DonatePage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="https://images.pexels.com/photos/5215011/pexels-photo-5215011.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Healthcare provider supporting a patient"
           className="absolute inset-0 w-full h-full object-cover"
           unoptimized={true}

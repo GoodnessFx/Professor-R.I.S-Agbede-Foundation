@@ -92,14 +92,14 @@ export function GrantsApplyPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Contact Name</label>
-                  <input {...register('contactName')} className="w-full px-3 py-2 border rounded-md" />
+                  <input {...register('contactName')} placeholder="P Zak" className="w-full px-3 py-2 border rounded-md" />
                   {errors.contactName && <p className="text-red-600 text-xs mt-1">{errors.contactName.message}</p>}
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Email</label>
-                  <input type="email" {...register('email')} className="w-full px-3 py-2 border rounded-md" />
+                  <input type="email" {...register('email')} placeholder="Pzak@gmail.com" className="w-full px-3 py-2 border rounded-md" />
                   {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
                 </div>
                 <div>

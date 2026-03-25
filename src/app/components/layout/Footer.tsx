@@ -3,10 +3,16 @@
  */
 
 import { Link } from 'react-router';
-import { Facebook, X, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
 import { Logo } from '../icons/Logo';
 import { NAV_LINKS, PROGRAMS, SOCIAL_LINKS } from '../../../lib/constants';
 import { useState } from 'react';
+
+const XIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153zM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644z" />
+  </svg>
+);
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -21,7 +27,7 @@ export function Footer() {
 
   const iconMap: Record<string, any> = {
     Facebook,
-    X,
+    X: XIcon,
     Instagram,
     Linkedin,
     Youtube,

@@ -166,12 +166,12 @@ export function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-28 md:h-32">
             {/* Logo & Name */}
-            <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
-              <Logo className="w-20 h-20 md:w-24 md:h-24 lg:w-[110px] lg:h-[110px]" />
-              <div className={`flex flex-col items-center text-center leading-[1.1] ${textClasses} transition-colors duration-300`}>
-                <span className="text-[14px] md:text-[16px] font-bold tracking-wider">Professor</span>
-                <span className="text-2xl md:text-3xl lg:text-[32px] font-bold font-serif whitespace-nowrap">R.I.S</span>
-                <span className="text-[12px] md:text-[14px] font-bold tracking-widest uppercase">Agbede Foundation</span>
+            <Link to="/" className="flex items-center gap-3 md:gap-4 group shrink-0">
+              <Logo className="w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28" />
+              <div className={`flex flex-col items-start leading-[1.1] ${textClasses} transition-colors duration-300`}>
+                <span className="text-[13px] md:text-[14px] font-bold tracking-wider">Professor</span>
+                <span className="text-xl md:text-2xl lg:text-3xl font-bold font-serif whitespace-nowrap">R.I.S</span>
+                <span className="text-[11px] md:text-[12px] font-bold tracking-widest uppercase">Agbede Foundation</span>
               </div>
             </Link>
 
