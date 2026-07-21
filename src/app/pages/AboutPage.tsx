@@ -17,20 +17,21 @@ export function AboutPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
-        <ImageWithFallback
-          src="/images/founders-image.jpeg"
-          alt="Founder image"
-          className="absolute inset-0 w-full h-full object-cover md:object-contain md:object-center md:scale-90"
-          unoptimized={true}
-        />
-        <div className="absolute inset-0 bg-[var(--navy)]/70" />
-        <div className="relative z-10 text-center text-white px-4">
+      <section
+        className="relative min-h-[280px] md:min-h-[420px] flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: 'url(/images/founders-image.jpeg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+        }}
+      >
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(20,30,45,0.55)' }} />
+        <div className="relative z-10 text-center text-white px-4 py-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-serif font-bold mb-4"
+            className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold mb-4"
           >
             Our Story
           </motion.h1>
@@ -38,7 +39,7 @@ export function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl max-w-2xl mx-auto"
+            className="text-base md:text-xl max-w-2xl mx-auto"
           >
             Supporting indigent patients with end-stage kidney disease across Nigeria
           </motion.p>
