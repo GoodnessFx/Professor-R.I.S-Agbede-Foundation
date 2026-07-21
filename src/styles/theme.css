@@ -222,4 +222,16 @@
     align-items: center;
     justify-content: center;
   }
+
+  .hero-banner {
+    background-image: url('/images/founders-image.jpeg');
+    background-size: cover;
+    background-position: center 25%;
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner {
+      background-position: center 18%;
+    }
+  }
 }

@@ -17,14 +17,7 @@ export function AboutPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section
-        className="relative min-h-[280px] md:min-h-[420px] flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: 'url(/images/founders-image.jpeg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-        }}
-      >
+      <section className="hero-banner relative min-h-[280px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(20,30,45,0.55)' }} />
         <div className="relative z-10 text-center text-white px-4 py-16">
           <motion.h1
