@@ -19,8 +19,8 @@ export function AboutPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="African medical professional in hospital"
+          src="/images/founders-image.jpeg"
+          alt="Founder image"
           className="absolute inset-0 w-full h-full object-cover"
           unoptimized={true}
         />
@@ -45,22 +45,23 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Section */}
+      {/* Biography Section */}
       <section ref={heroRef} id="founder" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={heroInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
+              className="lg:sticky lg:top-28"
             >
               <div className="relative max-w-md mx-auto">
                 <div className="absolute inset-0 bg-[var(--gold)] rounded-lg transform rotate-3" />
                 <ImageWithFallback
-                  src="https://images.pexels.com/photos/5490276/pexels-photo-5490276.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Founder portrait"
-                  className="relative rounded-lg shadow-2xl w-full h-[500px] object-cover"
-                  unoptimized={true}
+                  src="/images/professor-agbede-portrait.jpeg"
+                  alt="Professor Rowland Ibrahim Shehu Agbede"
+                  className="relative rounded-lg shadow-2xl w-full object-cover"
+                  style={{ maxHeight: '600px' }}
                 />
               </div>
             </motion.div>
@@ -77,14 +78,41 @@ export function AboutPage() {
               
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Professor Raphael Idowu Sunday Agbede was born in a small village in Kogi State, where access to quality healthcare was a distant dream for most. Through sheer determination and the support of his community, he rose to become a distinguished academic and public servant.
+                  Professor Rowland Ibrahim Shehu Agbede was a giant amongst men, a distinguished scholar and a devoted family man. He was born on February 3rd, 1949, in Kaduna, Kaduna State, to the family of the late Alhaji Ibrahim and Hajiya Maryam Azumi Agbede of Okpekpe, Etsako East, Edo State, as the first son of eleven. His life was marked by a pursuit of excellence and a commitment to faith.
                 </p>
                 <p>
-                  Throughout his career, Professor Agbede never forgot the challenges faced by those in his community. He witnessed firsthand how kidney disease could devastate families without the means to afford specialized care. This lived experience became the catalyst for the Foundation's mission.
+                  He completed his primary school education at St Michael's School, Kaduna, and his secondary school education at Holy Trinity Grammar School in Sabon Gida, Ora, in the present Edo State. He then went on to Ahmadu Bello University, ABU, where he achieved a Doctor of Veterinary Medicine in 1975.
                 </p>
                 <p>
-                  Established with a clear focus on kidney health, the Professor R.I.S Agbede Foundation now stands as a beacon of hope for indigent Nigerians. Our work ensures that end-stage kidney disease is not a death sentence for the vulnerable, providing a path to treatment, dignity, and a second chance at life.
+                  In 1976, after completing his year of national youth service, he joined Ahmadu Bello University, Zaria, at the rank of Lecturer 2 with an eventual promotion to Professor in 1989, the youngest ever (at the time) in ABU's history.
                 </p>
+                <p>
+                  En route to this, in 1977, through the Commonwealth Academic Staff Award programme, he completed a Master of Veterinary Science in applied Parasitology at the University of Liverpool, England, School of Tropical Medicine.
+                </p>
+                <p>
+                  By 1984, he had also completed a PhD in Parasitology at the University of Queensland, Australia, through the Federal Government of Nigeria Scholarship and the ABU study fellowship programme. His research at the University of Queensland provided valuable insights into the dynamics of blood meal digestion in ticks and identified a new stage in the life cycle of the intracellular parasite, Babesia bovis. As a result, he was invited to participate in a large ongoing research programme on vaccination of cattle against ticks at the CSIRO Laboratories in Brisbane and to write a chapter in "Morphology, Physiology and Behavioural Biology of Ticks," published by Ellis Horwood Chichester in 1986, which remains in print. Throughout his life, he remained a prolific scholarly writer with publications from as early as 1975, three books, and over a hundred publications and journal papers, spanning Parasitology, Veterinary Entomology, Tropical Biosciences and more. His work has received over 1200 citations and is still being referenced today, with over 400 citations since 2020.
+                </p>
+                <p>
+                  After 37 years at Ahmadu Bello University Zaria, he joined the University of Abuja in 2014 where he served as Head of his department and retired from active service in 2019 after 43 years of service.
+                </p>
+                <p>
+                  His list of achievements also includes 8 years as team leader for the European Economic Commission (EEC) sponsored project on the Control of African Animal Trypanosomiasis, coordinator of the African Regional Postgraduate Programme in Insect Science at ICIPE Nairobi, Kenya, from 1992 to 2014, the Fulbright Senior African Research Scholar award in 1995 from the University of Florida, and numerous fellowships, notably with the Nigerian Society of Parasitology and the College of Veterinary Surgeons. He was a very active member of the Parasitology and Public Health Society of Nigeria, where he served as the 3rd Editor-in-Chief of the Nigerian Journal for Parasitology for 9 years. He also served as president of the Society and was eventually appointed to the board of trustees, a position he held until his passing.
+                </p>
+                <p>
+                  Beyond his academic accolades, he was a pillar of strength to his family and community. He served as President of the Men's Missionary Union (MMU) at Calvary Baptist Church, his home church in Zaria, for many years. After moving to Abuja, he joined the Hospital Chapel, where he served on the marriage and counselling committee and was a committed member of the brothers' fellowship. He enjoyed travelling, loved sport, particularly tennis and football, and was an active member of the ABU Lawn Tennis club. Husband to Mrs Hauwa Agbede for 46 years, they had 4 children and 3 grandchildren, with many more who saw him as a father figure.
+                </p>
+                <p>
+                  Though his passing leaves a void in our hearts, we rejoice knowing he has completed his race and is now resting peacefully with his Creator. His life reflects his personal mantra:
+                </p>
+
+                <blockquote className="border-l-4 border-[var(--gold)] pl-6 py-3 my-6 bg-[var(--neutral-100)] rounded-r-lg">
+                  <p className="text-lg italic font-serif text-[var(--navy)] leading-relaxed">
+                    "Seest thou a man diligent in his works? he shall stand before kings; he shall not stand before mean men."
+                  </p>
+                  <footer className="mt-2 text-sm font-semibold text-[var(--gold)]">— Proverbs 22:29</footer>
+                </blockquote>
+
+                <p className="text-gray-500 italic">Thank you.</p>
               </div>
             </motion.div>
           </div>
