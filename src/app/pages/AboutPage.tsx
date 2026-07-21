@@ -21,7 +21,7 @@ export function AboutPage() {
         <ImageWithFallback
           src="/images/founders-image.jpeg"
           alt="Founder image"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover md:object-contain md:object-center md:scale-90"
           unoptimized={true}
         />
         <div className="absolute inset-0 bg-[var(--navy)]/70" />
