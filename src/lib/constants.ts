@@ -354,8 +354,13 @@ export const CONTACT_INFO = {
 export const BANK_DETAILS = {
   bank: 'First Bank of Nigeria',
   accountName: 'Prof. R.I.S Agbede Foundation',
-  accountNumber: '3012345678',
-  sortCode: '011-151-555'
+  accountNumber: '3012345678', // TODO: User will provide
+  sortCode: '011-151-555' // TODO: User will provide
+};
+
+export const CRYPTO_ADDRESSES = {
+  USDT_BASE: '0x0000000000000000000000000000000000000000', // TODO: User will provide
+  ETH: '0x0000000000000000000000000000000000000000' // TODO: User will provide
 };
 
 export const SOCIAL_LINKS = [
