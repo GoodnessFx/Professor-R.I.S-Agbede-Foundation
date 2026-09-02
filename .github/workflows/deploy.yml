@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
 
+# Allow the workflow to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +30,14 @@ jobs:
       run: npm ci
 
     - name: Build
+      # Inject all VITE_ env vars from GitHub Actions secrets at build time.
+      # Add each secret in: Settings → Secrets and variables → Actions → New repository secret
+      env:
+        VITE_FLUTTERWAVE_PUBLIC_KEY: ${{ secrets.VITE_FLUTTERWAVE_PUBLIC_KEY }}
+        VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+        VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+        VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+        VITE_DONATION_SUPPORT_EMAIL: ${{ secrets.VITE_DONATION_SUPPORT_EMAIL }}
       run: npm run build
 
     - name: Upload artifact

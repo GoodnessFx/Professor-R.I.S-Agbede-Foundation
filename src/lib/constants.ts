@@ -351,11 +351,18 @@ export const CONTACT_INFO = {
   hours: 'Monday – Friday: 8:00am – 5:00pm (WAT)'
 };
 
-export const BANK_DETAILS = {
+export const BANK_DETAILS_NGN = {
   bank: 'First Bank of Nigeria',
-  accountName: 'Prof. R.I.S Agbede Foundation',
-  accountNumber: '3012345678', // TODO: User will provide
-  sortCode: '011-151-555' // TODO: User will provide
+  accountName: 'PROFESSOR R.I.S. AGBEDE FOUNDATION',
+  accountNumber: '4011637915',
+  currency: 'NGN',
+};
+
+export const BANK_DETAILS_USD = {
+  bank: 'Fidelity Bank',
+  accountName: 'PROFESSOR R.I.S. AGBEDE FOUNDATION',
+  accountNumber: '5250576137',
+  currency: 'USD',
 };
 
 export const SOCIAL_LINKS = [
