@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Vercel
 
 on:
   push:
@@ -6,14 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
-# Allow the workflow to deploy to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,30 +23,24 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Build
-      # Inject all VITE_ env vars from GitHub Actions secrets at build time.
-      # Add each secret in: Settings → Secrets and variables → Actions → New repository secret
+    - name: Deploy to Vercel
+      # The Vercel CLI picks up VITE_ vars from the Vercel project's environment
+      # variable settings (Project → Settings → Environment Variables).
+      # All server-side vars (FLUTTERWAVE_SECRET_KEY, RESEND_API_KEY, ADMIN_EMAIL)
+      # must be set there — they are never passed through the client build.
+      #
+      # Required GitHub Actions secrets:
+      #   VERCEL_TOKEN   — from vercel.com → Account Settings → Tokens
+      #   VERCEL_ORG_ID  — from .vercel/project.json after first `vercel link`
+      #   VERCEL_PROJECT_ID — from .vercel/project.json after first `vercel link`
       env:
-        VITE_FLUTTERWAVE_PUBLIC_KEY: ${{ secrets.VITE_FLUTTERWAVE_PUBLIC_KEY }}
-        VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
-        VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
-        VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
-        VITE_DONATION_SUPPORT_EMAIL: ${{ secrets.VITE_DONATION_SUPPORT_EMAIL }}
-      run: npm run build
-
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      run: |
+        npm install -g vercel@latest
+        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          vercel --prod --token=$VERCEL_TOKEN --yes
+        else
+          vercel --token=$VERCEL_TOKEN --yes
+        fi

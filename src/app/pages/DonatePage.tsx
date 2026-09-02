@@ -1,11 +1,17 @@
 /**
  * Donate page — Flutterwave inline checkout (NGN & USD)
  *
- * ENV VARS required (set in Vercel / GitHub Actions secrets):
- *   VITE_FLUTTERWAVE_PUBLIC_KEY   — Flutterwave public key
- *   VITE_EMAILJS_SERVICE_ID       — EmailJS service ID  (admin notification)
- *   VITE_EMAILJS_TEMPLATE_ID      — EmailJS template ID (admin notification)
- *   VITE_EMAILJS_PUBLIC_KEY       — EmailJS public key  (admin notification)
+ * Payment flow:
+ *  1. Client opens Flutterwave modal with public key (safe to expose)
+ *  2. Flutterwave calls callback({ transaction_id, status, ... }) in the browser
+ *  3. Client POSTs { transaction_id, expected_amount, expected_currency, ... }
+ *     to /api/flutterwave/verify  ← Vercel serverless function
+ *  4. Server verifies with Flutterwave using the SECRET key, checks amount &
+ *     currency match, and sends the admin notification
+ *  5. Client shows success screen only when the server returns { success: true }
+ *
+ * Required env vars (GitHub Actions secrets → injected at Vite build time):
+ *   VITE_FLUTTERWAVE_PUBLIC_KEY
  */
 
 import { useState } from 'react';
@@ -14,15 +20,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, Shield, TrendingUp, CheckCircle, Copy, Loader2, AlertTriangle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import { BANK_DETAILS_NGN, BANK_DETAILS_USD } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-// ─── Preset amounts ──────────────────────────────────────────────────────────
+// ─── Preset amounts ───────────────────────────────────────────────────────────
 const NGN_PRESET_AMOUNTS = [5_000, 10_000, 50_000, 100_000];
 const USD_PRESET_AMOUNTS = [10, 25, 50, 100];
 
-// ─── Form schema ─────────────────────────────────────────────────────────────
+// ─── Form schema ──────────────────────────────────────────────────────────────
 const donationSchema = z.object({
   amount: z.number().min(1, 'Please enter a valid amount'),
   frequency: z.enum(['one-time', 'monthly']),
@@ -34,66 +39,27 @@ const donationSchema = z.object({
 
 type DonationForm = z.infer<typeof donationSchema>;
 type Currency = 'NGN' | 'USD';
-type AmountMode = 'preset' | 'custom'; // which input source is active
+type AmountMode = 'preset' | 'custom';
 
 // ─── Env-variable guard ───────────────────────────────────────────────────────
 const FLW_PUBLIC_KEY = import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string | undefined;
 
-// Detect obviously bad values baked in from a missing secret
-const isMissingKey = !FLW_PUBLIC_KEY ||
+const isMissingKey =
+  !FLW_PUBLIC_KEY ||
   FLW_PUBLIC_KEY === 'undefined' ||
   FLW_PUBLIC_KEY.trim() === '' ||
   FLW_PUBLIC_KEY.startsWith('FLWPUBK_TEST-xxx');
 
-// ─── Admin notification (client-side via EmailJS) ─────────────────────────────
-async function sendAdminNotification(params: {
-  donorName: string;
-  email: string;
-  amount: number;
-  currency: string;
-  message: string;
-  txRef: string;
-}) {
-  const serviceId  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string | undefined;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
-  const publicKey  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string | undefined;
-
-  if (!serviceId || !templateId || !publicKey) {
-    // EmailJS not configured — log and skip silently (donation already succeeded)
-    console.warn('[Admin notification] EmailJS env vars missing — skipping notification.');
-    return;
-  }
-
-  try {
-    await emailjs.send(
-      serviceId,
-      templateId,
-      {
-        donor_name: params.donorName,
-        donor_email: params.email,
-        amount: `${params.currency === 'NGN' ? '₦' : '$'}${params.amount.toLocaleString()}`,
-        currency: params.currency,
-        donor_message: params.message || '—',
-        tx_ref: params.txRef,
-      },
-      publicKey,
-    );
-  } catch (err) {
-    // Never surface to donor — this is internal only
-    console.error('[Admin notification] EmailJS send failed:', err);
-  }
-}
-
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
 export function DonatePage() {
-  const [currency, setCurrency]       = useState<Currency>('NGN');
-  const [amountMode, setAmountMode]   = useState<AmountMode>('preset');
+  const [currency, setCurrency]         = useState<Currency>('NGN');
+  const [amountMode, setAmountMode]     = useState<AmountMode>('preset');
   const [presetAmount, setPresetAmount] = useState<number>(NGN_PRESET_AMOUNTS[0]);
-  const [customInput, setCustomInput]  = useState('');
-  const [loading, setLoading]          = useState(false);
-  const [copied, setCopied]            = useState(false);
+  const [customInput, setCustomInput]   = useState('');
+  const [loading, setLoading]           = useState(false);
+  const [copied, setCopied]             = useState(false);
 
-  // Donation success state — holds data to show the thank-you screen
+  // Holds verified payment data — rendering this means the server confirmed success
   const [successData, setSuccessData] = useState<{
     name: string;
     amount: number;
@@ -109,67 +75,58 @@ export function DonatePage() {
     reset,
   } = useForm<DonationForm>({
     resolver: zodResolver(donationSchema),
-    defaultValues: {
-      amount: NGN_PRESET_AMOUNTS[0],
-      frequency: 'one-time',
-    },
+    defaultValues: { amount: NGN_PRESET_AMOUNTS[0], frequency: 'one-time' },
   });
 
   const frequency = watch('frequency');
 
-  // ── Currency toggle ────────────────────────────────────────────────────────
+  // ── Currency toggle ──────────────────────────────────────────────────────
   const handleCurrencyChange = (c: Currency) => {
     setCurrency(c);
     setAmountMode('preset');
     setCustomInput('');
-    const defaultAmount = c === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
-    setPresetAmount(defaultAmount);
-    setValue('amount', defaultAmount);
+    const def = c === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
+    setPresetAmount(def);
+    setValue('amount', def);
   };
 
-  // ── Preset button click ────────────────────────────────────────────────────
+  // ── Preset click ─────────────────────────────────────────────────────────
   const handlePresetClick = (amount: number) => {
     setAmountMode('preset');
     setPresetAmount(amount);
-    setCustomInput(''); // clear custom input visually
+    setCustomInput('');
     setValue('amount', amount);
   };
 
-  // ── Custom input change ────────────────────────────────────────────────────
+  // ── Custom input ─────────────────────────────────────────────────────────
   const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
-    setCustomInput(raw);
+    setCustomInput(e.target.value);
     setAmountMode('custom');
-    const parsed = parseFloat(raw);
+    const parsed = parseFloat(e.target.value);
     setValue('amount', isNaN(parsed) ? 0 : parsed);
   };
 
-  // ── Submit ─────────────────────────────────────────────────────────────────
+  // ── Submit ───────────────────────────────────────────────────────────────
   const onSubmit = async (data: DonationForm) => {
-    // Guard: missing public key — show actionable error to site owner
     if (isMissingKey) {
       alert(
         'SITE OWNER ACTION REQUIRED:\n\n' +
-        'The Flutterwave public key (VITE_FLUTTERWAVE_PUBLIC_KEY) is missing or not set.\n\n' +
-        'Fix: Add it as a GitHub Actions secret (or Vercel env var) and redeploy.\n\n' +
-        'Donors cannot pay until this is resolved.'
+        'VITE_FLUTTERWAVE_PUBLIC_KEY is missing or not set.\n\n' +
+        'Add it as a GitHub Actions / Vercel environment variable and redeploy.',
       );
       return;
     }
 
     const FlutterwaveCheckout = (window as any).FlutterwaveCheckout;
-
     if (!FlutterwaveCheckout) {
       alert(
-        'Payment system failed to load.\n\n' +
-        'This usually means the Flutterwave script was blocked by an ad-blocker or ' +
-        'network issue. Please disable any ad-blockers and refresh the page, then try again.'
+        'Payment system failed to load.\n' +
+        'Please disable any ad-blockers, refresh the page, and try again.',
       );
       return;
     }
 
     setLoading(true);
-
     const tx_ref = `don-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
 
     try {
@@ -193,41 +150,72 @@ export function DonatePage() {
           donor_message: data.message || '',
           frequency: data.frequency,
         },
+
+        // ── Flutterwave callback — browser side ──────────────────────────
+        // We receive transaction_id here but we do NOT trust the status field.
+        // Instead we send transaction_id + what we expected to the server,
+        // which re-verifies with Flutterwave using the secret key.
         callback: async (payment: any) => {
-          // Flutterwave calls this on successful payment
-          setLoading(false);
+          // payment.status can be spoofed in DevTools — we ignore it here
+          // and let the server be the single source of truth.
 
-          if (payment.status === 'successful' || payment.status === 'completed') {
-            // Show donor success screen
-            setSuccessData({
-              name: data.fullName,
-              amount: data.amount,
-              currency,
+          if (!payment.transaction_id) {
+            setLoading(false);
+            alert('Payment could not be confirmed. Please contact us if money was deducted.');
+            return;
+          }
+
+          // Keep loading spinner while server verifies
+          setLoading(true);
+
+          try {
+            const res = await fetch('/api/flutterwave/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                transaction_id: payment.transaction_id,
+                expected_amount: data.amount,
+                expected_currency: currency,
+                tx_ref,
+                donor_name: data.fullName,
+                donor_email: data.email,
+                donor_message: data.message || '',
+              }),
             });
 
-            // Fire admin notification (non-blocking — donor never sees this)
-            sendAdminNotification({
-              donorName: data.fullName,
-              email: data.email,
-              amount: data.amount,
-              currency,
-              message: data.message || '',
-              txRef: tx_ref,
-            });
+            const result = await res.json();
 
-            // Reset form silently in background
-            setTimeout(() => {
-              reset();
-              setAmountMode('preset');
-              setCustomInput('');
-              const defaultAmt = currency === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
-              setPresetAmount(defaultAmt);
-              setValue('amount', defaultAmt);
-            }, 500);
-          } else {
-            alert('Payment was not completed. No money has been deducted. Please try again.');
+            if (res.ok && result.success) {
+              // Server confirmed — safe to show success screen
+              setSuccessData({
+                name: data.fullName,
+                amount: data.amount,
+                currency,
+              });
+              // Reset form in background
+              setTimeout(() => {
+                reset();
+                setAmountMode('preset');
+                setCustomInput('');
+                const def = currency === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
+                setPresetAmount(def);
+                setValue('amount', def);
+              }, 500);
+            } else {
+              // Server rejected — could be a legit failure or a spoofing attempt
+              alert(
+                result.error ||
+                'Payment verification failed. Please contact us if money was deducted.',
+              );
+            }
+          } catch (err) {
+            console.error('[verify]', err);
+            alert('Could not reach the verification server. Please contact us if money was deducted.');
+          } finally {
+            setLoading(false);
           }
         },
+
         onclose: () => {
           setLoading(false);
         },
@@ -245,19 +233,16 @@ export function DonatePage() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const currentAmounts  = currency === 'USD' ? USD_PRESET_AMOUNTS : NGN_PRESET_AMOUNTS;
-  const currencySymbol  = currency === 'USD' ? '$' : '₦';
-  const bankDetails     = currency === 'USD' ? BANK_DETAILS_USD : BANK_DETAILS_NGN;
+  const currentAmounts = currency === 'USD' ? USD_PRESET_AMOUNTS : NGN_PRESET_AMOUNTS;
+  const currencySymbol = currency === 'USD' ? '$' : '₦';
+  const bankDetails    = currency === 'USD' ? BANK_DETAILS_USD : BANK_DETAILS_NGN;
 
-  // Displayed amount for the donate button label
   const displayAmount =
-    amountMode === 'preset'
-      ? presetAmount
-      : parseFloat(customInput) || 0;
+    amountMode === 'preset' ? presetAmount : parseFloat(customInput) || 0;
 
-  // ── Success screen ─────────────────────────────────────────────────────────
+  // ── Success screen ───────────────────────────────────────────────────────
   if (successData) {
-    const symbol = successData.currency === 'USD' ? '$' : '₦';
+    const sym = successData.currency === 'USD' ? '$' : '₦';
     return (
       <div className="pt-20 min-h-screen flex items-center justify-center bg-white px-4">
         <motion.div
@@ -277,9 +262,9 @@ export function DonatePage() {
           <p className="text-lg text-gray-600 mb-2">
             Your donation of{' '}
             <span className="font-bold text-[var(--navy)]">
-              {symbol}{successData.amount.toLocaleString()} {successData.currency}
+              {sym}{successData.amount.toLocaleString()} {successData.currency}
             </span>{' '}
-            has been received.
+            has been received and verified.
           </p>
           <p className="text-sm text-gray-500 mb-8">
             A confirmation will be sent to your email. The Prof. R.I.S. Agbede Foundation is
@@ -296,7 +281,7 @@ export function DonatePage() {
     );
   }
 
-  // ── Main page ──────────────────────────────────────────────────────────────
+  // ── Main page ────────────────────────────────────────────────────────────
   return (
     <div className="pt-20">
       {/* Hero */}
@@ -325,25 +310,23 @@ export function DonatePage() {
         </div>
       </section>
 
-      {/* Missing key banner — visible to site owner only during testing */}
+      {/* Missing-key banner — only visible when key is absent */}
       {isMissingKey && (
         <div className="bg-amber-50 border-l-4 border-amber-400 px-6 py-4 flex items-start gap-3">
           <AlertTriangle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-amber-800">
-            <strong>Site owner:</strong> The Flutterwave public key (
-            <code className="bg-amber-100 px-1 rounded">VITE_FLUTTERWAVE_PUBLIC_KEY</code>) is
-            not set. Donations will not process until you add it as a GitHub Actions / deployment
-            secret and redeploy.
+            <strong>Site owner:</strong> <code className="bg-amber-100 px-1 rounded">VITE_FLUTTERWAVE_PUBLIC_KEY</code>{' '}
+            is not set. Add it as a Vercel environment variable and redeploy.
           </p>
         </div>
       )}
 
-      {/* Main Content */}
+      {/* Main content */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12">
 
-            {/* ── Donation Form ─────────────────────────────────────────── */}
+            {/* ── Form ──────────────────────────────────────────────────── */}
             <div className="lg:col-span-2">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -351,46 +334,36 @@ export function DonatePage() {
                 transition={{ duration: 0.6 }}
                 className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-lg"
               >
-                {/* Header + Currency toggle */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                   <h2 className="text-3xl font-serif font-bold text-[var(--navy)] mb-4 sm:mb-0">
                     Make Your Donation
                   </h2>
+                  {/* Currency toggle */}
                   <div className="flex bg-gray-100 rounded-lg p-1">
-                    <button
-                      type="button"
-                      onClick={() => handleCurrencyChange('NGN')}
-                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
-                        currency === 'NGN'
-                          ? 'bg-white shadow text-[var(--navy)]'
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      ₦ NGN
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleCurrencyChange('USD')}
-                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
-                        currency === 'USD'
-                          ? 'bg-white shadow text-[var(--navy)]'
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      $ USD
-                    </button>
+                    {(['NGN', 'USD'] as Currency[]).map((c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => handleCurrencyChange(c)}
+                        className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
+                          currency === c
+                            ? 'bg-white shadow text-[var(--navy)]'
+                            : 'text-gray-500 hover:text-gray-700'
+                        }`}
+                      >
+                        {c === 'NGN' ? '₦ NGN' : '$ USD'}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-                  {/* ── Amount selection ─────────────────────────────────── */}
+                  {/* Amount */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                       Donation Amount ({currencySymbol})
                     </label>
-
-                    {/* Preset buttons */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                       {currentAmounts.map((amount) => (
                         <button
@@ -406,15 +379,13 @@ export function DonatePage() {
                           {currencySymbol}{amount.toLocaleString()}
                         </button>
                       ))}
-
-                      {/* "Other" button — activates custom input */}
+                      {/* Other — activates custom field */}
                       <button
                         type="button"
                         onClick={() => {
                           setAmountMode('custom');
                           setCustomInput('');
                           setValue('amount', 0);
-                          // Focus the input after a tick
                           setTimeout(() => {
                             (document.getElementById('custom-amount-input') as HTMLInputElement | null)?.focus();
                           }, 50);
@@ -428,8 +399,6 @@ export function DonatePage() {
                         Other
                       </button>
                     </div>
-
-                    {/* Custom amount input — only enabled when "Other" is active */}
                     <AnimatePresence>
                       {amountMode === 'custom' && (
                         <motion.div
@@ -448,18 +417,16 @@ export function DonatePage() {
                             value={customInput}
                             onChange={handleCustomChange}
                             className="w-full px-4 py-3 border-2 border-[var(--gold)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)] mt-1"
-                            autoFocus
                           />
                         </motion.div>
                       )}
                     </AnimatePresence>
-
                     {errors.amount && (
                       <p className="text-red-600 text-sm mt-1">{errors.amount.message}</p>
                     )}
                   </div>
 
-                  {/* ── Frequency ────────────────────────────────────────── */}
+                  {/* Frequency */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                       Frequency
@@ -470,7 +437,7 @@ export function DonatePage() {
                           key={f}
                           type="button"
                           onClick={() => setValue('frequency', f)}
-                          className={`flex-1 py-3 px-6 rounded-lg font-semibold capitalize transition-all duration-300 ${
+                          className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
                             frequency === f
                               ? 'bg-[var(--navy)] text-white'
                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -482,63 +449,48 @@ export function DonatePage() {
                     </div>
                   </div>
 
-                  {/* ── Personal information ─────────────────────────────── */}
+                  {/* Personal info */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Full Name *
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
                       <input
                         {...register('fullName')}
                         type="text"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                         placeholder="John Doe"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                       />
-                      {errors.fullName && (
-                        <p className="text-red-600 text-sm mt-1">{errors.fullName.message}</p>
-                      )}
+                      {errors.fullName && <p className="text-red-600 text-sm mt-1">{errors.fullName.message}</p>}
                     </div>
-
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Phone Number *
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
                       <input
                         {...register('phone')}
                         type="tel"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                         placeholder="+234 800 000 0000"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                       />
-                      {errors.phone && (
-                        <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
-                      )}
+                      {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address *
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                     <input
                       {...register('email')}
                       type="email"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                       placeholder="john@example.com"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                     />
-                    {errors.email && (
-                      <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
-                    )}
+                    {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Message (Optional)
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
                     <textarea
                       {...register('message')}
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                       placeholder="Add a message with your donation..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
                     />
                   </div>
 
@@ -556,10 +508,7 @@ export function DonatePage() {
                     className="w-full py-4 bg-[var(--gold)] text-[var(--navy)] rounded-lg font-bold text-lg hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
                     {loading ? (
-                      <>
-                        <Loader2 className="animate-spin" size={24} />
-                        Processing...
-                      </>
+                      <><Loader2 className="animate-spin" size={24} /> Processing...</>
                     ) : (
                       `Donate ${currencySymbol}${displayAmount > 0 ? displayAmount.toLocaleString() : '...'}`
                     )}
@@ -571,9 +520,9 @@ export function DonatePage() {
             {/* ── Sidebar ───────────────────────────────────────────────── */}
             <div className="space-y-6">
 
-              {/* Bank details — switches with currency toggle */}
+              {/* Bank details — switches with currency */}
               <motion.div
-                key={currency} // re-animate when currency changes
+                key={currency}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
@@ -620,28 +569,21 @@ export function DonatePage() {
                       )}
                     </AnimatePresence>
                   </div>
-                  <div className="pt-3 border-t border-white/20 text-white/60 text-xs">
-                    Reference: Your Full Name
-                  </div>
                 </div>
-
-                {/* Subtle toggle hint */}
                 <p className="mt-4 text-white/40 text-xs">
                   Switch to {currency === 'NGN' ? 'USD' : 'NGN'} above to see the{' '}
                   {currency === 'NGN' ? 'USD' : 'NGN'} account details.
                 </p>
               </motion.div>
 
-              {/* Why Donate */}
+              {/* Why donate */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="bg-white border-2 border-gray-100 rounded-2xl p-6"
               >
-                <h3 className="text-xl font-serif font-bold text-[var(--navy)] mb-4">
-                  Why Donate?
-                </h3>
+                <h3 className="text-xl font-serif font-bold text-[var(--navy)] mb-4">Why Donate?</h3>
                 <div className="space-y-4">
                   <div className="flex gap-3">
                     <Shield size={24} className="text-[var(--gold)] flex-shrink-0" />
