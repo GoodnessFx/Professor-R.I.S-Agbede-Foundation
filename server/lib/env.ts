@@ -13,8 +13,6 @@ function required(name: string) {
 export const env = {
   port: Number(process.env.PORT ?? 8787),
   frontendBaseUrl: process.env.FRONTEND_BASE_URL ?? 'http://localhost:5173',
-  paystackPublicKey: required('PAYSTACK_PUBLIC_KEY'),
-  paystackSecretKey: required('PAYSTACK_SECRET_KEY'),
   flutterwavePublicKey: required('FLUTTERWAVE_PUBLIC_KEY'),
   flutterwaveSecretKey: required('FLUTTERWAVE_SECRET_KEY'),
   flutterwaveSecretHash: required('FLUTTERWAVE_SECRET_HASH'),

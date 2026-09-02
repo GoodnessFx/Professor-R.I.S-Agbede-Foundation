@@ -358,11 +358,6 @@ export const BANK_DETAILS = {
   sortCode: '011-151-555' // TODO: User will provide
 };
 
-export const CRYPTO_ADDRESSES = {
-  USDT_BASE: '0x0000000000000000000000000000000000000000', // TODO: User will provide
-  ETH: '0x0000000000000000000000000000000000000000' // TODO: User will provide
-};
-
 export const SOCIAL_LINKS = [
   { name: 'Facebook', url: 'https://facebook.com/AgbedeFoundation', icon: 'Facebook' },
   { name: 'X (Twitter)', url: 'https://x.com/AgbedeFoundation', icon: 'X' },

@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-export type DonationProvider = 'paystack' | 'flutterwave' | 'crypto';
+export type DonationProvider = 'flutterwave';
 export type DonationStatus =
   | 'initialized'
   | 'pending'
@@ -19,10 +19,8 @@ export interface DonationRecord {
   currency: string;
   provider: DonationProvider;
   method: string;
-  network?: string;
   reference: string;
   processorTransactionId?: string;
-  txHash?: string;
   paymentLink?: string;
   paymentChannel?: string;
   status: DonationStatus;
