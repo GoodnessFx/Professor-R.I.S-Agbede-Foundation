@@ -1,16 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      <title>Build new app</title>
-    </head>
+    <!--
+      Content Security Policy
+      ─────────────────────────────────────────────────────────────────────────
+      Flutterwave's inline checkout script (v3.js) requires:
+        • script-src  — to load and execute checkout.flutterwave.com/v3.js
+                        (includes 'unsafe-eval' because Flutterwave uses it internally)
+        • frame-src   — the modal iframe is served from checkout.flutterwave.com
+        • connect-src — API calls Flutterwave makes from the browser during checkout
+        • img-src     — card brand logos loaded by the modal
+        • style-src   — inline styles injected by the modal
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src  'self' 'unsafe-inline' 'unsafe-eval'
+                  https://checkout.flutterwave.com
+                  https://*.flutterwave.com;
+      style-src   'self' 'unsafe-inline'
+                  https://fonts.googleapis.com
+                  https://*.flutterwave.com;
+      font-src    'self'
+                  https://fonts.gstatic.com;
+      img-src     'self' data: blob:
+                  https://*.flutterwave.com
+                  https://images.pexels.com
+                  https://*.pexels.com;
+      frame-src   https://checkout.flutterwave.com
+                  https://*.flutterwave.com;
+      connect-src 'self'
+                  https://*.flutterwave.com
+                  https://api.flutterwave.com;
+    " />
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Professor R.I.S. Agbede Foundation</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!--
+      Flutterwave inline checkout — must load before the React app so
+      window.FlutterwaveCheckout is available when the donate button is clicked.
+    -->
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

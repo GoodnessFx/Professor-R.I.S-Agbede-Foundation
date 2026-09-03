@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Shield, TrendingUp, CheckCircle, Copy, Loader2, AlertTriangle } from 'lucide-react';
+import { Heart, Shield, TrendingUp, CheckCircle, Copy, Loader2 } from 'lucide-react';
 import { BANK_DETAILS_NGN, BANK_DETAILS_USD } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
@@ -41,14 +41,17 @@ type DonationForm = z.infer<typeof donationSchema>;
 type Currency = 'NGN' | 'USD';
 type AmountMode = 'preset' | 'custom';
 
-// ─── Env-variable guard ───────────────────────────────────────────────────────
-const FLW_PUBLIC_KEY = import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string | undefined;
+// ─── Public key ──────────────────────────────────────────────────────────────
+// Prefer the env var (set in Pxxl / Vercel environment variables dashboard).
+// Falls back to the hardcoded live key so the donate button always works even
+// if the platform hasn't injected the env var at build time.
+// NOTE: the PUBLIC key is safe to be in source — it is not a secret.
+//       Never put the SECRET key here.
+const FLW_PUBLIC_KEY =
+  (import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string | undefined) ||
+  'FLWPUBK-039b11e5fdad47ae5daa6d31b415bc58-X';
 
-const isMissingKey =
-  !FLW_PUBLIC_KEY ||
-  FLW_PUBLIC_KEY === 'undefined' ||
-  FLW_PUBLIC_KEY.trim() === '' ||
-  FLW_PUBLIC_KEY.startsWith('FLWPUBK_TEST-xxx');
+const isMissingKey = false; // key is always present via fallback above
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function DonatePage() {
@@ -309,17 +312,6 @@ export function DonatePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* Missing-key banner — only visible when key is absent */}
-      {isMissingKey && (
-        <div className="bg-amber-50 border-l-4 border-amber-400 px-6 py-4 flex items-start gap-3">
-          <AlertTriangle size={20} className="text-amber-500 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-amber-800">
-            <strong>Site owner:</strong> <code className="bg-amber-100 px-1 rounded">VITE_FLUTTERWAVE_PUBLIC_KEY</code>{' '}
-            is not set. Add it as a Vercel environment variable and redeploy.
-          </p>
-        </div>
-      )}
 
       {/* Main content */}
       <section className="py-20 bg-white">
