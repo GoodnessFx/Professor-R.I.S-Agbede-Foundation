@@ -2,9 +2,9 @@
  * Hero section with automatic image/video slider and animated text
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { ChevronDown, Volume2, VolumeX, X as CloseIcon, Maximize2 } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { HERO_SLIDES } from '../../../lib/constants';
 
@@ -13,12 +13,6 @@ export function HeroSlider() {
   const [isLoaded, setIsLoaded] = useState<boolean[]>(Array(HERO_SLIDES.length).fill(false));
   const [sources, setSources] = useState<string[]>(HERO_SLIDES.map(s => s.image));
   
-  // Video dock states
-  const [isMuted, setIsMuted] = useState(true);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const dockVideoRef = useRef<HTMLVideoElement>(null);
-  const modalVideoRef = useRef<HTMLVideoElement>(null);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -26,25 +20,6 @@ export function HeroSlider() {
 
     return () => clearInterval(timer);
   }, []);
-
-  // Sync dock video volume
-  useEffect(() => {
-    if (dockVideoRef.current) {
-      dockVideoRef.current.muted = isMuted;
-    }
-  }, [isMuted]);
-
-  // Handle modal open/close
-  useEffect(() => {
-    if (isVideoModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isVideoModalOpen]);
 
   // Preload images to avoid white flashes and swap to fallback on error
   useEffect(() => {
@@ -233,93 +208,6 @@ export function HeroSlider() {
         </div>
       </motion.div>
 
-      {/* Floating Video Dock */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="fixed bottom-[88px] right-6 md:bottom-8 md:right-[120px] z-30 group"
-      >
-        <div 
-          className="relative w-[220px] h-[124px] md:w-[380px] md:h-[214px] rounded-2xl overflow-hidden border-2 border-[var(--gold)]/40 shadow-2xl cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:border-[var(--gold)]"
-          onClick={() => setIsVideoModalOpen(true)}
-        >
-          {/* Label */}
-          <div className="absolute top-0 left-0 right-0 z-10 px-3 py-2 bg-black/60 backdrop-blur-md border-b border-white/10">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-wider">Foundation Story</span>
-              <Maximize2 size={14} className="text-[var(--gold)]" />
-            </div>
-          </div>
-
-          {/* Unmute/Mute Toggle */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMuted(!isMuted);
-            }}
-            className="absolute bottom-3 left-3 z-10 p-2 rounded-full bg-black/50 backdrop-blur-sm text-white border border-white/20 hover:bg-[var(--gold)] transition-colors"
-          >
-            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-          </button>
-
-          {/* Video Preview */}
-          {/* 🎬 SWAP THIS: Drag and drop your video file into the "public/videos/" folder 
-              and then update the src below to "/videos/your-video.mp4" */}
-          <video
-            ref={dockVideoRef}
-            src="/videos/Kidneys work explained in 3D_ the formation of urine.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          />
-          
-          {/* Play Icon Overlay on Hover */}
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-            <div className="w-14 h-14 rounded-full bg-[var(--gold)] flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.4)]">
-              <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-[var(--navy)] border-b-[10px] border-b-transparent ml-1" />
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Fullscreen Video Modal */}
-      <AnimatePresence>
-        {isVideoModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 md:p-12"
-          >
-            <button
-              onClick={() => setIsVideoModalOpen(false)}
-              className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors z-[110]"
-            >
-              <CloseIcon size={24} />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black"
-            >
-              {/* 🎬 SWAP THIS: Use the same local video for the full screen modal */}
-              <video
-                ref={modalVideoRef}
-                src="/videos/Kidneys work explained in 3D_ the formation of urine.mp4"
-                autoPlay
-                controls
-                playsInline
-                className="w-full h-full object-contain"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

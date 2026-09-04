@@ -185,8 +185,18 @@ export function AboutPage() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="text-center"
               >
-                <div className="w-32 h-32 rounded-full bg-[var(--neutral-100)] mx-auto mb-4 flex items-center justify-center">
-                  <User size={48} className="text-[var(--navy)]/30" />
+                <div className="w-32 h-32 rounded-full bg-[var(--neutral-100)] mx-auto mb-4 overflow-hidden border border-[var(--navy)]/10 shadow-sm">
+                  {trustee.avatar ? (
+                    <ImageWithFallback
+                      src={trustee.avatar}
+                      alt={trustee.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-[var(--neutral-100)]">
+                      <User size={48} className="text-[var(--navy)]/30" />
+                    </div>
+                  )}
                 </div>
                 <h3 className="text-xl font-serif font-semibold text-[var(--navy)] mb-1">
                   {trustee.name}

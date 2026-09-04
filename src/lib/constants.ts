@@ -255,13 +255,25 @@ export const TESTIMONIALS: Testimonial[] = [
 export const TRUSTEES: Trustee[] = [
   {
     id: '1',
-    name: 'Mr Zachery Agbede',
-    title: 'Board Chairman',
+    name: 'Agbede Zakari Onagie',
+    title: 'Chairman',
+    avatar: '/images/agbede-zakari-onagie-chairman.jpeg',
   },
   {
     id: '2',
-    name: 'Mrs. Ngozi Eze',
-    title: 'Programs Director',
+    name: 'Agbede Ramatu O.',
+    title: 'Director',
+  },
+  {
+    id: '3',
+    name: 'Hadiya Agbede',
+    title: 'Programs Coordinator',
+  },
+  {
+    id: '4',
+    name: 'Nuhu Agbede',
+    title: 'Operations Coordinator',
+    avatar: '/images/nuhu-agbede.jpeg',
   },
 ];
 
@@ -283,8 +295,8 @@ export const GALLERY_IMAGES: GalleryImage[] = [
 export const HERO_SLIDES = [
   {
     id: 1,
-    image: 'https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'African doctor with patient',
+    image: '/images/hero-section-image.jpeg',
+    alt: 'Professor R.I.S Agbede Foundation community outreach and healthcare image',
     title: 'When Kidneys Fail, We Show Up',
     subtitle: 'Thousands of Nigerians with end-stage kidney disease cannot afford the care that would save their lives. The Professor R.I.S Agbede Foundation exists to change that through replacement therapy support, awareness, and compassionate patient care.'
   },
