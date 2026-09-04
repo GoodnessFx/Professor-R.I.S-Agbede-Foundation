@@ -231,13 +231,13 @@ export const TESTIMONIALS: Testimonial[] = [
 export const TRUSTEES: Trustee[] = [
   {
     id: '1',
-    name: 'Agbede Zakari Onagie',
+    name: 'Zakari Agbede',
     title: 'Chairman',
     avatar: '/images/agbede-zakari-onagie-chairman.jpeg',
   },
   {
     id: '2',
-    name: 'Agbede Ramatu O.',
+    name: 'Dr. Ramatu O. Agbede',
     title: 'Director',
   },
   {

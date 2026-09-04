@@ -185,7 +185,7 @@ export function AboutPage() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="text-center"
               >
-                <div className="w-32 h-32 rounded-full bg-[var(--neutral-100)] mx-auto mb-4 overflow-hidden border border-[var(--navy)]/10 shadow-sm flex items-center justify-center">
+                <div className="w-32 h-32 md:w-36 md:h-36 rounded-full bg-[var(--neutral-100)] mx-auto mb-4 overflow-hidden border border-[var(--navy)]/10 shadow-sm flex items-center justify-center">
                   {trustee.avatar ? (
                     <ImageWithFallback
                       src={trustee.avatar}
