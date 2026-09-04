@@ -25,25 +25,25 @@ type ContactForm = z.infer<typeof contactSchema>;
 
 const officeLocations = [
   {
-    name: 'Head Office — Lagos',
-    address: '22 Bode Thomas Street, Surulere,',
-    city: 'Lagos State, 23401, Nigeria',
-    phone: '+234 809 123 4567',
-    email: 'info@agbedefoundation.org',
+    name: 'Head Office',
+    address: 'Prof. R.I.S Agbede Foundation',
+    city: 'Nigeria',
+    phone: '+234 805 737 0966',
+    email: 'risagbedefoundation@gmail.com',
   },
   {
-    name: 'Abuja Office',
-    address: 'Plot 14, Diplomatic Zone, Maitama,',
-    city: 'Abuja, FCT 900288, Nigeria',
-    phone: '+234 802 345 6789',
-    email: 'abuja@agbedefoundation.org',
+    name: 'General Enquiries',
+    address: 'Support and Partnership',
+    city: 'Nigeria',
+    phone: '+234 805 737 0966',
+    email: 'risagbedefoundation@gmail.com',
   },
   {
-    name: 'Kogi State Office',
-    address: '12 Ibrahim Attah Road,',
-    city: 'Lokoja, Kogi State, Nigeria',
-    phone: '+234 803 456 7890',
-    email: 'kogi@agbedefoundation.org',
+    name: 'Donation & Grants',
+    address: 'Foundation contact line',
+    city: 'Nigeria',
+    phone: '+234 805 737 0966',
+    email: 'risagbedefoundation@gmail.com',
   },
 ];
 

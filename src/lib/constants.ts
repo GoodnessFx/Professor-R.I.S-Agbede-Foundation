@@ -336,19 +336,19 @@ export const VALUES = [
 
 export const CONTACT_INFO = {
   headOffice: {
-    name: 'Head Office',
-    address: '14 Unity Boulevard, Wuse Zone 5',
-    city: 'Abuja, FCT 900288, Nigeria'
+    name: 'Prof. R.I.S Agbede Foundation',
+    address: 'Nigeria',
+    city: 'Foundation contact desk'
   },
   lagosOffice: {
-    name: 'Lagos Office',
-    address: 'Block C, 22 Adeniran Ogunsanya Street',
-    city: 'Surulere, Lagos 23401, Nigeria'
+    name: 'General Support',
+    address: 'Nigeria',
+    city: 'Available by phone and email'
   },
-  phone: '+234 809 123 4567',
-  email: 'info@agbedefoundation.org',
+  phone: '+234 805 737 0966',
+  email: 'risagbedefoundation@gmail.com',
   website: 'www.agbedefoundation.org',
-  hours: 'Monday – Friday: 8:00am – 5:00pm (WAT)'
+  hours: 'Monday – Friday: 9:00am – 5:00pm (WAT)'
 };
 
 export const BANK_DETAILS_NGN = {

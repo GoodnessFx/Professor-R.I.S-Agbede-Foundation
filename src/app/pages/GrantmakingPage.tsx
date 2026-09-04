@@ -13,24 +13,24 @@ const grantCards = [
     title: 'Annual Grants',
     borderColor: '#C8832A',
     titleColor: 'var(--gold)',
-    description: 'Every year, the Foundation partners with qualified organisations across Nigeria to implement projects in our core focus areas of kidney healthcare and patient support.',
-    buttonText: 'Apply for Grants',
+    description: 'Coming soon. We will announce our next grant cycle and application details here when it opens.',
+    buttonText: 'Coming Soon',
   },
   {
     id: 'discretionary',
     title: 'Discretionary Grants',
     borderColor: '#2E9CCA',
     titleColor: 'var(--teal)',
-    description: 'We provide discretionary grants to fund rapid medical responses — emergencies, short-term interventions, and urgent community needs in kidney health that cannot wait for an annual cycle.',
-    buttonText: 'Apply for Grants',
+    description: 'Coming soon. Our discretionary grant opportunities will be shared once the next call for urgent support is launched.',
+    buttonText: 'Coming Soon',
   },
   {
     id: 'partnerships',
     title: 'Partnerships & Collaborations',
     borderColor: '#C8832A',
     titleColor: 'var(--gold)',
-    description: 'Partnerships multiply our reach. We work with hospitals, dialysis centers, and government agencies to co-create solutions and leverage both human and material resources for deeper impact.',
-    buttonText: 'Learn More',
+    description: 'Coming soon. Partnership opportunities will be posted here as they become available.',
+    buttonText: 'Coming Soon',
   },
 ];
 
@@ -73,10 +73,7 @@ export function GrantmakingPage() {
               lineHeight: '1.85'
             }}
           >
-            Our grantmaking approach is catalytic. We work with partners to deeply 
-            understand the challenges facing communities — then design solutions 
-            that actually fit. Our process is two-pronged: Annual Grants and 
-            Discretionary Grants.
+            Coming soon. We are updating our grantmaking opportunities and will share updates here when new funding cycles open.
           </motion.p>
         </div>
       </section>
@@ -132,13 +129,12 @@ export function GrantmakingPage() {
                   >
                     {card.description}
                   </p>
-                <Link
-                  to={`/grantmaking/apply?type=${card.id}`}
-                  className="px-6 py-3 border-2 border-[var(--navy)] text-[var(--navy)] rounded-lg font-semibold hover:bg-[var(--navy)] hover:text-white transition-all duration-300 text-center"
+                <span
+                  className="px-6 py-3 border-2 border-[var(--navy)] text-[var(--navy)] rounded-lg font-semibold text-center opacity-80"
                   style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                 >
                   {card.buttonText}
-                </Link>
+                </span>
                 </div>
               </motion.div>
             ))}
@@ -168,24 +164,15 @@ export function GrantmakingPage() {
                   lineHeight: '1.85'
                 }}
               >
-                We accept grant applications twice a year (February and August). 
-                All applications are reviewed by our grants committee, and successful 
-                applicants are notified within 12 weeks. Grants range from ₦500,000 
-                to ₦15,000,000 depending on project scope and alignment with our mission.
+                Coming soon. We will publish the next grant cycle, application guidelines, and funding priorities here as soon as they are ready.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  className="px-8 py-3 bg-[var(--gold)] text-[var(--navy)] rounded-full font-bold hover:scale-105 transition-all duration-300"
+                <span
+                  className="px-8 py-3 bg-[var(--gold)] text-[var(--navy)] rounded-full font-bold opacity-80"
                   style={{ fontFamily: 'Nunito Sans, sans-serif' }}
                 >
-                  Download Application Guide
-                </button>
-                <button
-                  className="px-8 py-3 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-[var(--navy)] transition-all duration-300"
-                  style={{ fontFamily: 'Nunito Sans, sans-serif' }}
-                >
-                  View Past Grantees
-                </button>
+                  Coming Soon
+                </span>
               </div>
             </div>
           </motion.div>

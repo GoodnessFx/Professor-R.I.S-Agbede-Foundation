@@ -7,8 +7,6 @@ import { useInView } from 'react-intersection-observer';
 import { Download } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { SectionHeader } from '../components/shared/SectionHeader';
-import { TestimonialCard } from '../components/shared/TestimonialCard';
-import { TESTIMONIALS } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { StatCounter } from '../components/shared/StatCounter';
 import { NigeriaMap } from '../components/shared/NigeriaMap';
@@ -28,7 +26,6 @@ const reports = [
 
 export function ImpactPage() {
   const { ref: statsRef, inView: statsInView } = useInView({ threshold: 0.2, triggerOnce: true });
-  const { ref: testimonialsRef, inView: testimonialsInView } = useInView({ threshold: 0.1, triggerOnce: true });
   const { ref: mapRef, inView: mapInView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   return (
@@ -161,30 +158,6 @@ export function ImpactPage() {
                 </BarChart>
               </ResponsiveContainer>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section ref={testimonialsRef} className="section-padding bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title="Voices of Impact"
-            subtitle="Stories from the patients and communities we serve"
-            centered
-          />
-
-          <div className="responsive-grid mt-12">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-              >
-                <TestimonialCard {...testimonial} />
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
