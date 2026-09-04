@@ -68,7 +68,7 @@ export function AboutPage() {
               <h2 className="text-4xl font-serif font-bold text-[var(--navy)] mb-2">
                 Professor R.I.S Agbede
               </h2>
-              <p className="text-xl text-[var(--gold)] mb-6">Founder & Patron</p>
+              <p className="text-xl text-[var(--gold)] mb-6">Honouree & Patron</p>
               
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
@@ -190,7 +190,7 @@ export function AboutPage() {
                     <ImageWithFallback
                       src={trustee.avatar}
                       alt={trustee.name}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover object-center scale-[1.08]"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-[var(--neutral-100)]">

@@ -239,10 +239,11 @@ export const TRUSTEES: Trustee[] = [
     id: '2',
     name: 'Dr. Ramatu O. Agbede',
     title: 'Director',
+    avatar: '/images/Dr Ramatu O.Agbede.jpeg',
   },
   {
     id: '3',
-    name: 'Hadiya Agada',
+    name: 'Dr Hadiya Agada',
     title: 'Programs Coordinator',
     avatar: '/images/hadiya-agbede.jpeg',
   },
