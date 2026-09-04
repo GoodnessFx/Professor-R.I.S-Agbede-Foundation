@@ -127,7 +127,7 @@ export function HeroSlider() {
               textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(212,175,55,0.2)'
             }}
           >
-            Fighting Kidney Disease Across Nigeria — One Patient At A Time
+            Fighting Kidney Disease Across Nigeria, One Patient At A Time
           </div>
         </div>
       </div>

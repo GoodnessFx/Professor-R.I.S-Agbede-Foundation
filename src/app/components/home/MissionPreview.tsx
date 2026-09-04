@@ -39,7 +39,7 @@ export function MissionPreview() {
                   Healthcare is not a privilege — it is a fundamental right that every Nigerian deserves.
                 </p>
                 <footer className="text-lg text-white/90">
-                  — Prof. R.I.S Agbede
+                  Prof. R.I.S Agbede
                 </footer>
               </blockquote>
             </motion.div>

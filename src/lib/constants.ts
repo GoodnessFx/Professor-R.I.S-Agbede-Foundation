@@ -286,7 +286,7 @@ export const HERO_SLIDES = [
     image: 'https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg?auto=compress&cs=tinysrgb&w=1920',
     alt: 'African doctor with patient',
     title: 'When Kidneys Fail, We Show Up',
-    subtitle: 'Thousands of Nigerians with end-stage kidney disease cannot afford the care that would save their lives. The Professor R.I.S Agbede Foundation exists to change that — through replacement therapy support, awareness, and compassionate patient care.'
+    subtitle: 'Thousands of Nigerians with end-stage kidney disease cannot afford the care that would save their lives. The Professor R.I.S Agbede Foundation exists to change that through replacement therapy support, awareness, and compassionate patient care.'
   },
   {
     id: 2,
@@ -348,7 +348,7 @@ export const CONTACT_INFO = {
   phone: '+234 805 737 0966',
   email: 'risagbedefoundation@gmail.com',
   website: 'www.agbedefoundation.org',
-  hours: 'Monday – Friday: 9:00am – 5:00pm (WAT)'
+  hours: 'Monday to Friday: 9:00am to 5:00pm (WAT)'
 };
 
 export const BANK_DETAILS_NGN = {

@@ -103,7 +103,7 @@ export function AboutPage() {
                   <p className="text-lg italic font-serif text-[var(--navy)] leading-relaxed">
                     "Seest thou a man diligent in his works? he shall stand before kings; he shall not stand before mean men."
                   </p>
-                  <footer className="mt-2 text-sm font-semibold text-[var(--gold)]">— Proverbs 22:29</footer>
+                  <footer className="mt-2 text-sm font-semibold text-[var(--gold)]">Proverbs 22:29</footer>
                 </blockquote>
 
                 <p className="text-gray-500 italic">Thank you.</p>

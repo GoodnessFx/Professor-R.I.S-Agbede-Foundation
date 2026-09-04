@@ -186,7 +186,7 @@ export function ContactPage() {
                 className="text-sm text-gray-500 text-center"
                 style={{ fontFamily: 'Nunito Sans, sans-serif' }}
               >
-                Prof. R.I.S Agbede Foundation — Serving communities across Nigeria
+                Prof. R.I.S Agbede Foundation serving communities across Nigeria
               </p>
             </motion.div>
 

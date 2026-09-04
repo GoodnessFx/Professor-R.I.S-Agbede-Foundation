@@ -178,7 +178,7 @@ export function ImpactPage() {
             className="max-w-3xl mx-auto bg-[var(--neutral-100)] rounded-2xl p-8 text-center"
           >
             <p className="text-lg text-gray-700 mb-6">
-              Our work currently spans <strong>Lagos, Abuja (FCT), Kogi, Enugu, Kano</strong> and <strong>Rivers</strong> states — with more communities coming onboard.
+              Our work currently spans <strong>Lagos, Abuja (FCT), Kogi, Enugu, Kano</strong> and <strong>Rivers</strong> states with more communities coming onboard.
             </p>
             <NigeriaMap />
           </motion.div>
