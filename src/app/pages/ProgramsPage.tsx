@@ -89,9 +89,11 @@ export function ProgramsPage() {
                             <span className="px-3 py-1 bg-[var(--green)]/10 text-[var(--green)] rounded-full text-sm font-medium">
                               {program.status}
                             </span>
-                            <span className="px-3 py-1 bg-[var(--navy)]/10 text-[var(--navy)] rounded-full text-sm font-medium">
-                              {program.stats}
-                            </span>
+                            {program.stats ? (
+                              <span className="px-3 py-1 bg-[var(--navy)]/10 text-[var(--navy)] rounded-full text-sm font-medium">
+                                {program.stats}
+                              </span>
+                            ) : null}
                           </div>
                         </div>
                       </div>

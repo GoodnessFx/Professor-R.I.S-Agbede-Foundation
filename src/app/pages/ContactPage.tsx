@@ -191,16 +191,14 @@ export function ContactPage() {
                   >
                     Contact Us
                   </h2>
-                  <p 
+                  <div
                     className="text-gray-600 mb-6"
                     style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '15px' }}
                   >
-                    Thank you for your interest in the Foundation's work. 
-                    Fill in the form and our team will respond within 48 hours.
-                  </p>
+                    To apply for support, please send a message including the programme you are applying for and your contact details. Our team will respond within 48 hours.
+                  </div>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Row 1: First Name | Last Name */}
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">

@@ -10,10 +10,9 @@ export const NAV_LINKS = [
     label: 'WHO WE ARE',
     dropdown: [
       { label: 'About the Foundation', path: '/about' },
-      { label: 'Our Founder', path: '/about#founder' },
+      { label: 'Our Honouree', path: '/about#founder' },
       { label: 'Board of Trustees', path: '/about#board' },
       { label: 'Our Vision & Values', path: '/about#values' },
-      { label: 'Annual Reports', path: '/impact#reports' },
     ]
   },
   {
@@ -23,7 +22,7 @@ export const NAV_LINKS = [
       { label: 'Kidney Disease Awareness', path: '/programs#awareness' },
       { label: 'Patient Support Programs', path: '/programs#patient-support' },
       { label: 'Laboratory Investigation Support', path: '/programs#laboratory' },
-      { label: 'Apply for Support', path: '/donate' },
+      { label: 'Apply for Support', path: '/contact' },
     ]
   },
   { label: 'CONTACT US', path: '/contact' },
@@ -38,7 +37,7 @@ export const PROGRAMS: Program[] = [
     icon: 'HeartPulse',
     image: 'https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Supporting indigent patients with end-stage kidney disease to access life-saving kidney replacement therapy they could never afford alone.',
-    stats: '500+ Patients Supported',
+    stats: '',
     status: 'Active',
     subPrograms: [
       'Dialysis Support',
@@ -52,7 +51,7 @@ export const PROGRAMS: Program[] = [
     icon: 'Megaphone',
     image: 'https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Community outreach, early detection drives, and education campaigns to reduce the burden of kidney disease across Nigeria.',
-    stats: '50k+ People Reached',
+    stats: '',
     status: 'Active',
     subPrograms: [
       'Early Detection Screening',
@@ -66,7 +65,7 @@ export const PROGRAMS: Program[] = [
     icon: 'Users',
     image: 'https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Establishing patient support programs including counseling, education, emotional support, nutrition, and social welfare assistance to patients and caregivers.',
-    stats: '1,200 Families Assisted',
+    stats: '',
     status: 'Ongoing',
     subPrograms: [
       'Counseling Services',
@@ -80,7 +79,7 @@ export const PROGRAMS: Program[] = [
     icon: 'FlaskConical',
     image: 'https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Providing financial assistance for laboratory investigations and related medical services for indigent end stage kidney disease patients.',
-    stats: '2,000+ Tests Funded',
+    stats: '',
     status: 'Active',
     subPrograms: [
       'Diagnostic Test Support',
@@ -243,7 +242,7 @@ export const TRUSTEES: Trustee[] = [
   },
   {
     id: '3',
-    name: 'Hadiya Agbede',
+    name: 'Hadiya Agada',
     title: 'Programs Coordinator',
     avatar: '/images/hadiya-agbede.jpeg',
   },

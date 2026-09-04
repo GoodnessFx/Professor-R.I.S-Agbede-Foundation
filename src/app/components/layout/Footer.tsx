@@ -16,23 +16,13 @@ const XIcon = ({ size = 18 }: { size?: number }) => (
 
 const footerLinks = [
   { label: 'About the Foundation', path: '/about' },
-  { label: 'Our Founder', path: '/about#founder' },
+  { label: 'Our Honouree', path: '/about#founder' },
   { label: 'Board of Trustees', path: '/about#board' },
   { label: 'Contact Us', path: '/contact' },
   { label: 'Programs', path: '/programs' },
 ];
 
 export function Footer() {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 3000);
-  };
-
   const iconMap: Record<string, any> = {
     Facebook,
     X: XIcon,
@@ -130,39 +120,6 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-serif font-semibold mb-4 text-[var(--gold)]">
-              Stay Connected
-            </h3>
-            <p className="text-white/80 mb-4 text-sm">
-              Subscribe to receive updates on our programs, impact stories, and upcoming events.
-            </p>
-            <form onSubmit={handleSubscribe} className="space-y-3">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  required
-                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={subscribed}
-                className="w-full px-4 py-3 bg-[var(--gold)] text-[var(--navy)] rounded-lg font-medium hover:bg-[var(--gold)]/90 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {subscribed ? (
-                  <>✓ Subscribed!</>
-                ) : (
-                  <>
-                    Subscribe <Send size={16} />
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
         </div>
 
         <div className="pt-8 border-t border-white/10">
