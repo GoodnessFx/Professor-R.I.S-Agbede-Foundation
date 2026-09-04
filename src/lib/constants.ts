@@ -341,7 +341,7 @@ export const CONTACT_INFO = {
     city: 'Foundation contact desk'
   },
   lagosOffice: {
-    name: 'General Support',
+    name: 'Contact Information',
     address: 'Nigeria',
     city: 'Available by phone and email'
   },

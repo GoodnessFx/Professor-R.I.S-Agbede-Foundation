@@ -25,22 +25,8 @@ type ContactForm = z.infer<typeof contactSchema>;
 
 const officeLocations = [
   {
-    name: 'Head Office',
+    name: 'Contact Information',
     address: 'Prof. R.I.S Agbede Foundation',
-    city: 'Nigeria',
-    phone: '+234 805 737 0966',
-    email: 'risagbedefoundation@gmail.com',
-  },
-  {
-    name: 'General Enquiries',
-    address: 'Support and Partnership',
-    city: 'Nigeria',
-    phone: '+234 805 737 0966',
-    email: 'risagbedefoundation@gmail.com',
-  },
-  {
-    name: 'Donation & Grants',
-    address: 'Foundation contact line',
     city: 'Nigeria',
     phone: '+234 805 737 0966',
     email: 'risagbedefoundation@gmail.com',
@@ -105,7 +91,7 @@ export function ContactPage() {
       {/* Office Location Cards */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-6 max-w-3xl mx-auto">
             {officeLocations.map((office, index) => (
               <motion.div
                 key={office.name}
@@ -173,13 +159,13 @@ export function ContactPage() {
                   <span className="text-gray-500 ml-2">• Nigeria</span>
                 </div>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7926689.7!2d3.3!3d9.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0baf7da48d0d%3A0x99a8fe4168c50bc8!2sNigeria!5e0!3m2!1sen!2sng!4v1620000000000!5m2!1sen!2sng"
+                  src="https://www.google.com/maps?q=Nigeria&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
-                  title="Foundation locations across Nigeria"
+                  title="Map showing Nigeria"
                 />
               </div>
               <p 
