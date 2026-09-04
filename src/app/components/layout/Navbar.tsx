@@ -87,13 +87,9 @@ export function Navbar() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const navClasses = scrolled || !isHomePage
-    ? 'bg-white/95 backdrop-blur-md shadow-md'
-    : 'bg-transparent';
+  const navClasses = 'bg-white/95 backdrop-blur-md shadow-[0_1px_0_rgba(17,24,39,0.12)] border-b border-slate-200';
 
-  const textClasses = scrolled || !isHomePage
-    ? 'text-[var(--navy)]'
-    : 'text-white';
+  const textClasses = 'text-[var(--navy)]';
 
   // Search data
   const searchData = [
@@ -154,9 +150,7 @@ export function Navbar() {
     <>
       <motion.nav
         initial={false}
-        animate={{
-          backgroundColor: scrolled || !isHomePage ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0)',
-        }}
+        animate={{ backgroundColor: 'rgba(255, 255, 255, 0.95)' }}
         transition={{ duration: 0.3 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navClasses}`}
       >
