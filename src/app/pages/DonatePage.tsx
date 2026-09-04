@@ -39,18 +39,20 @@ const donationSchema = z.object({
 type DonationForm = z.infer<typeof donationSchema>;
 type Currency = 'NGN' | 'USD';
 type AmountMode = 'preset' | 'custom';
+type PaymentProvider = 'flutterwave' | 'paystack';
 
-// ─── Public key ──────────────────────────────────────────────────────────────
-// Prefer the env var (set in Pxxl / Vercel environment variables dashboard).
-// Falls back to the hardcoded live key so the donate button always works even
-// if the platform hasn't injected the env var at build time.
-// NOTE: the PUBLIC key is safe to be in source — it is not a secret.
-//       Never put the SECRET key here.
+// ─── Public keys ─────────────────────────────────────────────────────────────
+// Prefer the env vars (set in your host environment variables dashboard).
+// The public keys are safe to expose in the browser; secret keys are never put here.
 const FLW_PUBLIC_KEY =
   (import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY as string | undefined) ||
   'FLWPUBK-039b11e5fdad47ae5daa6d31b415bc58-X';
 
-const isMissingKey = false; // key is always present via fallback above
+const PAYSTACK_PUBLIC_KEY =
+  (import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string | undefined) ||
+  '';
+
+const isMissingKey = false; // fallback keys are kept for convenience; key absence is usually a host config issue.
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function DonatePage() {
@@ -60,6 +62,7 @@ export function DonatePage() {
   const [customInput, setCustomInput]   = useState('');
   const [loading, setLoading]           = useState(false);
   const [copied, setCopied]             = useState(false);
+  const [paymentProvider, setPaymentProvider] = useState<PaymentProvider>('flutterwave');
 
   // Holds verified payment data — rendering this means the server confirmed success
   const [successData, setSuccessData] = useState<{
@@ -108,90 +111,204 @@ export function DonatePage() {
 
   // ── Submit ───────────────────────────────────────────────────────────────
   const onSubmit = async (data: DonationForm) => {
-    if (isMissingKey) {
-      alert(
-        'SITE OWNER ACTION REQUIRED:\n\n' +
-        'VITE_FLUTTERWAVE_PUBLIC_KEY is missing or not set.\n\n' +
-        'Add it as a GitHub Actions / Vercel environment variable and redeploy.',
-      );
+    if (paymentProvider === 'flutterwave') {
+      if (isMissingKey) {
+        alert(
+          'SITE OWNER ACTION REQUIRED:\n\n' +
+          'VITE_FLUTTERWAVE_PUBLIC_KEY is missing or not set.\n\n' +
+          'Add it as a GitHub Actions / Vercel environment variable and redeploy.',
+        );
+        return;
+      }
+
+      const FlutterwaveCheckout = (window as any).FlutterwaveCheckout;
+      if (!FlutterwaveCheckout) {
+        alert(
+          'Payment system failed to load.\n' +
+          'Please disable any ad-blockers, refresh the page, and try again.',
+        );
+        return;
+      }
+
+      setLoading(true);
+      const tx_ref = `don-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
+
+      try {
+        FlutterwaveCheckout({
+          public_key: FLW_PUBLIC_KEY,
+          tx_ref,
+          amount: data.amount,
+          currency,
+          payment_options: 'card, banktransfer, ussd, mobilemoney',
+          customer: {
+            email: data.email,
+            phone_number: data.phone,
+            name: data.fullName,
+          },
+          customizations: {
+            title: 'Prof. R.I.S. Agbede Foundation',
+            description: 'Donation',
+            logo: `${window.location.origin}/images/Professor%20logo.png`,
+          },
+          meta: {
+            donor_message: data.message || '',
+          },
+          callback: async (payment: any) => {
+            if (!payment.transaction_id) {
+              setLoading(false);
+              alert('Payment could not be confirmed. Please contact us if money was deducted.');
+              return;
+            }
+
+            setLoading(true);
+
+            try {
+              const res = await fetch('/api/flutterwave/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  transaction_id: payment.transaction_id,
+                  expected_amount: data.amount,
+                  expected_currency: currency,
+                  tx_ref,
+                  donor_name: data.fullName,
+                  donor_email: data.email,
+                  donor_message: data.message || '',
+                }),
+              });
+
+              const result = await res.json();
+
+              if (res.ok && result.success) {
+                setSuccessData({
+                  name: data.fullName,
+                  amount: data.amount,
+                  currency,
+                });
+                setTimeout(() => {
+                  reset();
+                  setAmountMode('preset');
+                  setCustomInput('');
+                  const def = currency === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
+                  setPresetAmount(def);
+                  setValue('amount', def);
+                }, 500);
+              } else {
+                alert(
+                  result.error ||
+                  'Payment verification failed. Please contact us if money was deducted.',
+                );
+              }
+            } catch (err) {
+              console.error('[verify]', err);
+              alert('Could not reach the verification server. Please contact us if money was deducted.');
+            } finally {
+              setLoading(false);
+            }
+          },
+          onclose: () => {
+            setLoading(false);
+          },
+        });
+      } catch (err: any) {
+        console.error(err);
+        alert(err.message || 'Error initiating payment. Please try again.');
+        setLoading(false);
+      }
       return;
     }
 
-    const FlutterwaveCheckout = (window as any).FlutterwaveCheckout;
-    if (!FlutterwaveCheckout) {
-      alert(
-        'Payment system failed to load.\n' +
-        'Please disable any ad-blockers, refresh the page, and try again.',
-      );
+    // ── Paystack flow ───────────────────────────────────────────────────────
+    if (!PAYSTACK_PUBLIC_KEY) {
+      alert('SITE OWNER ACTION REQUIRED:\n\nVITE_PAYSTACK_PUBLIC_KEY is missing or not set.');
       return;
     }
 
-    setLoading(true);
-    const tx_ref = `don-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
+    const paystackScriptId = 'paystack-inline-script';
+    let script = document.getElementById(paystackScriptId) as HTMLScriptElement | null;
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = paystackScriptId;
+      script.src = 'https://js.paystack.co/v1/inline.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    const waitForScript = () => new Promise<void>((resolve, reject) => {
+      const check = () => {
+        if ((window as any).PaystackPop) {
+          resolve();
+          return;
+        }
+        if (script && script.dataset.loaded === 'true') {
+          resolve();
+          return;
+        }
+        setTimeout(check, 150);
+      };
+
+      script?.addEventListener('load', () => {
+        script!.dataset.loaded = 'true';
+        resolve();
+      }, { once: true });
+
+      script?.addEventListener('error', () => reject(new Error('Paystack script failed to load')), { once: true });
+      check();
+    });
 
     try {
-      FlutterwaveCheckout({
-        public_key: FLW_PUBLIC_KEY,
-        tx_ref,
-        amount: data.amount,
+      setLoading(true);
+      await waitForScript();
+
+      const ref = `don-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
+      const paystack = (window as any).PaystackPop;
+      paystack.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: data.email,
+        amount: Math.round(data.amount * 100),
         currency,
-        payment_options: 'card, banktransfer, ussd, mobilemoney',
-        customer: {
-          email: data.email,
-          phone_number: data.phone,
-          name: data.fullName,
+        ref,
+        firstname: data.fullName.split(' ')[0],
+        lastname: data.fullName.split(' ').slice(1).join(' ') || 'Donor',
+        metadata: {
+          custom_fields: [
+            {
+              display_name: 'Donation message',
+              variable_name: 'donation_message',
+              value: data.message || '',
+            },
+          ],
         },
-        customizations: {
-          title: 'Prof. R.I.S. Agbede Foundation',
-          description: 'Donation',
-          logo: `${window.location.origin}/images/Professor%20logo.png`,
+        channels: ['card', 'bank', 'ussd', 'mobile_money'],
+        label: 'Prof. R.I.S. Agbede Foundation',
+        onClose: () => {
+          setLoading(false);
         },
-        meta: {
-          donor_message: data.message || '',
-        },
-
-        // ── Flutterwave callback — browser side ──────────────────────────
-        // We receive transaction_id here but we do NOT trust the status field.
-        // Instead we send transaction_id + what we expected to the server,
-        // which re-verifies with Flutterwave using the secret key.
-        callback: async (payment: any) => {
-          // payment.status can be spoofed in DevTools — we ignore it here
-          // and let the server be the single source of truth.
-
-          if (!payment.transaction_id) {
-            setLoading(false);
-            alert('Payment could not be confirmed. Please contact us if money was deducted.');
-            return;
-          }
-
-          // Keep loading spinner while server verifies
-          setLoading(true);
-
+        callback: async (response: { reference: string }) => {
           try {
-            const res = await fetch('/api/flutterwave/verify', {
+            const res = await fetch('/api/paystack/verify', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                transaction_id: payment.transaction_id,
+                reference: response.reference,
                 expected_amount: data.amount,
                 expected_currency: currency,
-                tx_ref,
                 donor_name: data.fullName,
                 donor_email: data.email,
                 donor_message: data.message || '',
+                tx_ref: ref,
               }),
             });
 
             const result = await res.json();
 
             if (res.ok && result.success) {
-              // Server confirmed — safe to show success screen
               setSuccessData({
                 name: data.fullName,
                 amount: data.amount,
                 currency,
               });
-              // Reset form in background
               setTimeout(() => {
                 reset();
                 setAmountMode('preset');
@@ -201,27 +318,19 @@ export function DonatePage() {
                 setValue('amount', def);
               }, 500);
             } else {
-              // Server rejected — could be a legit failure or a spoofing attempt
-              alert(
-                result.error ||
-                'Payment verification failed. Please contact us if money was deducted.',
-              );
+              alert(result.error || 'Paystack verification failed. Please contact us if money was deducted.');
             }
           } catch (err) {
-            console.error('[verify]', err);
-            alert('Could not reach the verification server. Please contact us if money was deducted.');
+            console.error('[paystack-verify]', err);
+            alert('Could not verify the Paystack payment. Please contact us if money was deducted.');
           } finally {
             setLoading(false);
           }
         },
-
-        onclose: () => {
-          setLoading(false);
-        },
       });
     } catch (err: any) {
       console.error(err);
-      alert(err.message || 'Error initiating payment. Please try again.');
+      alert(err.message || 'Paystack payment could not be initiated. Please try again.');
       setLoading(false);
     }
   };
@@ -345,6 +454,26 @@ export function DonatePage() {
                   </div>
                 </div>
 
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">Payment Provider</label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {(['flutterwave', 'paystack'] as PaymentProvider[]).map((provider) => (
+                      <button
+                        key={provider}
+                        type="button"
+                        onClick={() => setPaymentProvider(provider)}
+                        className={`flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-all ${
+                          paymentProvider === provider
+                            ? 'border-[var(--gold)] bg-[var(--gold)]/10 text-[var(--navy)] shadow-sm'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        {provider === 'flutterwave' ? 'Flutterwave' : 'Paystack'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
                   {/* Amount */}
@@ -462,7 +591,7 @@ export function DonatePage() {
                   <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600 flex items-start gap-2">
                     <Shield size={16} className="text-[var(--gold)] flex-shrink-0 mt-0.5" />
                     <p>
-                      Payments are processed securely via Flutterwave. Pay by card, bank transfer,
+                      Payments are processed securely via {paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack'}. Pay by card, bank transfer,
                       or USSD — no account required.
                     </p>
                   </div>
