@@ -16,7 +16,7 @@ const XIcon = ({ size = 18 }: { size?: number }) => (
 
 const footerLinks = [
   { label: 'About the Foundation', path: '/about' },
-  { label: 'Our Honouree', path: '/about#founder' },
+  { label: 'Our Honouree', path: '/about#honouree' },
   { label: 'Board of Trustees', path: '/about#board' },
   { label: 'Contact Us', path: '/contact' },
   { label: 'Programs', path: '/programs' },

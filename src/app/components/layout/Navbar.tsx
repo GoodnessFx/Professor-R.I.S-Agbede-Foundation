@@ -95,7 +95,7 @@ export function Navbar() {
   const searchData = [
     // Pages
     { title: 'Home', path: '/', category: 'Page', excerpt: 'Welcome to the Professor R.I.S Agbede Foundation' },
-    { title: 'About Us', path: '/about', category: 'Page', excerpt: 'Learn about our mission and honouree' },
+    { title: 'About Us', path: '/about', category: 'Page', excerpt: 'Learn about our mission and the honouree' },
     { title: 'Our Programs', path: '/programs', category: 'Page', excerpt: 'Explore our educational and community initiatives' },
     { title: 'Contact Us', path: '/contact', category: 'Page', excerpt: 'Get in touch with our team' },
     { title: 'Donate', path: '/donate', category: 'Page', excerpt: 'Support our work and make a difference' },

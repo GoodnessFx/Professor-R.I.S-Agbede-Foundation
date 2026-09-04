@@ -10,7 +10,7 @@ export const NAV_LINKS = [
     label: 'WHO WE ARE',
     dropdown: [
       { label: 'About the Foundation', path: '/about' },
-      { label: 'Our Honouree', path: '/about#founder' },
+      { label: 'Our Honouree', path: '/about#honouree' },
       { label: 'Board of Trustees', path: '/about#board' },
       { label: 'Our Vision & Values', path: '/about#values' },
     ]

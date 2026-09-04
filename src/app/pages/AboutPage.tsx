@@ -26,7 +26,7 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold mb-4"
           >
-            Our Story
+            About the Honouree
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -34,13 +34,13 @@ export function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base md:text-xl max-w-2xl mx-auto"
           >
-            Supporting indigent patients with end-stage kidney disease across Nigeria
+            Honouring the legacy of Professor R.I.S Agbede and his commitment to humanity
           </motion.p>
         </div>
       </section>
 
       {/* Biography Section */}
-      <section ref={heroRef} id="founder" className="py-20 bg-white">
+      <section ref={heroRef} id="honouree" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <motion.div
