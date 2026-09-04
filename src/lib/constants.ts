@@ -26,33 +26,10 @@ export const NAV_LINKS = [
       { label: 'Apply for Support', path: '/donate' },
     ]
   },
-  {
-    label: 'GRANTMAKING',
-    dropdown: [
-      { label: 'Annual Grants', path: '/grantmaking#annual-grants' },
-      { label: 'Discretionary Grants', path: '/grantmaking#discretionary' },
-      { label: 'Partnerships', path: '/grantmaking#partnerships' },
-    ]
-  },
-  { label: 'IMPACT', path: '/impact' },
-  {
-    label: 'NEWS & MEDIA',
-    dropdown: [
-      { label: 'Latest News', path: '/news' },
-      { label: 'Press Releases', path: '/news#press' },
-      { label: 'Gallery', path: '/gallery' },
-      { label: 'Publications', path: '/impact#reports' },
-    ]
-  },
   { label: 'CONTACT US', path: '/contact' },
 ];
 
-export const IMPACT_STATS = [
-  { label: 'Patients Supported', value: 10, suffix: '+' },
-  { label: 'Communities Reached', value: 3, suffix: '' },
-  { label: 'Awareness Campaigns Run', value: 5, suffix: '' },
-  { label: 'Lives Touched', value: 50, suffix: '+' },
-];
+export const IMPACT_STATS = [];
 
 export const PROGRAMS: Program[] = [
   {
@@ -268,6 +245,7 @@ export const TRUSTEES: Trustee[] = [
     id: '3',
     name: 'Hadiya Agbede',
     title: 'Programs Coordinator',
+    avatar: '/images/hadiya-agbede.jpeg',
   },
   {
     id: '4',
@@ -297,43 +275,8 @@ export const HERO_SLIDES = [
     id: 1,
     image: '/images/hero-section-image.jpeg',
     alt: 'Professor R.I.S Agbede Foundation community outreach and healthcare image',
-    title: 'When Kidneys Fail, We Show Up',
-    subtitle: 'Thousands of Nigerians with end-stage kidney disease cannot afford the care that would save their lives. The Professor R.I.S Agbede Foundation exists to change that through replacement therapy support, awareness, and compassionate patient care.'
-  },
-  {
-    id: 2,
-    image: 'https://images.pexels.com/photos/5452201/pexels-photo-5452201.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Black medical professional in hospital',
-    title: 'Fighting Kidney Disease Across Nigeria',
-    subtitle: 'One patient at a time, we are bridging the gap in kidney healthcare access for the indigent through direct support and community awareness.'
-  },
-  {
-    id: 3,
-    image: 'https://images.pexels.com/photos/4270371/pexels-photo-4270371.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'African nurse caring for patient',
-    title: 'Compassionate Patient Care',
-    subtitle: 'Beyond medical therapy, we provide emotional and social welfare support to kidney patients and their caregivers throughout their treatment journey.'
-  },
-  {
-    id: 4,
-    image: 'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Black doctor consulting with family',
-    title: 'Early Detection Saves Lives',
-    subtitle: 'Our community outreach programs focus on early screening and education to prevent the progression of kidney disease in underserved populations.'
-  },
-  {
-    id: 5,
-    image: 'https://images.pexels.com/photos/6647028/pexels-photo-6647028.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'African community health outreach',
-    title: 'Bridging the Healthcare Gap',
-    subtitle: 'We collaborate with hospitals and health workers to bring specialized kidney care and laboratory services to those who need them most.'
-  },
-  {
-    id: 6,
-    image: 'https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1920',
-    alt: 'Black healthcare worker with elderly patient',
-    title: 'A Legacy of Hope and Care',
-    subtitle: 'Restoring dignity and health to indigent Nigerians through sustainable kidney health initiatives and replacement therapy assistance.'
+    title: '',
+    subtitle: ''
   }
 ];
 
@@ -379,8 +322,8 @@ export const BANK_DETAILS_USD = {
 
 export const SOCIAL_LINKS = [
   { name: 'Facebook', url: 'https://facebook.com/AgbedeFoundation', icon: 'Facebook' },
-  { name: 'X (Twitter)', url: 'https://x.com/AgbedeFoundation', icon: 'X' },
-  { name: 'Instagram', url: 'https://instagram.com/AgbedeFoundation', icon: 'Instagram' },
+  { name: 'X (Twitter)', url: '#', icon: 'X' },
+  { name: 'Instagram', url: '#', icon: 'Instagram' },
   { name: 'LinkedIn', url: 'https://linkedin.com/company/agbede-foundation', icon: 'Linkedin' },
-  { name: 'YouTube', url: 'https://youtube.com/@AgbedeFoundation', icon: 'Youtube' },
+  { name: 'YouTube', url: '#', icon: 'Youtube' },
 ];

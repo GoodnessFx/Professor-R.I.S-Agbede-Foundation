@@ -101,11 +101,8 @@ export function Navbar() {
     { title: 'Home', path: '/', category: 'Page', excerpt: 'Welcome to the Professor R.I.S Agbede Foundation' },
     { title: 'About Us', path: '/about', category: 'Page', excerpt: 'Learn about our mission and founder' },
     { title: 'Our Programs', path: '/programs', category: 'Page', excerpt: 'Explore our educational and community initiatives' },
-    { title: 'Impact', path: '/impact', category: 'Page', excerpt: 'See the difference we\'re making' },
-    { title: 'News & Media', path: '/news', category: 'Page', excerpt: 'Latest updates and press releases' },
     { title: 'Contact Us', path: '/contact', category: 'Page', excerpt: 'Get in touch with our team' },
     { title: 'Donate', path: '/donate', category: 'Page', excerpt: 'Support our work and make a difference' },
-    { title: 'Grantmaking', path: '/grantmaking', category: 'Page', excerpt: 'Learn about our grant programs' },
     { title: 'Gallery', path: '/gallery', category: 'Page', excerpt: 'View our community impact photos' },
     
     // Programs

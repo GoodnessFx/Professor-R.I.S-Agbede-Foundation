@@ -5,7 +5,7 @@
 import { Link } from 'react-router';
 import { Facebook, Instagram, Linkedin, Youtube, Send } from 'lucide-react';
 import { Logo } from '../icons/Logo';
-import { NAV_LINKS, PROGRAMS, SOCIAL_LINKS } from '../../../lib/constants';
+import { PROGRAMS, SOCIAL_LINKS } from '../../../lib/constants';
 import { useState } from 'react';
 
 const XIcon = ({ size = 18 }: { size?: number }) => (
@@ -13,6 +13,14 @@ const XIcon = ({ size = 18 }: { size?: number }) => (
     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153zM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644z" />
   </svg>
 );
+
+const footerLinks = [
+  { label: 'About the Foundation', path: '/about' },
+  { label: 'Our Founder', path: '/about#founder' },
+  { label: 'Board of Trustees', path: '/about#board' },
+  { label: 'Contact Us', path: '/contact' },
+  { label: 'Programs', path: '/programs' },
+];
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -35,17 +43,8 @@ export function Footer() {
 
   return (
     <footer className="bg-[var(--navy)] text-white relative overflow-hidden">
-      {/* Subtle pattern background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-          backgroundSize: '20px 20px'
-        }} />
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Column 1: Logo & Mission */}
           <div>
             <Link to="/" className="flex items-center gap-3 mb-6">
               <Logo className="w-12 h-12 md:w-16 md:h-16" />
@@ -61,6 +60,23 @@ export function Footer() {
             <div className="flex gap-4">
               {SOCIAL_LINKS.map((social) => {
                 const Icon = iconMap[social.icon];
+                const isActive = /^https?:\/\//i.test(social.url);
+
+                if (!isActive) {
+                  return (
+                    <button
+                      key={social.name}
+                      type="button"
+                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-[var(--gold)] flex items-center justify-center transition-all duration-300 hover:scale-110 disabled:cursor-not-allowed opacity-60"
+                      aria-label={social.name}
+                      title="Coming soon"
+                      disabled
+                    >
+                      <Icon size={18} />
+                    </button>
+                  );
+                }
+
                 return (
                   <a
                     key={social.name}
@@ -69,6 +85,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-white/10 hover:bg-[var(--gold)] flex items-center justify-center transition-all duration-300 hover:scale-110"
                     aria-label={social.name}
+                    title={social.name}
                   >
                     <Icon size={18} />
                   </a>
@@ -77,13 +94,12 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
             <h3 className="text-lg font-serif font-semibold mb-4 text-[var(--gold)]">
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {NAV_LINKS.filter(link => link.label !== 'Donate').map((link) => (
+              {footerLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
@@ -96,7 +112,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Programs */}
           <div>
             <h3 className="text-lg font-serif font-semibold mb-4 text-[var(--gold)]">
               Our Programs
@@ -115,7 +130,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Newsletter */}
           <div>
             <h3 className="text-lg font-serif font-semibold mb-4 text-[var(--gold)]">
               Stay Connected
@@ -151,7 +165,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
             <p>
