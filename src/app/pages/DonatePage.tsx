@@ -24,13 +24,12 @@ import { BANK_DETAILS_NGN, BANK_DETAILS_USD } from '../../lib/constants';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 // ─── Preset amounts ───────────────────────────────────────────────────────────
-const NGN_PRESET_AMOUNTS = [5_000, 10_000, 50_000, 100_000];
+const NGN_PRESET_AMOUNTS = [50_000, 100_000, 500_000, 1_000_000];
 const USD_PRESET_AMOUNTS = [10, 25, 50, 100];
 
 // ─── Form schema ──────────────────────────────────────────────────────────────
 const donationSchema = z.object({
   amount: z.number().min(1, 'Please enter a valid amount'),
-  frequency: z.enum(['one-time', 'monthly']),
   fullName: z.string().min(2, 'Please enter your full name'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
@@ -78,10 +77,8 @@ export function DonatePage() {
     reset,
   } = useForm<DonationForm>({
     resolver: zodResolver(donationSchema),
-    defaultValues: { amount: NGN_PRESET_AMOUNTS[0], frequency: 'one-time' },
+    defaultValues: { amount: NGN_PRESET_AMOUNTS[0] },
   });
-
-  const frequency = watch('frequency');
 
   // ── Currency toggle ──────────────────────────────────────────────────────
   const handleCurrencyChange = (c: Currency) => {
@@ -151,7 +148,6 @@ export function DonatePage() {
         },
         meta: {
           donor_message: data.message || '',
-          frequency: data.frequency,
         },
 
         // ── Flutterwave callback — browser side ──────────────────────────
@@ -304,7 +300,7 @@ export function DonatePage() {
           >
             <Heart size={64} className="mx-auto mb-6 text-[var(--gold)]" />
             <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">
-              Invest in a Generation
+              Invest in a life
             </h1>
             <p className="text-xl max-w-2xl mx-auto">
               Your generosity fuels education, healthcare, and hope for Nigerian communities
@@ -416,29 +412,6 @@ export function DonatePage() {
                     {errors.amount && (
                       <p className="text-red-600 text-sm mt-1">{errors.amount.message}</p>
                     )}
-                  </div>
-
-                  {/* Frequency */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">
-                      Frequency
-                    </label>
-                    <div className="flex gap-4">
-                      {(['one-time', 'monthly'] as const).map((f) => (
-                        <button
-                          key={f}
-                          type="button"
-                          onClick={() => setValue('frequency', f)}
-                          className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
-                            frequency === f
-                              ? 'bg-[var(--navy)] text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {f === 'one-time' ? 'One-time' : 'Monthly'}
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                   {/* Personal info */}
