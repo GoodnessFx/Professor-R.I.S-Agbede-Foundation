@@ -8,7 +8,7 @@ export function HeroSlider() {
   const heroImage = HERO_SLIDES[0]?.image ?? '/images/hero-section-image.jpeg';
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#0D1B2A] min-h-[52svh] sm:min-h-[60svh] md:min-h-[72svh] lg:min-h-[90svh] pt-20 md:pt-24">
+    <div className="relative w-full overflow-hidden bg-[#0D1B2A] min-h-[52svh] sm:min-h-[60svh] md:min-h-[72svh] lg:min-h-[90svh] pt-14 md:pt-18 lg:pt-20">
       <div
         className="absolute inset-0"
         style={{

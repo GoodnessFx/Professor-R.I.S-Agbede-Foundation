@@ -68,7 +68,11 @@ export function AboutPage() {
               <h2 className="text-4xl font-serif font-bold text-[var(--navy)] mb-2">
                 Professor R.I.S Agbede
               </h2>
-              <p className="text-xl text-[var(--gold)] mb-6">Honouree</p>
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <p className="text-xl text-[var(--gold)]">Honouree</p>
+                <span className="text-gray-400">•</span>
+                <p className="text-base md:text-lg text-[var(--navy)] font-medium">3 February 1949 - 25 November 2025</p>
+              </div>
               
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>

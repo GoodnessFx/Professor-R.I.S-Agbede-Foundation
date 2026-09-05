@@ -591,8 +591,7 @@ export function DonatePage() {
                   <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600 flex items-start gap-2">
                     <Shield size={16} className="text-[var(--gold)] flex-shrink-0 mt-0.5" />
                     <p>
-                      Payments are processed securely via {paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack'}. Pay by card, bank transfer,
-                      or USSD — no account required.
+                      Payments are processed securely via Paystack. Pay by card, bank transfer, or USSD - no account required.
                     </p>
                   </div>
 
