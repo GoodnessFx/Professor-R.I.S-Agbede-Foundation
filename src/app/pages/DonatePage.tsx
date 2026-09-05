@@ -224,37 +224,24 @@ export function DonatePage() {
       return;
     }
 
-    const paystackScriptId = 'paystack-inline-script';
-    let script = document.getElementById(paystackScriptId) as HTMLScriptElement | null;
+    const waitForScript = () => new Promise<void>((resolve, reject) => {
+      if ((window as any).PaystackPop && typeof (window as any).PaystackPop.setup === 'function') {
+        resolve();
+        return;
+      }
 
-    if (!script) {
-      script = document.createElement('script');
-      script.id = paystackScriptId;
+      const script = document.createElement('script');
       script.src = 'https://js.paystack.co/v1/inline.js';
       script.async = true;
-      document.body.appendChild(script);
-    }
-
-    const waitForScript = () => new Promise<void>((resolve, reject) => {
-      const check = () => {
-        if ((window as any).PaystackPop) {
+      script.onload = () => {
+        if ((window as any).PaystackPop && typeof (window as any).PaystackPop.setup === 'function') {
           resolve();
           return;
         }
-        if (script && script.dataset.loaded === 'true') {
-          resolve();
-          return;
-        }
-        setTimeout(check, 150);
+        reject(new Error('Paystack script loaded but did not initialize correctly.'));
       };
-
-      script?.addEventListener('load', () => {
-        script!.dataset.loaded = 'true';
-        resolve();
-      }, { once: true });
-
-      script?.addEventListener('error', () => reject(new Error('Paystack script failed to load')), { once: true });
-      check();
+      script.onerror = () => reject(new Error('Paystack script failed to load'));
+      document.body.appendChild(script);
     });
 
     try {
@@ -263,7 +250,12 @@ export function DonatePage() {
 
       const ref = `don-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
       const paystack = (window as any).PaystackPop;
-      paystack.setup({
+
+      if (!paystack || typeof paystack.setup !== 'function') {
+        throw new Error('Paystack did not initialize correctly.');
+      }
+
+      const handler = paystack.setup({
         key: PAYSTACK_PUBLIC_KEY,
         email: data.email,
         amount: Math.round(data.amount * 100),
@@ -282,52 +274,52 @@ export function DonatePage() {
         },
         channels: ['card', 'bank', 'ussd', 'mobile_money'],
         label: 'Prof. R.I.S. Agbede Foundation',
-        onClose: () => {
+        onClose: function () {
           setLoading(false);
         },
-        callback: async (response: { reference: string }) => {
-          try {
-            const res = await fetch('/api/paystack/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                reference: response.reference,
-                expected_amount: data.amount,
-                expected_currency: currency,
-                donor_name: data.fullName,
-                donor_email: data.email,
-                donor_message: data.message || '',
-                tx_ref: ref,
-              }),
-            });
-
-            const result = await res.json();
-
-            if (res.ok && result.success) {
-              setSuccessData({
-                name: data.fullName,
-                amount: data.amount,
-                currency,
-              });
-              setTimeout(() => {
-                reset();
-                setAmountMode('preset');
-                setCustomInput('');
-                const def = currency === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
-                setPresetAmount(def);
-                setValue('amount', def);
-              }, 500);
-            } else {
-              alert(result.error || 'Paystack verification failed. Please contact us if money was deducted.');
-            }
-          } catch (err) {
-            console.error('[paystack-verify]', err);
-            alert('Could not verify the Paystack payment. Please contact us if money was deducted.');
-          } finally {
-            setLoading(false);
-          }
+        callback: function (response: { reference: string }) {
+          fetch('/api/paystack/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              reference: response.reference,
+              expected_amount: data.amount,
+              expected_currency: currency,
+              donor_name: data.fullName,
+              donor_email: data.email,
+              donor_message: data.message || '',
+              tx_ref: ref,
+            }),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              if (result.success) {
+                setSuccessData({
+                  name: data.fullName,
+                  amount: data.amount,
+                  currency,
+                });
+                setTimeout(() => {
+                  reset();
+                  setAmountMode('preset');
+                  setCustomInput('');
+                  const def = currency === 'NGN' ? NGN_PRESET_AMOUNTS[0] : USD_PRESET_AMOUNTS[0];
+                  setPresetAmount(def);
+                  setValue('amount', def);
+                }, 500);
+              } else {
+                alert(result.error || 'Paystack verification failed. Please contact us if money was deducted.');
+              }
+            })
+            .catch((err) => {
+              console.error('[paystack-verify]', err);
+              alert('Could not verify the Paystack payment. Please contact us if money was deducted.');
+            })
+            .finally(() => setLoading(false));
         },
       });
+
+      handler.openIframe();
     } catch (err: any) {
       console.error(err);
       alert(err.message || 'Paystack payment could not be initiated. Please try again.');
