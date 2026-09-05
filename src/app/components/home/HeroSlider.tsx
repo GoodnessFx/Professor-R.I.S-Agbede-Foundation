@@ -45,14 +45,12 @@ export function HeroSlider() {
         </div>
 
         <div className="flex w-full justify-center lg:w-[34%] lg:justify-end">
-          <div className="h-[280px] w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-white/15 bg-black/20 shadow-[0_22px_60px_rgba(0,0,0,0.45)] backdrop-blur-[2px] md:h-[420px] lg:h-[520px] lg:max-w-[460px]">
-            <img
-              src={heroImage}
-              alt="Professor R.I.S Agbede"
-              className="h-full w-full object-cover object-center"
-              style={{ objectPosition: 'center top' }}
-            />
-          </div>
+          <img
+            src={heroImage}
+            alt="Professor R.I.S Agbede"
+            className="h-[280px] w-full max-w-[360px] rounded-t-[1.5rem] object-cover object-center shadow-[0_22px_60px_rgba(0,0,0,0.45)] md:h-[420px] lg:h-[520px] lg:max-w-[460px]"
+            style={{ objectPosition: 'center top' }}
+          />
         </div>
       </div>
     </div>
