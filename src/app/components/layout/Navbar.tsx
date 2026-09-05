@@ -157,11 +157,11 @@ export function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 md:h-28 lg:h-32">
             {/* Logo & Name */}
-            <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
-              <Logo className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28" />
-              <div className={`flex flex-col items-start leading-[0.9] ${textClasses} transition-colors duration-300`}>
-                <span className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.5rem] font-black font-serif tracking-[-0.04em] whitespace-nowrap">Professor R.I.S Agbede</span>
-                <span className="text-[0.62rem] md:text-[0.72rem] lg:text-[0.82rem] font-black tracking-[0.26em] uppercase">Foundation</span>
+            <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0 min-w-0">
+              <Logo className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 shrink-0" />
+              <div className={`flex min-w-0 flex-col items-start leading-[0.82] ${textClasses} transition-colors duration-300`}>
+                <span className="text-[0.72rem] sm:text-[0.9rem] md:text-[1.05rem] lg:text-[1.55rem] xl:text-[1.75rem] font-black font-serif tracking-[-0.05em] whitespace-nowrap">Professor R.I.S Agbede</span>
+                <span className="mt-0.5 text-[0.54rem] sm:text-[0.64rem] md:text-[0.72rem] lg:text-[0.82rem] xl:text-[0.92rem] font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase text-[var(--navy)]">Foundation</span>
               </div>
             </Link>
 
