@@ -307,7 +307,7 @@ export const CONTACT_INFO = {
 };
 
 export const BANK_DETAILS_NGN = {
-  bank: 'First Bank of Nigeria',
+  bank: 'Fidelity Bank',
   accountName: 'PROFESSOR R.I.S. AGBEDE FOUNDATION',
   accountNumber: '4011637915',
   currency: 'NGN',
