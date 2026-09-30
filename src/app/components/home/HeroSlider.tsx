@@ -1,27 +1,47 @@
 /**
- * Hero section with a single static foundation image
+ * Hero section — displays the full foundation banner image without cropping.
+ * Uses a real <img> with object-contain so text in the artwork is never cut off.
  */
 
+import { useState } from 'react';
 import { HERO_SLIDES } from '../../../lib/constants';
 
 export function HeroSlider() {
   const heroImage = HERO_SLIDES[0]?.image ?? '/images/hero-section-image.jpeg';
+  const heroAlt =
+    HERO_SLIDES[0]?.alt ?? 'Professor R.I.S Agbede Foundation banner';
+  const [failed, setFailed] = useState(false);
+  const src = failed ? '/images/professor-agbede-portrait.jpeg' : heroImage;
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#0b1117] min-h-[52svh] sm:min-h-[60svh] md:min-h-[72svh] lg:min-h-[86svh] pt-24 sm:pt-28 md:pt-28 lg:pt-32">
+    <section
+      aria-label="Foundation banner"
+      className="relative w-full overflow-hidden bg-[#0b1117] pt-24 sm:pt-28 md:pt-32 lg:pt-36"
+    >
+      {/* Soft backdrop glow so letterbox bars blend with the artwork */}
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 22%',
-          backgroundRepeat: 'no-repeat',
-          filter: 'brightness(0.72) contrast(1.04)',
-        }}
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_65%)]"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30" />
 
-      <div className="relative z-10 mx-auto flex min-h-[52svh] w-full max-w-7xl items-center justify-center px-3 pb-6 pt-2 sm:px-6 sm:pb-8 sm:pt-4 lg:px-10 lg:pb-12 xl:px-12" />
-    </div>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-10 xl:px-12 pb-6 sm:pb-8 lg:pb-10">
+        <div className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl ring-1 ring-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.45)] bg-[#0b1117]">
+          <img
+            src={src}
+            alt={heroAlt}
+            loading="eager"
+            decoding="async"
+            draggable={false}
+            onError={() => setFailed(true)}
+            className="block h-auto w-full max-h-[78svh] sm:max-h-[80svh] lg:max-h-[86svh] object-contain object-center select-none"
+          />
+          {/* Very light legibility veil — does not hide artwork text */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
+          />
+        </div>
+      </div>
+    </section>
   );
 }

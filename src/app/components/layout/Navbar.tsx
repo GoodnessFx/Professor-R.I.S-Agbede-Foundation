@@ -157,11 +157,12 @@ export function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 md:h-28 lg:h-32">
             {/* Logo & Name */}
-            <Link to="/" className="flex items-center gap-1 md:gap-2 group shrink-0 min-w-0">
-              <Logo className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 shrink-0" />
-              <div className={`flex min-w-0 flex-col items-start leading-none ${textClasses} transition-colors duration-300`}>
-                <span className="text-[clamp(0.7rem,1.25vw,1.35rem)] md:text-[clamp(0.8rem,1.4vw,1.7rem)] font-black font-serif tracking-[-0.05em] whitespace-nowrap">Professor R.I.S Agbede</span>
-                <span className="mt-0.5 text-[clamp(0.56rem,1.1vw,1.05rem)] md:text-[clamp(0.68rem,1.45vw,1.35rem)] font-black tracking-[0.16em] sm:tracking-[0.2em] uppercase text-[var(--navy)] leading-none">Foundation</span>
+            <Link to="/" className="flex items-center gap-3 md:gap-3.5 group shrink-0 min-w-0 py-1">
+              <Logo className="w-16 h-16 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20 lg:w-24 lg:h-24 shrink-0" />
+              <div className={`flex min-w-0 flex-col items-start justify-center leading-none ${textClasses} transition-colors duration-300`}>
+                <span className="font-serif font-bold tracking-tight whitespace-nowrap text-[clamp(0.95rem,1.6vw,1.65rem)] md:text-[clamp(1.1rem,1.8vw,1.9rem)] text-[var(--navy)]">Professor R.I.S Agbede</span>
+                <span className="mt-1.5 text-[clamp(0.62rem,1vw,0.95rem)] font-bold tracking-[0.32em] uppercase text-[var(--navy)]/80 leading-none">Foundation</span>
+                <span className="mt-1.5 h-[2px] w-10 rounded-full bg-[var(--gold)] transition-all duration-300 group-hover:w-16" aria-hidden="true" />
               </div>
             </Link>
 
