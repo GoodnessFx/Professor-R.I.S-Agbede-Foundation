@@ -1,4 +1,4 @@
 @import 'tailwindcss' source(none);
 @source '../**/*.{js,ts,jsx,tsx}';
-
-@import 'tw-animate-css';
+/* tw-animate-css removed: it pulls extra animation runtime into the bundle
+   and was never used by any component. Less JS = less chance of blank page. */

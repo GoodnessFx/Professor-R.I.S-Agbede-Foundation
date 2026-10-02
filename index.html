@@ -8,22 +8,16 @@
       header from vercel.json. A second meta-tag policy would intersect with
       it and can block the app's own scripts/styles (blank page). -->
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Google Fonts: preconnect only (stylesheet loads via CSS import).
+      No render-blocking font <link> so a slow/blocked font CDN
+      can never leave the page blank. -->
+
     <link rel="icon" type="image/png" href="/images/Professor%20logo.png" />
     <title>Professor R.I.S. Agbede Foundation</title>
   </head>
 
   <body>
     <div id="root"></div>
-    <!--
-      Flutterwave inline checkout — must load before the React app so
-      window.FlutterwaveCheckout is available when the donate button is clicked.
-    -->
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
