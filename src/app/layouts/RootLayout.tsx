@@ -1,16 +1,24 @@
 /**
- * Root layout component with navigation and footer.
- * AnimatePresence/motion wrapper removed: it blanked the page when the
- * motion package failed to load, and it added no visible benefit.
+ * Root layout — bulletproof.
+ * Navbar/Footer are each guarded: if either throws, the page content
+ * still renders. The app can NEVER go fully blank.
  */
 
+import { Component, type ReactNode, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
-import { useEffect } from 'react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
-import { BackToTop } from '../components/shared/BackToTop';
-import { WhatsAppButton } from '../components/shared/WhatsAppButton';
-import { CookieNotice } from '../components/shared/CookieNotice';
+
+class Guard extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    if (this.state.failed) return null;
+    return this.props.children;
+  }
+}
 
 export function RootLayout() {
   const location = useLocation();
@@ -22,14 +30,15 @@ export function RootLayout() {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
-      <Navbar />
+      <Guard>
+        <Navbar />
+      </Guard>
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
-      <BackToTop />
-      <WhatsAppButton />
-      <CookieNotice />
+      <Guard>
+        <Footer />
+      </Guard>
     </div>
   );
 }
