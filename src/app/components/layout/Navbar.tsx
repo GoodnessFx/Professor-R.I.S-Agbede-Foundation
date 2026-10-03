@@ -157,12 +157,12 @@ export function Navbar() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 md:h-28 lg:h-32">
             {/* Logo & Name */}
-            <Link to="/" className="flex items-center gap-3 md:gap-3.5 group shrink-0 min-w-0 py-1">
-              <Logo className="w-16 h-16 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20 lg:w-24 lg:h-24 shrink-0" />
+            <Link to="/" className="flex items-center gap-3 md:gap-4 group shrink-0 min-w-0 py-1">
+              <Logo className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 shrink-0" />
               <div className={`flex min-w-0 flex-col items-start justify-center leading-none ${textClasses} transition-colors duration-300`}>
                 <span className="font-serif font-bold tracking-tight whitespace-nowrap text-[clamp(0.95rem,1.6vw,1.65rem)] md:text-[clamp(1.1rem,1.8vw,1.9rem)] text-[var(--navy)]">Professor R.I.S Agbede</span>
-                <span className="mt-1.5 text-[clamp(0.62rem,1vw,0.95rem)] font-bold tracking-[0.32em] uppercase text-[var(--navy)]/80 leading-none">Foundation</span>
-                <span className="mt-1.5 h-[2px] w-10 rounded-full bg-[var(--gold)] transition-all duration-300 group-hover:w-16" aria-hidden="true" />
+                <span className="mt-2 text-[clamp(0.85rem,1.35vw,1.2rem)] font-black tracking-[0.28em] uppercase text-[var(--navy)] leading-none">Foundation</span>
+                <span className="mt-2 h-[3px] w-24 rounded-full bg-[var(--gold)] transition-all duration-300 group-hover:w-32" aria-hidden="true" />
               </div>
             </Link>
 

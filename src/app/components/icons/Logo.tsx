@@ -1,6 +1,6 @@
 type Props = { className?: string };
 
-export function Logo({ className = "w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" }: Props) {
+export function Logo({ className = "w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32" }: Props) {
   return (
     <img
       src="/images/Professor logo.png"
@@ -8,7 +8,7 @@ export function Logo({ className = "w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" }
       loading="eager"
       decoding="async"
       draggable={false}
-      className={`${className} object-contain shrink-0 rounded-full bg-white p-1 ring-1 ring-slate-200 shadow-[0_2px_10px_rgba(0,0,0,0.18)]`}
+      className={`${className} object-contain shrink-0`}
     />
   );
 }
